@@ -29,34 +29,36 @@
     			<div class="col-md-12	featured-top">
     				<div class="row no-gutters">
 	  					<div class="col-md-4 d-flex align-items-center">
-	  						<form action="#" class="request-form ftco-animate bg-primary">
-		          		<h2>Make your trip</h2>
+	  					<form action="{{ route('showAvailableCars') }}" method="POST" class="request-form ftco-animate bg-primary">
+		          	 @csrf	
+                <h2>Make your trip</h2>
 			    				<div class="form-group">
 			    					<label for="" class="label">Pick-up location</label>
-			    					<input type="text" class="form-control" placeholder="City, Airport, Station, etc">
+			    					<input type="text" name="pick_up_location" class="form-control" placeholder="City, Airport, Station, etc">
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="" class="label">Drop-off location</label>
-			    					<input type="text" class="form-control" placeholder="City, Airport, Station, etc">
+			    					<input type="text" name="drop_off_location" class="form-control" placeholder="City, Airport, Station, etc">
 			    				</div>
 			    				<div class="d-flex">
-			    					<div class="form-group mr-2">
+			    					<div class="form-group mr-2 ">
 			                <label for="" class="label">Pick-up date</label>
-			                <input type="text" class="form-control" id="book_pick_date" placeholder="Date">
+			                <input type="date" name="pick_up_date" class="form-control col-md-12"  placeholder="Date">
 			              </div>
 			              <div class="form-group ml-2">
 			                <label for="" class="label">Drop-off date</label>
-			                <input type="text" class="form-control" id="book_off_date" placeholder="Date">
+			                <input type="date" name="drop_off_date" class="form-control col-md-12"  placeholder="Date">
 			              </div>
 		              </div>
 		              <div class="form-group">
 		                <label for="" class="label">Pick-up time</label>
-		                <input type="text" class="form-control" id="time_pick" placeholder="Time">
+		                <input type="text" name="time_pick" class="form-control" id="time_pick" placeholder="Time">
 		              </div>
 			            <div class="form-group">
 			              <input type="submit" value="Rent A Car Now" class="btn btn-secondary py-3 px-4">
 			            </div>
 			    			</form>
+
 	  					</div>
 	  					<div class="col-md-8 d-flex align-items-center">
 	  						<div class="services-wrap rounded-right w-100">
@@ -94,20 +96,22 @@
 				</div>
   		</div>
     </section>
-
-
+ 
     <section class="ftco-section ftco-no-pt bg-light">
-    	<div class="container">
-    		<div class="row justify-content-center">
-          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-          	<span class="subheading">What we offer</span>
-            <h2 class="mb-2">Feeatured Vehicles</h2>
-          </div>
-        </div>
-    		<div class="row">
-    			<div class="col-md-12">
-    				<div class="carousel-car owl-carousel">
-						@foreach($car as $car)
+      <div class="container">
+    <div class="row">
+    			<div class="col-md-12 m-3">
+
+    @if (Session::has('found'))
+   
+   
+    <h2 class="row justify-content-center">Available Cars:</h2>
+     @if ($carsAva->isEmpty())
+    <p>No car available for the selected dates.</p>
+      @else
+      <div class="col-md-12">
+    				<div class="col-md-4">
+						@foreach($carsAva as $car)
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="img rounded d-flex align-items-end" style="background-image: url(images/{{$car['img_1']}});">
@@ -120,6 +124,52 @@
 		    						</div>
 		    						<p class="d-flex mb-0 d-block">
                       <a href="{{ route('car_single', ['id' => $car->id]) }}" class="btn btn-secondary py-2 ml-1">Book now</a>
+
+								   </p>
+		    					</div>
+		    				</div>
+    					</div>
+
+						@endforeach
+    					
+    					
+    					
+    				</div>
+    			</div>
+      @endif
+
+      @endif
+
+</div>
+</div>
+
+</div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt bg-light">
+    	<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          	<span class="subheading">What we offer</span>
+            <h2 class="mb-2">Feeatured Vehicles</h2>
+          </div>
+        </div>
+    		<div class="row">
+    			<div class="col-md-12">
+    				<div class="carousel-car owl-carousel">
+						@foreach($car as $cars)
+    					<div class="item">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url(images/{{$cars['img_1']}});">
+		    					</div>
+		    					<div class="text">
+		    						<h2 class="mb-0"><a href="#">{{$cars['name']}}</a></h2>
+		    						<div class="d-flex mb-3">
+			    						<span class="cat">{{$cars['transmission']}}</span>
+			    						<p class="price ml-auto">JOD{{$cars['price']}} <span>/day</span></p>
+		    						</div>
+		    						<p class="d-flex mb-0 d-block">
+                      <a href="{{ route('car_single', ['id' => $cars->id]) }}" class="btn btn-secondary py-2 ml-1">Book now</a>
 
 								   </p>
 		    					</div>

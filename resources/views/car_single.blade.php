@@ -2,6 +2,45 @@
 
 @section("content")
 
+   <style>
+	/* Style the modal and overlay */
+.modal {
+  display: none; /* Hide the modal by default */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  max-width: 600px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+   </style>
+
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('images/bg_3.jpg') }}');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -193,59 +232,81 @@
     <div class="container">
         <div class="row d-flex mb-5 contact-info">
             <div class="col-md-12 block-9 mb-md-5">
-                <form method="POST" action="{{ route('bookings.storeBooking') }}" class="bg-light p-5 contact-form">
-                    @csrf
+	
 
-                    <div class="form-group d-flex">
-                        <input type="text" class="form-control mr-3" name="start_location" placeholder="Picking Up Location">
-						<p>@error('start_location'){{$message}} @enderror</p>
-                        <input type="text" class="form-control" name="end_location" placeholder="Dropping off Location">
-						<p>@error('end_location'){{$message}} @enderror</p>
-                    </div>
 
-                    <div class="form-group d-flex">
-                        <input type="date" class="form-control mr-3" name="start_date" id="start_date">
-						<p>@error('start_date'){{$message}} @enderror</p>
-                        <input type="date" class="form-control" name="end_date" id="end_date">
-						<p >@error('end_date'){{$message}} @enderror</p>
-                    </div>
+<!-- Create the booking form -->
+<form id="bookingForm" method="POST" action="{{ route('bookings.storeBooking') }}" class="bg-light p-5 contact-form">
+  @csrf
 
-                    <div class="form-group d-flex">
-                        <input type="time" class="form-control mr-3" name="start_hour" id="start_hour">
-						<p>@error('start_hour'){{$message}} @enderror</p>
-                        <input type="time" class="form-control" name="end_hour" id="end_hour">
-						<p>@error('end_hour'){{$message}} @enderror</p>
-                    </div>
-                      <div>
-					  <p class="form-group d-flex"  id="booking_period"></p>
-					  <p class="form-group d-flex" id="booking_cost"></p>
-					  </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" name="lessor_id"  value="{{$car->lessor_id}}">
-                        <input type="hidden" class="form-control" name="car_id"  value="{{$car->id}}">
-						<input type="hidden" class="form-control" name="price" id="price"  value="{{$car->price}}">
-						<input type="hidden" name="booking_period" id="booking_period">
-                        <input type="hidden" name="booking_cost" id="booking_cost">
+  <!-- Booking form inputs -->
+  <div class="form-group d-flex">
+    <input type="text" class="form-control mr-3" name="start_location" placeholder="Picking Up Location" >
+    <input type="text" class="form-control" name="end_location" placeholder="Dropping off Location" >
+  </div>
+
+  <div class="form-group d-flex">
+    <input type="date" class="form-control mr-3" name="start_date" id="start_date" >
+    <input type="date" class="form-control" name="end_date" id="end_date" >
+  </div>
+
+  <div class="form-group d-flex">
+    <input type="time" class="form-control mr-3" name="start_hour" id="start_hour" >
+  </div>
+
+  <div>
+    <p class="form-group d-flex" id="booking_period"></p>
+    <p class="form-group d-flex" id="booking_cost"></p>
+  </div>
+
+  <div class="form-group">
+    <input type="hidden" class="form-control" name="lessor_id" value="{{$car->lessor_id}}">
+    <input type="hidden" class="form-control" name="car_id" value="{{$car->id}}">
+    <input type="hidden" class="form-control" name="car_price" value="{{$car->price}}">
+  </div>
+
+  <div class="form-group">
+    <!-- <input type="submit" value="Book Now" class="btn btn-primary py-3 px-5"  id="bookNowBtn"> -->
+
+	<!-- Add a button to trigger the popup -->
+	 <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Book Now</button>
+
+	
+<!-- Create the popup modal -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <span id="closeBtn" class="close">&times;</span>
+    <h2>Payment Information</h2>
+    <p>Enter your payment details here:</p>
+    <!-- Add payment form inputs here -->
+    <form id="paymentForm">
+      <!-- Payment form inputs -->
+      <div class="form-group">
+        <input type="text" class="form-control" name="cardNumber" placeholder="Card Number" required>
+      </div>
+      <!-- Add more payment form inputs as needed -->
+      <button type="submit" class="btn btn-primary">Submit Payment</button>
+    </form>
+  </div>
+</div>
+
+
+
+  </div>
+
+  <div class="form-group">
+    @if (Session::has('success'))
+    <div class="alert alert-success" role="alert">
+      {{ Session::get('success') }}
+    </div>
+    @endif
+  </div>
   
+</form>
 
-					</div>
+	 
 
-                   
 
-                    <div class="form-group">
-                        <input type="submit" value="Book Now" class="btn btn-primary py-3 px-5">
-                    </div>
-
-					<div class="form-group">
-
-					@if (Session::has('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ Session::get('success') }}
-                        </div>
-                    @endif
-		
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -262,11 +323,9 @@
 							  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
 							    <li class="nav-item">
-							      <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Book now</a>
+							      <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Description</a>
 							    </li>
-							    <li class="nav-item">
-							      <a class="nav-link" id="pills-manufacturer-tab" data-toggle="pill" href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer" aria-expanded="true">Description</a>
-							    </li>
+							    
 							    <li class="nav-item">
 							      <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">Review</a>
 							    </li>
@@ -276,24 +335,14 @@
 						  <div class="tab-content" id="pills-tabContent">
 						    <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
 						    	<div class="row">
-						    		<div class="col-md-4">
-						    			<ul class="features">
-						    				<li class="check"><span class="ion-ios-checkmark"></span>Airconditions</li>
-						    				<li class="check"><span class="ion-ios-checkmark"></span>Child Seat</li>
-						    				<li class="check"><span class="ion-ios-checkmark"></span>GPS</li>
-						    				<li class="check"><span class="ion-ios-checkmark"></span>Luggage</li>
-						    				<li class="check"><span class="ion-ios-checkmark"></span>Music</li>
-						    			</ul>
-						    		</div>
+										<p>{{$car->description}}</p>
+						    		
 						    		
 						    		
 						    	</div>
 						    </div>
 
-						    <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
-						      <p>{{$car->description}}</p>
-									<!-- <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p> -->
-						    </div>
+						   
 
 						    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
 						      <div class="row">
@@ -432,7 +481,7 @@
       </div>
     </section>
 
-    <section class="ftco-section ftco-no-pt">
+    <!-- <section class="ftco-section ftco-no-pt">
     	<div class="container">
     		<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -485,60 +534,121 @@
     			</div>
         </div>
     	</div>
-    </section>
-    
-    <script>
-function calculateBookingPeriodAndCost() {
-    // Get the start and end dates and hours
-    const startDate = document.getElementById('start_date').value;
-    const endDate = document.getElementById('end_date').value;
-    const startHour = document.getElementById('start_hour').value;
-    const endHour = document.getElementById('end_hour').value;
+    </section> -->
 
-    // Check if all necessary fields are filled
-    if (startDate && endDate && startHour && endHour) {
-        const startTime = new Date(`${startDate}T${startHour}`);
-        const endTime = new Date(`${endDate}T${endHour}`);
+	<script>
+    // Get the necessary form elements
+    // const startDateInput = document.getElementById('start_date');
+    // const endDateInput = document.getElementById('end_date');
+    // const bookingPeriodElement = document.getElementById('booking_period');
+    // const bookingCostElement = document.getElementById('booking_cost');
+    // const carPrice = parseFloat({{ $car->price }}); // Retrieve car price from PHP variable
 
-        // Calculate the difference between the start and end dates
-        const diffInTime = endTime.getTime() - startTime.getTime();
-        const diffInDays = Math.floor(diffInTime / (1000 * 60 * 60 * 24));
+    // // Add event listeners to calculate and display booking period and cost
+    // startDateInput.addEventListener('change', updateBookingDetails);
+    // endDateInput.addEventListener('change', updateBookingDetails);
 
-        // Calculate the difference between the start and end hours
-        const diffInHours = Math.floor((diffInTime / (1000 * 60 * 60)) % 24);
+    // function updateBookingDetails() {
+    //     const startDate = new Date(startDateInput.value);
+    //     const endDate = new Date(endDateInput.value);
 
-        // Get the rate per day from the hidden input field
-        const ratePerDay = parseFloat(document.getElementById('price').value);
+    //     if (startDate && endDate && startDate <= endDate) {
+    //         const bookingPeriod = calculateBookingPeriod(startDate, endDate);
+    //         const bookingCost = calculateBookingCost(bookingPeriod, carPrice);
 
-        // Calculate the cost of booking
-        const cost = (diffInDays * ratePerDay) + ((diffInHours / 24) * ratePerDay);
+    //         bookingPeriodElement.textContent = `Booking Period: ${bookingPeriod} days`;
+    //         bookingCostElement.textContent = `Booking Cost: $${bookingCost.toFixed(2)}`;
+    //     } else {
+    //         bookingPeriodElement.textContent = '';
+    //         bookingCostElement.textContent = '';
+    //     }
+    // }
 
-        // Display the booking period and cost
-        const resultElement = document.getElementById('booking_period');
-        resultElement.textContent = `Booking Period: ${diffInDays} days and ${diffInHours} hours`;
+    // function calculateBookingPeriod(startDate, endDate) {
+    //     const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
+    //     return Math.round(Math.abs((startDate - endDate) / oneDay)) + 1; // Add 1 to include both start and end dates
+    // }
 
-        const costElement = document.getElementById('booking_cost');
-        costElement.textContent = `Cost: JOD ${cost.toFixed(2)}`;
-    } else {
-        // Clear the booking period and cost if any field is missing
-        const resultElement = document.getElementById('booking_period');
-        resultElement.textContent = '';
+    // function calculateBookingCost(bookingPeriod, carPrice) {
+    //     return bookingPeriod * carPrice;
+    // }
 
-        const costElement = document.getElementById('booking_cost');
-        costElement.textContent = '';
-    }
+
+const bookNowBtn = document.getElementById('bookNowBtn');
+const paymentModal = document.getElementById('paymentModal');
+const closeBtn = document.getElementById('closeBtn');
+const paymentForm = document.getElementById('paymentForm');
+const startDateInput = document.getElementById('start_date');
+const endDateInput = document.getElementById('end_date');
+const bookingPeriodElement = document.getElementById('booking_period');
+const bookingCostElement = document.getElementById('booking_cost');
+const carPrice = parseFloat({{ $car->price }}); // Retrieve car price from PHP variable
+
+// Add event listeners to show/hide the payment modal and calculate booking details
+bookNowBtn.addEventListener('click', openPaymentModal);
+closeBtn.addEventListener('click', closePaymentModal);
+startDateInput.addEventListener('change', calculateBookingDetails);
+endDateInput.addEventListener('change', calculateBookingDetails);
+
+function openPaymentModal() {
+  paymentModal.style.display = 'block'; // Show the payment modal
 }
 
-// Add event listeners to the input fields
-document.getElementById('start_date').addEventListener('input', calculateBookingPeriodAndCost);
-document.getElementById('end_date').addEventListener('input', calculateBookingPeriodAndCost);
-document.getElementById('start_hour').addEventListener('input', calculateBookingPeriodAndCost);
-document.getElementById('end_hour').addEventListener('input', calculateBookingPeriodAndCost);
+function closePaymentModal() {
+  paymentModal.style.display = 'none'; // Hide the payment modal
+}
+
+function calculateBookingDetails() {
+  const startDate = new Date(startDateInput.value);
+  const endDate = new Date(endDateInput.value);
+
+  if (startDate && endDate && startDate <= endDate) {
+    const bookingPeriod = calculateBookingPeriod(startDate, endDate);
+    const bookingCost = calculateBookingCost(bookingPeriod, carPrice);
+
+    bookingPeriodElement.textContent = `Booking Period: ${bookingPeriod} day(s)`;
+    bookingCostElement.textContent = `Booking Cost: $${bookingCost.toFixed(2)}`;
+  } else {
+    bookingPeriodElement.textContent = '';
+    bookingCostElement.textContent = '';
+  }
+}
+
+function calculateBookingPeriod(startDate, endDate) {
+  const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
+  return Math.round(Math.abs((startDate - endDate) / oneDay)) + 1; // Add 1 to include both start and end dates
+}
+
+function calculateBookingCost(bookingPeriod, carPrice) {
+  return bookingPeriod * carPrice;
+}
+
+// Add event listener to handle payment form submission
+paymentForm.addEventListener('submit', submitPayment);
+
+function submitPayment(event) {
+  event.preventDefault(); // Prevent form submission (for demonstration purposes)
+
+  // Perform your payment processing logic here
+  // For example, you can send an AJAX request to your payment API
+
+  // Simulate a successful payment
+  const paymentSuccess = true;
+
+  if (paymentSuccess) {
+    // Submit the booking form
+    document.getElementById('bookingForm').submit();
+  } else {
+    alert('Payment failed. Please try again.');
+  }
+
+  // After successful payment submission, you can close the modal
+  closePaymentModal();
+}
+
+
 </script>
 
 
-
-
-
-
-    @endsection
+    
+	   @endsection

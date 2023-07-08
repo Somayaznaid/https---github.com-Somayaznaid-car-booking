@@ -81,6 +81,8 @@ Route::post('/logout', [SignController::class , 'logout'])->name('logout');
 
 Route::post('/bookings', [BookController::class, 'storeBooking'])->name('bookings.storeBooking');
 
+Route::post('/index', [BookController::class, 'showAvailableCars'])->name('showAvailableCars');
+
 
 ///////////////////////////////////////////////////////////////
 // admin 
