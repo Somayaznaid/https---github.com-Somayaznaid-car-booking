@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Users;
 use App\Models\Lessor;
+
 class Car extends Model
 {
     use HasFactory;
@@ -45,5 +46,10 @@ class Car extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function Ratings()
+    {
+        return $this->belongsTo(Rating::class);
     }
 }

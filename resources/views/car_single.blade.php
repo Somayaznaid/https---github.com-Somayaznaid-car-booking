@@ -388,28 +388,15 @@
 									   			<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
 									   		</div>
 									   	</div>
+
 									   	<div class="review d-flex">
 									   		<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
 									   		<div class="desc">
-									   			<h4>
-									   				<span class="text-left">Jacob Webb</span>
-									   				<span class="text-right">14 March 2018</span>
-									   			</h4>
-									   			<p class="star">
-									   				<span>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-								   					</span>
-								   					<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-									   			</p>
-									   			<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+									   		
 									   		</div>
 									   	</div>
 							   		</div>
-							   		<div class="col-md-5">
+							   		{{-- <div class="col-md-5">
 							   			<div class="rating-wrap">
 								   			<h3 class="head">Give a Review</h3>
 								   			<div class="wrap">
@@ -469,9 +456,50 @@
 								   					<span>0 Reviews</span>
 									   			</p>
 									   		</div>
-								   		</div>
+								   		</div> --}}
+
+                       <div class="row">
+                        <div class="container">
+                            <div class="row d-flex mb-5 contact-info">
+                                <div class="col-md-12 block-9 mb-md-5">
+                    
+                    <!-- Create the booking form -->
+                    <form id="bookingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
+                      @csrf
+                    
+                      <!-- Booking form inputs -->
+                      <div class="form-group d-flex">
+                        <input type="text" class="form-control mr-3" name="start_location" placeholder="Picking Up Location" >
+                      </div>
+                    
+                      <div class="form-group d-flex">
+                        <textarea name="comments" id="" cols="30" rows="7" class="form-control mr-3" placeholder="Note..."></textarea>
+                      </div>
+                    
+                      <div class="form-group">
+                        <input type="hidden" class="form-control" name="car_id" value="{{ request()->route('id') }}">
+                      </div>
+                    
+                      <div class="form-group">
+                      <!-- Add a button to trigger the popup -->
+                       <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Rate Car</button>
+                      </div>
+                   
+                    </form>
+                    
+                       
+                    
+                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 							   		</div>
+
+
 							   	</div>
+
+                  
 						    </div>
 						  </div>
 						</div>
@@ -481,98 +509,10 @@
       </div>
     </section>
 
-    <!-- <section class="ftco-section ftco-no-pt">
-    	<div class="container">
-    		<div class="row justify-content-center">
-          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-          	<span class="subheading">Choose Car</span>
-            <h2 class="mb-2">Related Cars</h2>
-          </div>
-        </div>
-        <div class="row">
-        	<div class="col-md-4">
-    				<div class="car-wrap rounded ftco-animate">
-    					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-1.jpg);">
-    					</div>
-    					<div class="text">
-    						<h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
-    						<div class="d-flex mb-3">
-	    						<span class="cat">Cheverolet</span>
-	    						<p class="price ml-auto">$500 <span>/day</span></p>
-    						</div>
-    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="car-wrap rounded ftco-animate">
-    					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-2.jpg);">
-    					</div>
-    					<div class="text">
-    						<h2 class="mb-0"><a href="car-single.html">Range Rover</a></h2>
-    						<div class="d-flex mb-3">
-	    						<span class="cat">Subaru</span>
-	    						<p class="price ml-auto">$500 <span>/day</span></p>
-    						</div>
-    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="car-wrap rounded ftco-animate">
-    					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-3.jpg);">
-    					</div>
-    					<div class="text">
-    						<h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
-    						<div class="d-flex mb-3">
-	    						<span class="cat">Cheverolet</span>
-	    						<p class="price ml-auto">$500 <span>/day</span></p>
-    						</div>
-    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
-    					</div>
-    				</div>
-    			</div>
-        </div>
-    	</div>
-    </section> -->
+   
 
 	<script>
-    // Get the necessary form elements
-    // const startDateInput = document.getElementById('start_date');
-    // const endDateInput = document.getElementById('end_date');
-    // const bookingPeriodElement = document.getElementById('booking_period');
-    // const bookingCostElement = document.getElementById('booking_cost');
-    // const carPrice = parseFloat({{ $car->price }}); // Retrieve car price from PHP variable
-
-    // // Add event listeners to calculate and display booking period and cost
-    // startDateInput.addEventListener('change', updateBookingDetails);
-    // endDateInput.addEventListener('change', updateBookingDetails);
-
-    // function updateBookingDetails() {
-    //     const startDate = new Date(startDateInput.value);
-    //     const endDate = new Date(endDateInput.value);
-
-    //     if (startDate && endDate && startDate <= endDate) {
-    //         const bookingPeriod = calculateBookingPeriod(startDate, endDate);
-    //         const bookingCost = calculateBookingCost(bookingPeriod, carPrice);
-
-    //         bookingPeriodElement.textContent = `Booking Period: ${bookingPeriod} days`;
-    //         bookingCostElement.textContent = `Booking Cost: $${bookingCost.toFixed(2)}`;
-    //     } else {
-    //         bookingPeriodElement.textContent = '';
-    //         bookingCostElement.textContent = '';
-    //     }
-    // }
-
-    // function calculateBookingPeriod(startDate, endDate) {
-    //     const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
-    //     return Math.round(Math.abs((startDate - endDate) / oneDay)) + 1; // Add 1 to include both start and end dates
-    // }
-
-    // function calculateBookingCost(bookingPeriod, carPrice) {
-    //     return bookingPeriod * carPrice;
-    // }
-
+ 
 
 const bookNowBtn = document.getElementById('bookNowBtn');
 const paymentModal = document.getElementById('paymentModal');

@@ -37,5 +37,10 @@ class Users extends Model implements Authenticatable
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function rating()
+    {
+        return $this->belongsTo(Rating::class);
+    }
  
 }

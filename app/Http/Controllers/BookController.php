@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Car;
 use App\Models\Booking;
+use App\Models\Rating;
 use Carbon\Carbon;
 
 class BookController extends Controller
@@ -73,6 +74,7 @@ class BookController extends Controller
 public function showAvailableCars(Request $request)
 {
     $car = Car::all();
+    // dd($car);
     
     // Retrieve user's input
     $pickUpLocation = $request->input('pick_up_location');
@@ -80,9 +82,11 @@ public function showAvailableCars(Request $request)
     $pickUpDate = Carbon::createFromFormat('Y-m-d', $request->input('pick_up_date'))->startOfDay();
     $dropOffDate = Carbon::createFromFormat('Y-m-d', $request->input('drop_off_date'))->endOfDay();
     $time_pick = $request->input('time_pick');
-    
+    $minPrice = $request->input('min_price');
+    $maxPrice = $request->input('max_price');
+
     // Perform filtering logic to get the available cars based on the user's input
-    $bookingIds = Booking::where('start_date', '<=', $dropOffDate)
+    $bookingIds = Booking::whereNot('start_date', '<=', $dropOffDate) //find first index
                         ->where('end_date', '>=', $pickUpDate)
                         ->pluck('car_id');
     
@@ -90,16 +94,36 @@ public function showAvailableCars(Request $request)
         // No bookings found for the selected dates
         $availableCars = collect(); // Empty collection
     } else {
-       
-        $availableCars = Car::whereIn('id', $bookingIds)->get();
+        $availableCars = Car::whereIn('id', $bookingIds) //every index
+                            ->where('price', '>=', $minPrice) // Filter by minimum price
+                            ->where('price', '<=', $maxPrice) // Filter by maximum price
+                            ->get();        
     }
     
-    Session::flash('found');
+    if ($availableCars->isEmpty()) {
+        // No cars available for the selected dates and price range
+        Session::flash('found', false);
+    } else {
+        Session::flash('found', true);
+    }
     
     return view('index')->with('carsAva', $availableCars)->with('car', $car);
 }
 
 
+public function rating(Request $request , $id){
+   
+    $rating= new Rating();
+    $rating->comments = $request->input("comments");
+    $rating->star_rating = 3;
+    $rating->car_id = $request->input('car_id');
+    $rating->user_id = Auth::id();
+    $rating->save();
+    return  redirect()->back();
+}
 
-    
+    public function showAllCars(){
+        $cars= Car::all();
+        return view('car')->with('cars', $cars);
+    }
 }

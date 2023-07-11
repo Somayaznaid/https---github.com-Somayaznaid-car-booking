@@ -29,7 +29,7 @@
     			<div class="col-md-12	featured-top">
     				<div class="row no-gutters">
 	  					<div class="col-md-4 d-flex align-items-center">
-	  					<form action="{{ route('showAvailableCars') }}" method="POST" class="request-form ftco-animate bg-primary">
+	  					<form action="{{ route('showAvailableCars.index') }}" method="POST" class="request-form ftco-animate bg-primary">
 		          	 @csrf	
                 <h2>Make your trip</h2>
 			    				<div class="form-group">
@@ -50,6 +50,19 @@
 			                <input type="date" name="drop_off_date" class="form-control col-md-12"  placeholder="Date">
 			              </div>
 		              </div>
+
+                  <div class="d-flex">
+			    					<div class="form-group mr-2 ">
+			                <label for="" class="label">Min Price</label>
+			                <input type="text" name="min_price" class="form-control col-md-12"  placeholder="min price">
+			              </div>
+			              <div class="form-group ml-2">
+			                <label for="" class="label">Max Price</label>
+			                <input type="text" name="max_price" class="form-control col-md-12"  placeholder="max price">
+			              </div>
+		              </div>
+
+
 		              <div class="form-group">
 		                <label for="" class="label">Pick-up time</label>
 		                <input type="text" name="time_pick" class="form-control" id="time_pick" placeholder="Time">
@@ -98,87 +111,100 @@
     </section>
  
     <section class="ftco-section ftco-no-pt bg-light">
-      <div class="container">
-    <div class="row">
-    			<div class="col-md-12 m-3">
+    <div class="container">
+      @if (Session::has('found'))
+      <div class="row justify-content-center">
+        <div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          	<span class="subheading">Your Options</span>
+            <h2 class="mb-2">Available Cars:</h2>
+          </div>
+        </div>
+      </div>
+        <div class="row">
+            <div class="col-md-12 m-3">
+             
+                   
+                    @if ($carsAva->isEmpty())
+                        <p>No car available for the selected dates.</p>
+                    @else
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                @foreach($carsAva as $car)
+                                    <div class="item">
+                                        <div class="car-wrap rounded ftco-animate">
+                                            <div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $car['img_1']) }}');">
+                                            </div>
+                                            <div class="text">
+                                                <h2 class="mb-0"><a href="#">{{ $car['name'] }}</a></h2>
+                                                <div class="d-flex mb-3">
+                                                    <span class="cat">{{ $car['transmission'] }}</span>
+                                                    <p class="price ml-auto">JOD{{ $car['price'] }} <span>/day</span></p>
+                                                </div> 
+                                                <p class="d-flex mb-0 d-block">
+                                                    <a href="{{ route('car_single', ['id' => $car->id]) }}" class="btn btn-secondary py-2 ml-1">Book now</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                @endif
+            </div>
+        </div>
+    </div>
+</section>
 
-    @if (Session::has('found'))
-   
-   
-    <h2 class="row justify-content-center">Available Cars:</h2>
-     @if ($carsAva->isEmpty())
-    <p>No car available for the selected dates.</p>
-      @else
-      <div class="col-md-12">
-    				<div class="col-md-4">
-						@foreach($carsAva as $car)
-    					<div class="item">
-    						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(images/{{$car['img_1']}});">
-		    					</div>
-		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">{{$car['name']}}</a></h2>
-		    						<div class="d-flex mb-3">
-			    						<span class="cat">{{$car['transmission']}}</span>
-			    						<p class="price ml-auto">JOD{{$car['price']}} <span>/day</span></p>
-		    						</div>
-		    						<p class="d-flex mb-0 d-block">
-                      <a href="{{ route('car_single', ['id' => $car->id]) }}" class="btn btn-secondary py-2 ml-1">Book now</a>
-
-								   </p>
-		    					</div>
-		    				</div>
-    					</div>
-
-						@endforeach
-    					
-    					
-    					
-    				</div>
-    			</div>
-      @endif
-
-      @endif
-
-</div>
-</div>
-
-</div>
-    </section>
 
     <section class="ftco-section ftco-no-pt bg-light">
+      @if(Session::has('found'))
+
+      @else
     	<div class="container">
     		<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
           	<span class="subheading">What we offer</span>
-            <h2 class="mb-2">Feeatured Vehicles</h2>
+            <h2 class="mb-2">Featured Vehicles</h2>
           </div>
         </div>
     		<div class="row">
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
+             
+                  
+             
+                  
+             
 						@foreach($car as $cars)
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(images/{{$cars['img_1']}});">
+                <div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $cars['img_1']) }}');">
+
+
 		    					</div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">{{$cars['name']}}</a></h2>
-		    						<div class="d-flex mb-3">
-			    						<span class="cat">{{$cars['transmission']}}</span>
-			    						<p class="price ml-auto">JOD{{$cars['price']}} <span>/day</span></p>
-		    						</div>
-		    						<p class="d-flex mb-0 d-block">
-                      <a href="{{ route('car_single', ['id' => $cars->id]) }}" class="btn btn-secondary py-2 ml-1">Book now</a>
+                 <h2 class="mb-0"><a href="#">{{ $cars['name']  }}</a></h2>
 
-								   </p>
+		    						<div class="d-flex mb-3">
+                    <span class="cat">{{  $cars['transmission']  }}</span>
+
+                    <p class="price ml-auto">JOD{{  $cars['price']  }} <span>/day</span></p>
+
+                    </div>
+
+                      <p class="d-flex mb-0 d-block">
+                         <a href="{{  route('car_single', ['id' => $cars['id']])  }}" class="btn btn-secondary py-2 ml-1">Book now</a>
+                      </p>
+
 		    					</div>
 		    				</div>
     					</div>
 
 						@endforeach
     					
-    					
+            @endif
     					
     				</div>
     			</div>

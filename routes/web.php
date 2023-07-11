@@ -81,8 +81,11 @@ Route::post('/logout', [SignController::class , 'logout'])->name('logout');
 
 Route::post('/bookings', [BookController::class, 'storeBooking'])->name('bookings.storeBooking');
 
-Route::post('/index', [BookController::class, 'showAvailableCars'])->name('showAvailableCars');
+Route::post('/car_single/{id}', [BookController::class, 'rating'])->name('rating');
 
+Route::post('index', [BookController::class, 'showAvailableCars'])->name('showAvailableCars.index');
+
+Route::post('car', [BookController::class, 'showAllCars'])->name('showAllCars');
 
 ///////////////////////////////////////////////////////////////
 // admin 
