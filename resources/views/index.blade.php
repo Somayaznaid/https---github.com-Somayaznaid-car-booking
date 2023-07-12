@@ -1,6 +1,8 @@
 @extends("layout.master")
 
 @section("content")
+
+
 <div class="hero-wrap ftco-degree-bg" style="background-image: url('images/bg_1.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -29,48 +31,53 @@
     			<div class="col-md-12	featured-top">
     				<div class="row no-gutters">
 	  					<div class="col-md-4 d-flex align-items-center">
-	  					<form action="{{ route('showAvailableCars.index') }}" method="POST" class="request-form ftco-animate bg-primary">
-		          	 @csrf	
-                <h2>Make your trip</h2>
-			    				<div class="form-group">
-			    					<label for="" class="label">Pick-up location</label>
-			    					<input type="text" name="pick_up_location" class="form-control" placeholder="City, Airport, Station, etc">
-			    				</div>
-			    				<div class="form-group">
-			    					<label for="" class="label">Drop-off location</label>
-			    					<input type="text" name="drop_off_location" class="form-control" placeholder="City, Airport, Station, etc">
-			    				</div>
-			    				<div class="d-flex">
-			    					<div class="form-group mr-2 ">
-			                <label for="" class="label">Pick-up date</label>
-			                <input type="date" name="pick_up_date" class="form-control col-md-12"  placeholder="Date">
-			              </div>
-			              <div class="form-group ml-2">
-			                <label for="" class="label">Drop-off date</label>
-			                <input type="date" name="drop_off_date" class="form-control col-md-12"  placeholder="Date">
-			              </div>
-		              </div>
-
+	  					
+                <form action="{{ route('showAvailableCars.index') }}" method="POST" class="request-form ftco-animate bg-primary" id="carForm">
+                  @csrf
+                  <h2>Make your trip</h2>
+                  <div class="form-group">
+                    <label for="" class="label">Pick-up location</label>
+                    <input type="text" name="pick_up_location" class="form-control" placeholder="City, Airport, Station, etc">
+                    <small id="pickUpLocationError" class="text-danger"></small>
+                  </div>
+                  <div class="form-group">
+                    <label for="" class="label">Drop-off location</label>
+                    <input type="text" name="drop_off_location" class="form-control" placeholder="City, Airport, Station, etc">
+                    <small id="dropOffLocationError" class="text-danger"></small>
+                  </div>
                   <div class="d-flex">
-			    					<div class="form-group mr-2 ">
-			                <label for="" class="label">Min Price</label>
-			                <input type="text" name="min_price" class="form-control col-md-12"  placeholder="min price">
-			              </div>
-			              <div class="form-group ml-2">
-			                <label for="" class="label">Max Price</label>
-			                <input type="text" name="max_price" class="form-control col-md-12"  placeholder="max price">
-			              </div>
-		              </div>
-
-
-		              <div class="form-group">
-		                <label for="" class="label">Pick-up time</label>
-		                <input type="text" name="time_pick" class="form-control" id="time_pick" placeholder="Time">
-		              </div>
-			            <div class="form-group">
-			              <input type="submit" value="Rent A Car Now" class="btn btn-secondary py-3 px-4">
-			            </div>
-			    			</form>
+                    <div class="form-group mr-2">
+                      <label for="" class="label">Pick-up date</label>
+                      <input type="date" name="pick_up_date" class="form-control col-md-12" placeholder="Date">
+                      <small id="pickUpDateError" class="text-danger"></small>
+                    </div>
+                    <div class="form-group ml-2">
+                      <label for="" class="label">Drop-off date</label>
+                      <input type="date" name="drop_off_date" class="form-control col-md-12" placeholder="Date">
+                      <small id="dropOffDateError" class="text-danger"></small>
+                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <div class="form-group mr-2">
+                      <label for="" class="label">Min Price</label>
+                      <input type="text" name="min_price" class="form-control col-md-12" placeholder="min price">
+                      <small id="minPriceError" class="text-danger"></small>
+                    </div>
+                    <div class="form-group ml-2">
+                      <label for="" class="label">Max Price</label>
+                      <input type="text" name="max_price" class="form-control col-md-12" placeholder="max price">
+                      <small id="maxPriceError" class="text-danger"></small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="" class="label">Pick-up time</label>
+                    <input type="text" name="time_pick" class="form-control" id="time_pick" placeholder="Time">
+                    <small id="pickUpTimeError" class="text-danger"></small>
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" value="Rent A Car Now" class="btn btn-secondary py-3 px-4">
+                  </div>
+                </form>
 
 	  					</div>
 	  					<div class="col-md-8 d-flex align-items-center">
@@ -462,4 +469,75 @@
         </div>
     	</div>
     </section>	
+
+    <script>
+      document.getElementById('carForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+    
+        // Clear previous error messages
+        var errorElements = document.querySelectorAll('.text-danger');
+        errorElements.forEach(function(errorElement) {
+          errorElement.textContent = '';
+        });
+    
+        // Retrieve form field values
+        var pickUpLocation = document.getElementsByName('pick_up_location')[0].value;
+        var dropOffLocation = document.getElementsByName('drop_off_location')[0].value;
+        var pickUpDate = document.getElementsByName('pick_up_date')[0].value;
+        var dropOffDate = document.getElementsByName('drop_off_date')[0].value;
+        var minPrice = document.getElementsByName('min_price')[0].value;
+        var maxPrice = document.getElementsByName('max_price')[0].value;
+        var pickUpTime = document.getElementsByName('time_pick')[0].value;
+    
+        // Validate form fields
+        var isValid = true;
+    
+        if (pickUpLocation === '') {
+          document.getElementById('pickUpLocationError').textContent = 'Please enter the pick-up location';
+          isValid = false;
+        }
+    
+        if (dropOffLocation === '') {
+          document.getElementById('dropOffLocationError').textContent = 'Please enter the drop-off location';
+          isValid = false;
+        }
+    
+        if (pickUpDate === '') {
+          document.getElementById('pickUpDateError').textContent = 'Please enter the pick-up date';
+          isValid = false;
+        }
+    
+        if (dropOffDate === '') {
+          document.getElementById('dropOffDateError').textContent = 'Please enter the drop-off date';
+          isValid = false;
+        }
+    
+        if (minPrice === '') {
+          document.getElementById('minPriceError').textContent = 'Please enter the min price';
+          isValid = false;
+        }
+    
+        if (maxPrice === '') {
+          document.getElementById('maxPriceError').textContent = 'Please enter the max price';
+          isValid = false;
+        }
+    
+        if (pickUpTime === '') {
+          document.getElementById('pickUpTimeError').textContent = 'Please enter the pick-up time';
+          isValid = false;
+        }
+    
+        // Check if min price is smaller than max price
+        if (parseFloat(minPrice) >= parseFloat(maxPrice)) {
+          document.getElementById('minPriceError').textContent = 'Min price should be smaller than max price';
+          isValid = false;
+        }
+    
+        // Form is valid, perform further actions or submit the form
+        if (isValid) {
+          this.submit();
+        }
+      });
+    </script>
+
 @endsection

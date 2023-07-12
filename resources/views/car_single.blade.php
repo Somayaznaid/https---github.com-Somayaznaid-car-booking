@@ -235,76 +235,86 @@
 	
 
 
-<!-- Create the booking form -->
-<form id="bookingForm" method="POST" action="{{ route('bookings.storeBooking') }}" class="bg-light p-5 contact-form">
-  @csrf
+              <form id="bookingForm" method="POST" action="{{ route('bookings.storeBooking') }}" class="bg-light p-5 contact-form" onsubmit="validateForm(event)">
+                @csrf
+                <!-- Booking form inputs -->
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control mr-3" name="start_location" id="start_location" placeholder="Picking Up Location">
+                  <span class="error-message" id="startLocationError"></span>
+                  <input type="text" class="form-control" name="end_location" id="end_location" placeholder="Dropping off Location">
+                  <span class="error-message" id="endLocationError"></span>
+                </div>
+              
+                <div class="form-group d-flex">
+                  <input type="date" class="form-control mr-3" name="start_date" id="start_date" onchange="calculateBookingDetails()">
+                  <span class="error-message" id="startDateError"></span>
+                  <input type="date" class="form-control" name="end_date" id="end_date" onchange="calculateBookingDetails()">
+                  <span class="error-message" id="endDateError"></span>
+                </div>
+              
+                <div class="form-group d-flex">
+                  <input type="time" class="form-control mr-3" name="start_hour" id="start_hour">
+                  <span class="error-message" id="startHourError"></span>
+                </div>
+              
+                <div>
+                  <p class="form-group d-flex" id="booking_period"></p>
+                  <p class="form-group d-flex" id="booking_cost"></p>
+                </div>
+              
+                <div class="form-group">
+                  <input type="hidden" class="form-control" name="lessor_id" value="{{$car->lessor_id}}">
+                  <input type="hidden" class="form-control" name="car_id" value="{{$car->id}}">
+                  <input type="hidden" class="form-control" name="car_price" value="{{$car->price}}">
+                </div>
+              
 
-  <!-- Booking form inputs -->
-  <div class="form-group d-flex">
-    <input type="text" class="form-control mr-3" name="start_location" placeholder="Picking Up Location" >
-    <input type="text" class="form-control" name="end_location" placeholder="Dropping off Location" >
-  </div>
-
-  <div class="form-group d-flex">
-    <input type="date" class="form-control mr-3" name="start_date" id="start_date" >
-    <input type="date" class="form-control" name="end_date" id="end_date" >
-  </div>
-
-  <div class="form-group d-flex">
-    <input type="time" class="form-control mr-3" name="start_hour" id="start_hour" >
-  </div>
-
-  <div>
-    <p class="form-group d-flex" id="booking_period"></p>
-    <p class="form-group d-flex" id="booking_cost"></p>
-  </div>
-
-  <div class="form-group">
-    <input type="hidden" class="form-control" name="lessor_id" value="{{$car->lessor_id}}">
-    <input type="hidden" class="form-control" name="car_id" value="{{$car->id}}">
-    <input type="hidden" class="form-control" name="car_price" value="{{$car->price}}">
-  </div>
-
-  <div class="form-group">
-    <!-- <input type="submit" value="Book Now" class="btn btn-primary py-3 px-5"  id="bookNowBtn"> -->
-
-	<!-- Add a button to trigger the popup -->
-	 <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Book Now</button>
-
-	
-<!-- Create the popup modal -->
-<div id="paymentModal" class="modal">
-  <div class="modal-content">
-    <span id="closeBtn" class="close">&times;</span>
-    <h2>Payment Information</h2>
-    <p>Enter your payment details here:</p>
-    <!-- Add payment form inputs here -->
-    <form id="paymentForm">
-      <!-- Payment form inputs -->
-      <div class="form-group">
-        <input type="text" class="form-control" name="cardNumber" placeholder="Card Number" required>
-      </div>
-      <!-- Add more payment form inputs as needed -->
-      <button type="submit" class="btn btn-primary">Submit Payment</button>
-    </form>
-  </div>
-</div>
+                <p>Payment Method:</p>
+                    
+                <!-- Payment form inputs -->
+                <div class="form-group">
+                  <input type="checkbox" name="paymentMethod" id="cardCheckbox" onclick="toggleCardInputs()">
+                  <label for="cardCheckbox">Using Card</label>
+                  <input type="checkbox" name="paymentMethod" id="cashCheckbox" onclick="toggleUserNumberInput()">
+                  <label for="cashCheckbox">Cash</label>
+          
+                  <div id="cardInputs" style="display: none;">
+                    <input type="text" class="form-control col-4" name="cardNumber" placeholder="Card Number">
+                    <input type="text" class="form-control col-4" name="cardHolder" placeholder="Card Holder">
+                    <input type="text" class="form-control col-4" name="cvc" placeholder="CVC">
+                    <input type="date" class="form-control col-4" name="exp_day" placeholder="Expiration Day">
+                  </div>
+          
+                  <div id="userNumberInput" style="display: none;">
+                    <input type="text" class="form-control col-4" name="user_number" placeholder="User Number">
+                  </div>
+                </div>             
+          
+                <div class="form-group">
+                  <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Book Now</button>
+                </div>
+              
+              
+                    
+                    
+                <div class="form-group">
+                  @if (Session::has('success'))
+                  <div class="alert alert-success" role="alert">
+                    {{ Session::get('success') }}
+                  </div>
+                  @endif
+                </div>
+              </form>
+              
 
 
-
-  </div>
-
-  <div class="form-group">
+	 {{-- <div class="form-group">
     @if (Session::has('success'))
     <div class="alert alert-success" role="alert">
       {{ Session::get('success') }}
     </div>
     @endif
-  </div>
-  
-</form>
-
-	 
+  </div> --}}
 
 
             </div>
@@ -511,83 +521,165 @@
 
    
 
-	<script>
- 
+    <script>
 
-const bookNowBtn = document.getElementById('bookNowBtn');
-const paymentModal = document.getElementById('paymentModal');
-const closeBtn = document.getElementById('closeBtn');
-const paymentForm = document.getElementById('paymentForm');
-const startDateInput = document.getElementById('start_date');
-const endDateInput = document.getElementById('end_date');
-const bookingPeriodElement = document.getElementById('booking_period');
-const bookingCostElement = document.getElementById('booking_cost');
-const carPrice = parseFloat({{ $car->price }}); // Retrieve car price from PHP variable
+function toggleCardInputs() {
+    var cardInputs = document.getElementById("cardInputs");
+    var userNumberInput = document.getElementById("userNumberInput");
+    var cardCheckbox = document.getElementById("cardCheckbox");
 
-// Add event listeners to show/hide the payment modal and calculate booking details
-bookNowBtn.addEventListener('click', openPaymentModal);
-closeBtn.addEventListener('click', closePaymentModal);
-startDateInput.addEventListener('change', calculateBookingDetails);
-endDateInput.addEventListener('change', calculateBookingDetails);
+    if (cardCheckbox.checked) {
+      cardInputs.style.display = "block";
+      userNumberInput.style.display = "none";
+    } else {
+      cardInputs.style.display = "none";
+    }
+  }
 
-function openPaymentModal() {
-  paymentModal.style.display = 'block'; // Show the payment modal
+  function toggleUserNumberInput() {
+    var cardInputs = document.getElementById("cardInputs");
+    var userNumberInput = document.getElementById("userNumberInput");
+    var cashCheckbox = document.getElementById("cashCheckbox");
+
+    if (cashCheckbox.checked) {
+      cardInputs.style.display = "none";
+      userNumberInput.style.display = "block";
+    } else {
+      userNumberInput.style.display = "none";
+    }
+  }
+
+  function validateForm(event) {
+  var startLocationInput = document.getElementById("start_location");
+  var endLocationInput = document.getElementById("end_location");
+  var startDateInput = document.getElementById("start_date");
+  var endDateInput = document.getElementById("end_date");
+  var startHourInput = document.getElementById("start_hour");
+  var cardCheckbox = document.getElementById("cardCheckbox");
+  var cardNumberInput = document.getElementsByName("cardNumber")[0];
+  var cardHolderInput = document.getElementsByName("cardHolder")[0];
+  var cvcInput = document.getElementsByName("cvc")[0];
+  var userNumberInput = document.getElementsByName("user_number")[0];
+
+  // Reset error messages
+  var errorMessages = document.getElementsByClassName("error-message");
+  for (var i = 0; i < errorMessages.length; i++) {
+    errorMessages[i].textContent = "";
+  }
+
+  // Validate start location
+  if (startLocationInput.value.trim() === "") {
+    document.getElementById("startLocationError").textContent = "Start location is required.";
+    event.preventDefault();
+    return;
+  }
+
+  // Validate end location
+  if (endLocationInput.value.trim() === "") {
+    document.getElementById("endLocationError").textContent = "End location is required.";
+    event.preventDefault();
+    return;
+  }
+
+  // Validate start date
+  if (startDateInput.value.trim() === "") {
+    document.getElementById("startDateError").textContent = "Start date is required.";
+    event.preventDefault();
+    return;
+  }
+
+  // Validate end date
+  if (endDateInput.value.trim() === "") {
+    document.getElementById("endDateError").textContent = "End date is required.";
+    event.preventDefault();
+    return;
+  }
+
+  // Validate start hour
+  if (startHourInput.value.trim() === "") {
+    document.getElementById("startHourError").textContent = "Start hour is required.";
+    event.preventDefault();
+    return;
+  }
+
+  // Validate payment method
+  if (cardCheckbox.checked) {
+    // Card payment selected
+    if (cardNumberInput.value.trim() === "") {
+      document.getElementById("cardInputs").style.display = "block";
+      document.getElementById("cardNumberError").textContent = "Card number is required.";
+      event.preventDefault();
+      return;
+    }
+
+    if (cardHolderInput.value.trim() === "") {
+      document.getElementById("cardInputs").style.display = "block";
+      document.getElementById("cardHolderError").textContent = "Card holder is required.";
+      event.preventDefault();
+      return;
+    }
+
+    if (cvcInput.value.trim() === "") {
+      document.getElementById("cardInputs").style.display = "block";
+      document.getElementById("cvcError").textContent = "CVC is required.";
+      event.preventDefault();
+      return;
+    }
+  } else {
+    // Cash payment selected
+    if (userNumberInput.value.trim() === "") {
+      document.getElementById("userNumberInput").style.display = "block";
+      document.getElementById("userNumberError").textContent = "User number is required.";
+      event.preventDefault();
+      return;
+    }
+  }
+
+  // Form is valid, continue with submission
 }
 
-function closePaymentModal() {
-  paymentModal.style.display = 'none'; // Hide the payment modal
-}
 
 function calculateBookingDetails() {
-  const startDate = new Date(startDateInput.value);
-  const endDate = new Date(endDateInput.value);
+  var startDateInput = document.getElementById("start_date");
+  var endDateInput = document.getElementById("end_date");
+  var bookingPeriodElement = document.getElementById("booking_period");
+  var bookingCostElement = document.getElementById("booking_cost");
+  var carPrice = parseFloat(document.getElementsByName("car_price")[0].value);
+
+  var startDate = new Date(startDateInput.value);
+  var endDate = new Date(endDateInput.value);
 
   if (startDate && endDate && startDate <= endDate) {
-    const bookingPeriod = calculateBookingPeriod(startDate, endDate);
-    const bookingCost = calculateBookingCost(bookingPeriod, carPrice);
+    var bookingPeriod = calculateBookingPeriod(startDate, endDate);
+    var bookingCost = calculateBookingCost(bookingPeriod, carPrice);
 
-    bookingPeriodElement.textContent = `Booking Period: ${bookingPeriod} day(s)`;
-    bookingCostElement.textContent = `Booking Cost: $${bookingCost.toFixed(2)}`;
+    bookingPeriodElement.textContent = "Booking Period: " + bookingPeriod + " day(s)";
+    bookingCostElement.textContent = "Booking Cost: $" + bookingCost.toFixed(2);
   } else {
-    bookingPeriodElement.textContent = '';
-    bookingCostElement.textContent = '';
+    bookingPeriodElement.textContent = "";
+    bookingCostElement.textContent = "";
   }
 }
 
 function calculateBookingPeriod(startDate, endDate) {
-  const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
-  return Math.round(Math.abs((startDate - endDate) / oneDay)) + 1; // Add 1 to include both start and end dates
+  var oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
+  return Math.round(Math.abs(startDate - endDate) / oneDay) + 1; // Add 1 to include both start and end dates
 }
 
 function calculateBookingCost(bookingPeriod, carPrice) {
   return bookingPeriod * carPrice;
 }
 
-// Add event listener to handle payment form submission
-paymentForm.addEventListener('submit', submitPayment);
-
-function submitPayment(event) {
-  event.preventDefault(); // Prevent form submission (for demonstration purposes)
-
-  // Perform your payment processing logic here
-  // For example, you can send an AJAX request to your payment API
-
-  // Simulate a successful payment
-  const paymentSuccess = true;
-
-  if (paymentSuccess) {
-    // Submit the booking form
-    document.getElementById('bookingForm').submit();
-  } else {
-    alert('Payment failed. Please try again.');
-  }
-
-  // After successful payment submission, you can close the modal
-  closePaymentModal();
-}
 
 
-</script>
+
+  
+
+
+
+      </script>
+      
+      
 
 
     

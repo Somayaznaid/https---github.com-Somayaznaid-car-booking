@@ -18,38 +18,27 @@
 		<section class="ftco-section bg-light">
     	<div class="container">
     		<div class="row">
-				@foreach($cars as $car)
-				<div class="item">
+				<div class="col-md-4">
+					@foreach($cars as $car)
 					<div class="car-wrap rounded ftco-animate">
-		<div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $cars['img_1']) }}');">
-
-
+						<div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $car['img_1']) }}');">
 						</div>
 						<div class="text">
-		 <h2 class="mb-0"><a href="#">{{ $cars['name']  }}</a></h2>
-
+							<h2 class="mb-0"><a href="car-single.html">{{ $car['name'] }}</a></h2>
 							<div class="d-flex mb-3">
-			<span class="cat">{{  $cars['transmission']  }}</span>
-
-			<p class="price ml-auto">JOD{{  $cars['price']  }} <span>/day</span></p>
-
-			</div>
-
-			  <p class="d-flex mb-0 d-block">
-				 <a href="{{  route('car_single', ['id' => $cars['id']])  }}" class="btn btn-secondary py-2 ml-1">Book now</a>
-			  </p>
-
+								<span class="cat">{{ $car['transmission'] }}</span>
+								<p class="price ml-auto">${{ $car['price'] }} <span>/day</span></p>
+							</div>
+							<p class="d-flex mb-0 d-block">
+								<a href="{{ route('car_single', ['id' => $car['id']]) }}" class="btn btn-secondary py-2 ml-1">Book now</a>
+							</p>
 						</div>
 					</div>
+					@endforeach
 				</div>
+			</div>
+			
 
-				@endforeach
-    			</div>
-    			
-    			
-    		
-    			
-    		</div>
     		<div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">

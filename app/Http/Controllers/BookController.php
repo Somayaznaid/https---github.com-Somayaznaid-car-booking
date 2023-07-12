@@ -122,8 +122,15 @@ public function rating(Request $request , $id){
     return  redirect()->back();
 }
 
-    public function showAllCars(){
+    public function showAllCars( ){
+        
         $cars= Car::all();
-        return view('car')->with('cars', $cars);
+        return view('car' , compact('cars'));
+    }
+
+    public function showBookDay(string $id){
+        
+        $book= Booking::find()->where('');
+        return view('car_single' , compact('book'));
     }
 }
