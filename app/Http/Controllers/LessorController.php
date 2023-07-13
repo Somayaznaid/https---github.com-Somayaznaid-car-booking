@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LessorController extends Controller
 {
@@ -36,7 +38,7 @@ class LessorController extends Controller
     $car->description = $request->input('description');
     $car->mileage = $request->input('mileage');
     $car->mileage = $request->input('city'); 
-    $car->mileage = $request->input('price');
+    $car->price = $request->input('price');
     $car->transmission = $request->input('transmission');
     $car->seats = $request->input('seats');
     $car->luggage = $request->input('luggage');
@@ -60,8 +62,8 @@ class LessorController extends Controller
     $car->user_id = null;
 
     $car->save();
-
-    return redirect('product')->with('success', 'Car added successfully!');
+    Session::flash('add_product_found');
+    return redirect('product')->with('add_product_found', 'Car added successfully!');
 }
 
 private function storeImage($file)
@@ -75,15 +77,106 @@ private function storeImage($file)
     public function showCars(){
         
         $car = Car::all();
+        
         return view('index' , ['car' =>$car]);
     }
 
-    public function showCarsLessor(){
-        $id= Auth::lessor()->id;
-        // dd($id);
-        // $lessor = Lessor::where('id' , $id);
-        $car = Car::find($id);
-        return view('product' , ['car' =>$car]);
-    }
+    public function showCarsLessor(Request $request)
+{
+    $id = Auth::id(); 
+    $cars = Car::where('lessor_id', $id)->get();
+    Session::flash('lessor_found');
 
+
+    $booking = Booking::where('lessor_id' , Auth::id())->get();
+
+
+    return view('product_lessor', compact('cars','booking')  );
+}
+
+
+public function deleteProduct(string $id)
+{
+    $data = Car::find($id);
+
+   
+    if (Booking::where('car_id' , $id)->exists()) {
+        
+        return redirect('/product')->with('warning', 'Deleting this car is not allowed as it has associated bookings, and removing it would compromise the accuracy of the booking records.');
+
+    } else {
+
+        $data->delete();
+        return redirect('/product')->with('success', 'Car deleted successfully.');
+    }
+}
+
+  public function showCarEdit(string $id){
+     
+      $car = Car::find($id);
+      
+      return view('edit_product', compact('car'));
+  }
+
+  public function editCar(Request $request)
+  {
+      // Validate the incoming request using the CarRequest or custom validation logic
+    //   dd("car");
+      $validated = $request->validate([
+          'name' => 'required',
+          'price' => 'required',
+          'city' => 'required',
+          'description' => 'required',
+          'mileage' => 'required',
+          'transmission' => 'required',
+          'seats' => 'required',
+          'luggage' => 'required',
+          'fuel' => 'required',
+          'year_of_manufacture' => 'required',
+      ]);
+  
+      // Create a new car instance and assign the necessary attributes
+  
+      $car = Car::find($request->input('car_id'));
+
+      $car->name = $request->input('name');
+      $car->description = $request->input('description');
+      $car->mileage = $request->input('mileage');
+      $car->city = $request->input('city'); 
+      $car->price = $request->input('price');
+      $car->transmission = $request->input('transmission');
+      $car->seats = $request->input('seats');
+      $car->luggage = $request->input('luggage');
+      $car->fuel = $request->input('fuel');
+
+
+      if($request->input('img_1') || $request->input('img_2')|| $request->input('img_3') ){
+      $img_1 = $request->file('img_1'); // Updated input name to 'img'
+      $imagePath = $this->storeImage($img_1);
+      $car->img_1 = $imagePath;
+  
+      $img_2 = $request->file('img_2'); // Updated input name to 'img'
+      $imagePath = $this->storeImage($img_2);
+      $car->img_2 = $imagePath;
+  
+      $img_3 = $request->file('img_3'); // Updated input name to 'img'
+      $imagePath = $this->storeImage($img_3);
+      $car->img_3 = $imagePath;
+      }
+  
+      $car->year_of_manufacture = $request->input('year_of_manufacture');
+      
+      
+    
+      $car->update();
+      Session::flash('edit_product_found');
+      return redirect('product')->with('edit_product_found', 'Car edit successfully!');
+  }
+
+
+//   public function showBooking(){
+        
+//     $booking =  Booking::where('lessor_id' , Auth::id());
+//     return view('/product_lessor' , ['booking' =>$booking]);
+//   }
 }

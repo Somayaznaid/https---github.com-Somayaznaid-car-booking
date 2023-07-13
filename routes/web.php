@@ -140,10 +140,18 @@ Route::get('/product', function () {
     return view('product_lessor');
 });
 
+Route::get('/edit_product', function () {
+    return view('edit_product');
+});
+
 Route::match(['GET', 'POST'], 'add_product_lessor', [LessorController::class, 'addCar'])->name('addCar');
 
 Route::get('index' , [LessorController::class , 'showCars'])->name('showCars');
 
-Route::get('product' , [LessorController::class , 'showCarsLessor'])->name('showCarsLessor');
+Route::get('/product' , [LessorController::class , 'showCarsLessor'])->name('showCarsLessor');
 
+Route::get('product/delete/{id}' , [LessorController::class , 'deleteProduct'])->name('deleteProduct');
 
+Route::get('product/edit/{id}' , [LessorController::class , 'showCarEdit'])->name('showCarEdit');
+
+Route::post('product/edit' , [LessorController::class , 'editCar'])->name('editCar');

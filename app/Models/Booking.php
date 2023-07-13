@@ -22,7 +22,8 @@ class Booking extends Model
         'end_hour',
         'lessor_id',
         'user_id',
-        'car_id'
+        'car_id' ,
+        'booking_cost',
     ];
 
     protected $table = 'booking';

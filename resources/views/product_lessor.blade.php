@@ -3,19 +3,45 @@
 @section("content")
 
 
-<div class="container mt-5">
+<div class="container mt-5 col-sm-12">
       <div class=" ">
         <div class="col-sm-12 col-md-12 m-1">
           <div class="tm-bg-primary-dark tm-block tm-block-products">
             <div class="tm-product-table-container">
               <h2 class="tm-site-title m-2">Your Products</h2>
+              <div class="form-group">
+                @if (Session::has('add_product_found'))
+                <div class="alert alert-success" role="alert">
+                  {{ Session::get('add_product_found') }}
+                </div>
+                @endif
+
+                @if (Session::has('success'))
+                <div class="alert alert-success" role="alert">
+                  {{ Session::get('success') }}
+                </div>
+                @endif
+
+                @if (Session::has('warning'))
+                <div class="alert  alert-danger" role="alert">
+                  {{ Session::get('warning') }}
+                </div>
+                @endif
+
+
+                @if (Session::has('edit_product_found'))
+                <div class="alert  alert-success" role="alert">
+                  {{ Session::get('edit_product_found') }}
+                </div>
+                @endif
+                
+              </div>
               <table class="table table-hover tm-table-small tm-product-table">
                 <thead>
                   <tr>
 
                     <th scope="col">&nbsp;</th>
                     <th scope="col">PRODUCT NAME</th>
-                    <th scope="col">description </th>
                     <th scope="col">price</th>
                     <th scope="col">mileage</th>
                     <th scope="col">transmission</th>
@@ -23,33 +49,57 @@
                     <th scope="col">luggage</th>
                     <th scope="col">fuel</th>
                     <th scope="col">year_of_manufacture</th>
+                    <th scope="col">description </th>
+                    <th scope="col">&nbsp;</th>
                     <th scope="col">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @if (Session::has('lessor_found'))
+                  @foreach ($cars as $car)
+                    
+                  
                   <tr>
                     
-                    <td class="tm-product-name">Lorem Ipsum Product 1</td>
-                    <td>1,450</td>
-                    <td>550</td>
-                    <td>28 March 2019</td>
+                    <td class="tm-product-name"><img src="{{ asset('images/' . $car->img_1) }}" alt="car" width="50px" ></td>
+                    <td>{{$car->name}}</td>
+                    <td>{{$car->price}}$</td>
+                    <td>{{$car->mileage}}</td>
+                    <td>{{$car->transmission}}</td>
+                    <td>{{$car->seats}}</td>
+                    <td>{{$car->luggage}}</td>
+                    <td>{{$car->fuel}}</td>
+                    <td>{{$car->year_of_manufacture}}</td>
+                    <td>{{$car->description}}</td>
+                    
                     <td>
-                      <a href="#" class="tm-product-delete-link">
+                      <a href="product/delete/ {{$car->id}}" class="tm-product-delete-link" onclick="return confirmDeletion()">
                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </a>
+                    </td> 
+
+                    <td>
+                      <a href="product/edit/ {{$car->id}}" class="tm-product-delete-link">
+                        <i class='fa fa-edit' style='color: white'></i>
                       </a>
                     </td>
                   </tr>
-                
+                  @endforeach
+                  @else
+                       
+                  <td class="tm-product-name align-middle" colspan="5">  NO PRODUCT ADD YET</td>
+
+                  
+                 
+                  @endif
                 </tbody>
               </table>
             </div>
             <!-- table container -->
             <a
-              href="add-product.html"
+              href="{{ url('add_product') }}"
               class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
-            <button class="btn btn-primary btn-block text-uppercase">
-              Delete selected products
-            </button>
+              
           </div>
         </div>
 
@@ -167,39 +217,45 @@
                 <table class="table table-hover tm-table-small tm-product-table">
                   <thead>
                     <tr>
-                      <th scope="col">&nbsp;</th>
+                      
                       <th scope="col">PRODUCT NAME</th>
-                      <th scope="col">UNIT SOLD</th>
-                      <th scope="col">IN STOCK</th>
-                      <th scope="col">EXPIRE DATE</th>
+                      <th scope="col">BOOKING COST</th>
+                      <th scope="col">Start DATE</th>
+                      <th scope="col">End DATE</th>
+                      <th scope="col">START LOCATION</th>
+                      <th scope="col">END LOCATION</th>
+                      <th scope="col">START HOUR</th>
                       <th scope="col">&nbsp;</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($booking as $booking)
                     <tr>
-                      {{-- <th scope="row"><input type="checkbox" /></th> --}}
-                      <td class="tm-product-name">Lorem Ipsum Product 1</td>
-                      <td>1,450</td>
-                      <td>550</td>
-                      <td>28 March 2019</td>
-                      <td>
-                        <a href="#" class="tm-product-delete-link">
-                          <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                        </a>
-                      </td>
+                     
+                      <td class="tm-product-name">{{ $car->name}}</td>
+                      <td>{{$booking->booking_cost}}</td>
+                      <td>{{$booking->start_date}}</td>
+                      <td>{{$booking->end_date}}</td>
+                      <td>{{$booking->start_location}}</td>
+                      <td>{{$booking->end_location}}</td> 
+                      <td>{{$booking->start_hour}}</td> 
+                      
+                      
+                      
                     </tr>
-                    
+                     @endforeach
                    
                   </tbody>
                 </table>
               </div>
               <!-- table container -->
-              <a
+              {{-- <a
                 href="add-product.html"
                 class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
               <button class="btn btn-primary btn-block text-uppercase">
                 Delete selected products
-              </button>
+              </button> --}}
             </div>
           </div>
       
@@ -217,4 +273,14 @@
       });
     </script>
 
+
+<script>
+  function confirmDeletion() {
+      if (confirm('Are you sure you want to delete this car?')) {
+          document.getElementById('delete-car-form').submit();
+      } else {
+          alert('Car deletion canceled.');
+      }
+  }
+</script>
 @endsection
