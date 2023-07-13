@@ -144,4 +144,6 @@ Route::match(['GET', 'POST'], 'add_product_lessor', [LessorController::class, 'a
 
 Route::get('index' , [LessorController::class , 'showCars'])->name('showCars');
 
+Route::get('product' , [LessorController::class , 'showCarsLessor'])->name('showCarsLessor');
+
 

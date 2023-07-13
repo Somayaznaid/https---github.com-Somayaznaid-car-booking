@@ -133,7 +133,7 @@ class SignController extends Controller
        
         Auth::login($lessor);  // Log in the lessor
         $request->session()->regenerate();
-        return redirect()->intended('/add_product');
+        return redirect()->intended('/product');
     } else if ($admin && Hash::check($request->password, $admin->password)) {
         // Authentication successful
         Auth::login($admin);  // Log in the admin

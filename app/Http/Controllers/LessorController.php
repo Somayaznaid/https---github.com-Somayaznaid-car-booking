@@ -61,7 +61,7 @@ class LessorController extends Controller
 
     $car->save();
 
-    return redirect('add_product')->with('success', 'Car added successfully!');
+    return redirect('product')->with('success', 'Car added successfully!');
 }
 
 private function storeImage($file)
@@ -76,6 +76,14 @@ private function storeImage($file)
         
         $car = Car::all();
         return view('index' , ['car' =>$car]);
+    }
+
+    public function showCarsLessor(){
+        $id= Auth::lessor()->id;
+        // dd($id);
+        // $lessor = Lessor::where('id' , $id);
+        $car = Car::find($id);
+        return view('product' , ['car' =>$car]);
     }
 
 }

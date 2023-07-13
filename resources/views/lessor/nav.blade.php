@@ -56,7 +56,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="products.html">
+                            <a class="nav-link" href="{{ url('product') }}">
                                 <i class="fas fa-shopping-cart"></i>
                                 Products
                             </a>
@@ -84,11 +84,20 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link d-block" href="login.html">
-                                Admin, <b>Logout</b>
+                        {{-- <li class="nav-item">
+                            <a class="nav-link d-block" href="{{ route('logout') }}">
+                                Lessor, <b>Logout</b>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                      </form>
                             </a>
-                        </li>
+                        </li> --}}
+                        <li class="nav-item">
+                            <a href="{{ route('logout') }}" class="nav-link d-block" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                             @csrf
+                               </form>
+                          </li>
                     </ul>
                 </div>
             </div>
