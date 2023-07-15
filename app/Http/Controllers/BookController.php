@@ -33,8 +33,6 @@ class BookController extends Controller
         'end_date' => 'required|date',
         'start_hour' => 'required|date_format:H:i',
         
-        // 'end_hour' => 'required|date_format:H:i',
-        // 'booking_cost' => 'required|numeric', // Add validation for booking_cost
     ]);
 
     // dd($validatedData);
@@ -86,8 +84,8 @@ public function showAvailableCars(Request $request)
     $maxPrice = $request->input('max_price');
 
     // Perform filtering logic to get the available cars based on the user's input
-    $bookingIds = Booking::whereNot('start_date', '<=', $dropOffDate) //find first index
-                        ->where('end_date', '>=', $pickUpDate)
+    $bookingIds = Booking::whereNot('start_date', '>=', $dropOffDate) //find first index
+                        ->where('end_date','<=', $pickUpDate)
                         ->pluck('car_id');
     
     if ($bookingIds->isEmpty()) {
@@ -100,10 +98,12 @@ public function showAvailableCars(Request $request)
                             ->get();        
     }
     
+     
     if ($availableCars->isEmpty()) {
         // No cars available for the selected dates and price range
         Session::flash('found', false);
     } else {
+        
         Session::flash('found', true);
     }
     
@@ -111,15 +111,16 @@ public function showAvailableCars(Request $request)
 }
 
 
-public function rating(Request $request , $id){
-   
-    $rating= new Rating();
+public function rating(Request $request, $id)
+{
+    $rating = new Rating();
     $rating->comments = $request->input("comments");
-    $rating->star_rating = 3;
+    $rating->star_rating = $request->input("star_rating"); // Retrieve the rating value from the request
     $rating->car_id = $request->input('car_id');
     $rating->user_id = Auth::id();
     $rating->save();
-    return  redirect()->back();
+
+    return redirect()->back();
 }
 
     public function showAllCars( ){

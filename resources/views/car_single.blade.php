@@ -40,6 +40,12 @@
 }
 
    </style>
+ {{-- js lib for rating --}}
+ <link rel="stylesheet" href="{{ asset('path/to/jquery.rateyo.min.css') }}">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('images/bg_3.jpg') }}');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
@@ -268,6 +274,7 @@
                   <input type="hidden" class="form-control" name="car_price" value="{{$car->price}}">
                 </div>
               
+                @if (Auth::check())
 
                 <p>Payment Method:</p>
                     
@@ -293,7 +300,11 @@
                 <div class="form-group">
                   <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Book Now</button>
                 </div>
-              
+                @else
+                <div class="alert alert-danger" role="alert">
+                     <p> Need to Log In to Complete YOUR Car Book! </p>
+                </div>
+                @endif
               
                     
                     
@@ -474,28 +485,33 @@
                                 <div class="col-md-12 block-9 mb-md-5">
                     
                     <!-- Create the booking form -->
-                    <form id="bookingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
+                    <form id="ratingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
                       @csrf
-                    
+                  
+                      <input type="hidden" name="star_rating" id="starRatingInput" value="">
+
+                      <div class="form-group">
+                          <input type="hidden" name="star_rating" id="starRatingInput" value="">
+                      </div>
+                  
                       <!-- Booking form inputs -->
                       <div class="form-group d-flex">
-                        <input type="text" class="form-control mr-3" name="start_location" placeholder="Picking Up Location" >
+                          <div id="starRating"></div>
                       </div>
-                    
+                  
                       <div class="form-group d-flex">
-                        <textarea name="comments" id="" cols="30" rows="7" class="form-control mr-3" placeholder="Note..."></textarea>
+                          <textarea name="comments" id="" cols="30" rows="7" class="form-control mr-3" placeholder="Note..."></textarea>
                       </div>
-                    
+                  
                       <div class="form-group">
-                        <input type="hidden" class="form-control" name="car_id" value="{{ request()->route('id') }}">
+                          <input type="hidden" class="form-control" name="car_id" value="{{ request()->route('id') }}">
                       </div>
-                    
+                  
                       <div class="form-group">
-                      <!-- Add a button to trigger the popup -->
-                       <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Rate Car</button>
+                          <!-- Add a button to trigger the popup -->
+                          <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Rate Car</button>
                       </div>
-                   
-                    </form>
+                  </form>
                     
                        
                     
@@ -520,8 +536,18 @@
     </section>
 
    
-
     <script>
+    $(document).ready(function() {
+        $("#ratingForm").rateYo({
+            rating: 0, // Initial rating value
+            starWidth: "20px", // Adjust the star size as needed
+            fullStar: true, // Enable full stars
+            onSet: function(rating, rateYoInstance) {
+                $("#starRatingInput").val(rating); // Set the selected rating value in the hidden input field
+            }
+        });
+    });
+    
 
 function toggleCardInputs() {
     var cardInputs = document.getElementById("cardInputs");

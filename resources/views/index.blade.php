@@ -36,6 +36,11 @@
                   @csrf
                   <h2>Make your trip</h2>
                   <div class="form-group">
+                    <label for="" class="label">Country</label>
+                    <input type="text" name="country" class="form-control" placeholder="Country">
+                    <small id="Error" class="text-danger"></small>
+                  </div>
+                  <div class="form-group">
                     <label for="" class="label">Pick-up location</label>
                     <input type="text" name="pick_up_location" class="form-control" placeholder="City, Airport, Station, etc">
                     <small id="pickUpLocationError" class="text-danger"></small>
@@ -109,7 +114,7 @@
 					            </div>      
 					          </div>
 					        </div>
-					        <p><a href="#" class="btn btn-primary py-3 px-4">Reserve Your Perfect Car</a></p>
+					        <p><a href="#sale" class="btn btn-primary py-3 px-4">OR Sale Your Car</a></p>
 	  						</div>
 	  					</div>
 	  				</div>
@@ -180,10 +185,6 @@
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
              
-                  
-             
-                  
-             
 						@foreach($car as $cars)
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
@@ -192,7 +193,7 @@
 
 		    					</div>
 		    					<div class="text">
-                 <h2 class="mb-0"><a href="#">{{ $cars['name']  }}</a></h2>
+                 <h2 class="mb-0"> <a href="#">{{ $cars['name']  }}</a> </h2>
 
 		    						<div class="d-flex mb-3">
                     <span class="cat">{{  $cars['transmission']  }}</span>
@@ -216,6 +217,60 @@
     				</div>
     			</div>
     		</div>
+
+        
+    	</div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt bg-light" id="sale">
+      @if(Session::has('found'))
+
+      @else
+    	<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          	<span class="subheading">What we offer</span>
+            <h2 class="mb-2">Sale Section</h2>
+          </div>
+        </div>
+    		<div class="row">
+    			<div class="col-md-12">
+    				<div class="carousel-car owl-carousel">
+             
+						@foreach($car as $cars)
+    					<div class="item">
+    						<div class="car-wrap rounded ftco-animate">
+                <div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $cars['img_1']) }}');">
+
+
+		    					</div>
+		    					<div class="text">
+                 <h2 class="mb-0"> <a href="#">{{ $cars['name']  }}</a> </h2>
+
+		    						<div class="d-flex mb-3">
+                    <span class="cat">{{  $cars['transmission']  }}</span>
+
+                    <p class="price ml-auto">JOD{{  $cars['price']  }} <span>/day</span></p>
+
+                    </div>
+
+                      <p class="d-flex mb-0 d-block">
+                         <a href="{{  route('car_single', ['id' => $cars['id']])  }}" class="btn btn-secondary py-2 ml-1">Book now</a>
+                      </p>
+
+		    					</div>
+		    				</div>
+    					</div>
+
+						@endforeach
+    					
+            @endif
+    					
+    				</div>
+    			</div>
+    		</div>
+
+        
     	</div>
     </section>
 
@@ -293,14 +348,14 @@
 				<div class="row justify-content-end">
 					<div class="col-md-6 heading-section heading-section-white ftco-animate">
             <h2 class="mb-3">Do You Want To Earn With Us? So Don't Be Late.</h2>
-            <a href="#" class="btn btn-primary btn-lg">Become A Driver</a>
+            <a href="{{ url('sign_lessor')}}" class="btn btn-primary btn-lg">Become A Lessor</a>
           </div>
 				</div>
 			</div>
 		</section>
 
 
-    <section class="ftco-section testimony-section bg-light">
+    {{-- <section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center heading-section ftco-animate">
@@ -370,9 +425,9 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> --}}
 
-    <section class="ftco-section">
+    {{-- <section class="ftco-section">
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 heading-section text-center ftco-animate">
@@ -428,9 +483,9 @@
           </div>
         </div>
       </div>
-    </section>	
+    </section>	 --}}
 
-    <section class="ftco-counter ftco-section img bg-light" id="section-counter">
+    {{-- <section class="ftco-counter ftco-section img bg-light" id="section-counter">
 			<div class="overlay"></div>
     	<div class="container">
     		<div class="row">
@@ -468,7 +523,7 @@
           </div>
         </div>
     	</div>
-    </section>	
+    </section>	 --}}
 
     <script>
       document.getElementById('carForm').addEventListener('submit', function(event) {

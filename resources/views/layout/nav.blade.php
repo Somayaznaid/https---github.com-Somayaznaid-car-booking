@@ -20,11 +20,13 @@
 
     <link rel="stylesheet" href="{{asset('css/bootstrap-datepicker.css')}}">
     <link rel="stylesheet" href="{{asset('css/jquery.timepicker.css')}}">
-
-    
+   
     <link rel="stylesheet" href="{{asset('css/flaticon.css')}}">
     <link rel="stylesheet" href="{{asset('css/icomoon.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+
+   
   </head>
   <body>
     
@@ -42,7 +44,7 @@
 <li class="nav-item"><a href="{{ url('services') }}" class="nav-link">Services</a></li>
 <li class="nav-item"><a href="{{ url('pricing') }}" class="nav-link">Pricing</a></li>
 <li class="nav-item"><a href="{{ url('car') }}" class="nav-link">Cars</a></li>
-<li class="nav-item"><a href="{{ url('blog') }}" class="nav-link">Blog</a></li>
+{{-- <li class="nav-item"><a href="{{ url('blog') }}" class="nav-link">Blog</a></li> --}}
 <li class="nav-item"><a href="{{ url('contact') }}" class="nav-link">Contact</a></li>
 
             @if(Auth::check())

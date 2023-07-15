@@ -1,7 +1,47 @@
 @extends("admin.master")
 
 @section("content")
+<style>
+/* Styles for the edit profile popup */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+</style>
 <div class="container-fluid px-2 px-md-4">
       <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
         <span class="mask  bg-gradient-primary  opacity-6"></span>
@@ -10,19 +50,25 @@
         <div class="row gx-4 mb-2">
           <div class="col-auto">
             <div class="avatar avatar-xl position-relative">
-              <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              <img src="{{ asset($info->img) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
             </div>
           </div>
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-                Richard Davis
+               {{ $info->name}}
               </h5>
               <p class="mb-0 font-weight-normal text-sm">
                 CEO / Co-Founder
               </p>
             </div>
           </div>
+
+          @if (Session::has('success'))
+          <div class="alert  alert-success" role="alert">
+            {{ Session::get('success') }}
+          </div>
+          @endif
           <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
             <div class="nav-wrapper position-relative end-0">
               <ul class="nav nav-pills nav-fill p-1" role="tablist">
@@ -50,7 +96,7 @@
         </div>
         <div class="row">
           <div class="row">
-            <div class="col-12 col-xl-4">
+            {{-- <div class="col-12 col-xl-4">
               <div class="card card-plain h-100">
                 <div class="card-header pb-0 p-3">
                   <h6 class="mb-0">Platform Settings</h6>
@@ -100,7 +146,7 @@
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> --}}
             <div class="col-12 col-xl-4">
               <div class="card card-plain h-100">
                 <div class="card-header pb-0 p-3">
@@ -109,23 +155,55 @@
                       <h6 class="mb-0">Profile Information</h6>
                     </div>
                     <div class="col-md-4 text-end">
-                      <a href="javascript:;">
+                      <a href="javascript:;" onclick="openEditProfilePopup()">
                         <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Profile"></i>
                       </a>
                     </div>
+
+                    <!-- Button to trigger the edit profile popup -->
+
+
+<!-- Edit profile popup -->
+<div id="editProfilePopup" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditProfilePopup()">&times;</span>
+        <h2>Edit Profile</h2>
+        <form  action="{{ route('editAdminInfo') }}" method="POST" id="editProfileForm" onsubmit="return validateEditProfileForm()">
+          @csrf
+          <div class="form-group">
+            <input type="hidden" name="id" value="{{ $info->id }}">
+
+            <label for="name">Name:</label>
+            <input type="text" id="editName" name="name" class="form-control border" value="{{ $info->name }}">
+            <small id="nameError" class="text-danger"></small>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="editEmail" name="email" class="form-control border" value="{{ $info->email }}">
+            <small id="emailError" class="text-danger"></small>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="editPassword" name="password" class="form-control border" value="{{ $info->password }}" >
+            <small id="passwordError" class="text-danger"></small>
+          </div>
+          <button type="submit" class="btn btn-primary">Update Info</button>
+        </form>
+    </div>
+</div>
+
                   </div>
                 </div>
                 <div class="card-body p-3">
                   <p class="text-sm">
-                    Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
+                    Hi, I’m {{ $info->name}} , Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
                   </p>
                   <hr class="horizontal gray-light my-4">
                   <ul class="list-group">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Alec M. Thompson</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (44) 123 1234 123</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; alecthompson@mail.com</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; USA</li>
-                    <li class="list-group-item border-0 ps-0 pb-0">
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ $info->name}}</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ $info->email}}</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; Jordan</li>
+                    {{-- <li class="list-group-item border-0 ps-0 pb-0">
                       <strong class="text-dark text-sm">Social:</strong> &nbsp;
                       <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
                         <i class="fab fa-facebook fa-lg"></i>
@@ -136,13 +214,13 @@
                       <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
                         <i class="fab fa-instagram fa-lg"></i>
                       </a>
-                    </li>
+                    </li> --}}
                   </ul>
                 </div>
               </div>
             </div>
             <div class="col-12 col-xl-4">
-              <div class="card card-plain h-100">
+              {{-- <div class="card card-plain h-100">
                 <div class="card-header pb-0 p-3">
                   <h6 class="mb-0">Conversations</h6>
                 </div>
@@ -200,52 +278,57 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> --}}
             </div>
             <div class="col-12 mt-4">
               <div class="mb-5 ps-3">
                 <h6 class="mb-1">Projects</h6>
-                <p class="text-sm">Architects design houses</p>
+                <p class="text-sm">Car rent</p>
               </div>
               <div class="row">
+                @foreach ($cars as $car)
+                    
+               
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
                   <div class="card card-blog card-plain">
                     <div class="card-header p-0 mt-n4 mx-3">
                       <a class="d-block shadow-xl border-radius-xl">
-                        <img src="../assets/img/home-decor-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                        <img src="{{ asset('images/' . $car->img_1) }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
                       </a>
                     </div>
                     <div class="card-body p-3">
-                      <p class="mb-0 text-sm">Project #2</p>
+                      <p class="mb-0 text-sm">Project </p>
                       <a href="javascript:;">
                         <h5>
-                          Modern
+                          {{$car->name}}
                         </h5>
                       </a>
                       <p class="mb-4 text-sm">
-                        As Uber works through a huge amount of internal management turmoil.
+                        {{$car->description}}
                       </p>
                       <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
+                        {{-- <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button> --}}
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
+                            {{-- <img alt="Image placeholder" src="../assets/img/team-1.jpg"> --}}
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
+                            {{-- <img alt="Image placeholder" src="../assets/img/team-2.jpg"> --}}
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
+                            {{-- <img alt="Image placeholder" src="../assets/img/team-3.jpg"> --}}
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
+                            {{-- <img alt="Image placeholder" src="../assets/img/team-4.jpg"> --}}
                           </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                @endforeach
+
+                {{-- <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
                   <div class="card card-blog card-plain">
                     <div class="card-header p-0 mt-n4 mx-3">
                       <a class="d-block shadow-xl border-radius-xl">
@@ -281,8 +364,8 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                </div> --}}
+                {{-- <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
                   <div class="card card-blog card-plain">
                     <div class="card-header p-0 mt-n4 mx-3">
                       <a class="d-block shadow-xl border-radius-xl">
@@ -318,8 +401,8 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                </div> --}}
+                {{-- <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
                   <div class="card card-blog card-plain">
                     <div class="card-header p-0 mt-n4 mx-3">
                       <a class="d-block shadow-xl border-radius-xl">
@@ -355,7 +438,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> --}}
               </div>
             </div>
           </div>
@@ -363,6 +446,62 @@
       </div>
     </div>
 
+   <script>
+  function openEditProfilePopup() {
+    var popup = document.getElementById("editProfilePopup");
+    popup.style.display = "block";
 
+    // Populate form fields with current admin info
+    var nameInput = document.getElementById("editName");
+    var emailInput = document.getElementById("editEmail");
+    var passwordInput = document.getElementById("editPassword");
+
+    nameInput.value = "{{ $info->name }}";
+    emailInput.value = "{{ $info->email }}";
+    passwordInput.value = "{{ $info->password }}";
+  }
+
+  // Close the edit profile popup
+  function closeEditProfilePopup() {
+    var popup = document.getElementById("editProfilePopup");
+    popup.style.display = "none";
+  }
+
+  // Form validation for edit profile form
+  function validateEditProfileForm() {
+    var name = document.getElementById("editName").value;
+    var email = document.getElementById("editEmail").value;
+    var password = document.getElementById("editPassword").value;
+
+    // Clear previous error messages
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("passwordError").innerHTML = "";
+
+    // Validate name field
+    if (name.trim() === "") {
+      document.getElementById("nameError").innerHTML = "Please enter your name.";
+      return false;
+    }
+
+    // Validate email field
+    if (email.trim() === "") {
+      document.getElementById("emailError").innerHTML = "Please enter your email.";
+      return false;
+    }
+
+    // Validate password field
+    if (password.trim() === "") {
+      document.getElementById("passwordError").innerHTML = "Please enter your password.";
+      return false;
+    }
+
+    // Perform additional validation if needed
+
+    // If all validations pass, return true to submit the form
+    return true;
+  }
+
+   </script>
 
 @endsection

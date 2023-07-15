@@ -14,15 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SignController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-   
+    
     public function create(Request $request)
     {
         $validated = $request->validate([
@@ -44,6 +36,9 @@ class SignController extends Controller
        $user->password = Hash::make($request->input('password'));
        $user->role_id = 1;
        $user->save();
+
+       Auth::login($user); 
+
        return redirect('index');
     }
 
@@ -70,45 +65,11 @@ class SignController extends Controller
        $lessor->password = Hash::make($request->input('password'));
        $lessor->role_id = 2;
        $lessor->save();
-       return redirect('index');
+
+       Auth::login($lessor);
+
+       return redirect('product');
     }
-
-    
-    // public function log(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email',
-    //         'password' => 'required',
-    //     ]);
-
-
-    //     $user = Users::where('email', $request -> input('email'))->where('role_id', 1)->first();
-    //     $lessor = Lessor::where('email', $request -> input('email'))->where('role_id', 2)->first();
-    //     $admin = Users::where('email', $request -> input('email'))->where('role_id', 3)->first();
-
-    //     if ($user && Hash::check($request->password, $user->password)) {
-    //         // Authentication successful
-    //         dd(Auth::login($user));
-    //         Auth::login($user);  // Log in the user
-    //         $user->status = 'online';
-    //         $request->session()->regenerate();
-    //         return redirect()->intended('index');
-    //     } else if ($lessor && Hash::check($request->password, $lessor->password)) {
-    //         // Authentication successful
-    //         dd(Auth::login($lessor));
-    //         Auth::login($lessor);  // Log in the lessor
-    //         $request->session()->regenerate();
-    //         return redirect()->intended('add_product_lessor');
-    //     }else if ($admin && Hash::check($request->password, $admin->password)) {
-    //         // Authentication successful
-    //         Auth::login($admin);  // Log in the admin
-    //         $request->session()->regenerate();
-    //         return redirect()->intended('admin');
-    //     } else {
-    //         // Authentication failed
-    //         return redirect()->back()->with('error', 'Invalid credentials');
-    //     }
-    // } 
 
 
     public function log(Request $request)
@@ -138,7 +99,7 @@ class SignController extends Controller
         // Authentication successful
         Auth::login($admin);  // Log in the admin
         $request->session()->regenerate();
-        return redirect()->intended('admin');
+        return redirect()->intended('admin_table');
     } else {
         // Authentication failed
         return redirect()->back()->with('error', 'Invalid credentials');

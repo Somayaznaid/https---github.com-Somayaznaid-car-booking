@@ -42,20 +42,20 @@
 
                     <th scope="col">&nbsp;</th>
                     <th scope="col">PRODUCT NAME</th>
-                    <th scope="col">price</th>
-                    <th scope="col">mileage</th>
-                    <th scope="col">transmission</th>
-                    <th scope="col">seats</th>
-                    <th scope="col">luggage</th>
-                    <th scope="col">fuel</th>
-                    <th scope="col">year_of_manufacture</th>
-                    <th scope="col">description </th>
+                    <th scope="col">PRICE</th>
+                    <th scope="col">MILEAGE</th>
+                    <th scope="col">TRANSMISSION</th>
+                    <th scope="col">SEATS</th>
+                    <th scope="col">LUGGAGE</th>
+                    <th scope="col">FUEL</th>
+                    <th scope="col">YEAR OF MANUFACTURE</th>
+                    <th scope="col">DESCRIPTION</th>
                     <th scope="col">&nbsp;</th>
                     <th scope="col">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @if (Session::has('lessor_found'))
+                  @if ($cars == false)
                   @foreach ($cars as $car)
                     
                   
@@ -85,6 +85,8 @@
                     </td>
                   </tr>
                   @endforeach
+
+
                   @else
                        
                   <td class="tm-product-name align-middle" colspan="5">  NO PRODUCT ADD YET</td>
@@ -104,116 +106,24 @@
         </div>
 
 
-        {{-- <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
-          <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
-            <h2 class="tm-block-title">Product Categories</h2>
-            <div class="tm-product-table-container">
-              <table class="table tm-table-small tm-product-table">
-                <tbody>
-                  <tr>
-                    <td class="tm-product-name">Product Category 1</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 2</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 3</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 4</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 5</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 6</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 7</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 8</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 9</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 10</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 11</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- table container -->
-            <button class="btn btn-primary btn-block text-uppercase mb-3">
-              Add new category
-            </button>
-          </div>
-        </div> --}}
-
 
         
           <div class="col-sm-12 col-md-12 m-1">
             <div class="tm-bg-primary-dark tm-block tm-block-products">
               <div class="tm-product-table-container">
                 <h2 class="tm-site-title m-2">Your Orders</h2>
+                @if (Session::has('success_reject'))
+                <div class="alert  alert-danger" role="alert">
+                  {{ Session::get('success_reject') }}
+                </div>
+                @endif
+
+
+                @if (Session::has('success_approve'))
+                <div class="alert  alert-success" role="alert">
+                  {{ Session::get('success_approve') }}
+                </div>
+                @endif
                 <table class="table table-hover tm-table-small tm-product-table">
                   <thead>
                     <tr>
@@ -240,7 +150,33 @@
                       <td>{{$booking->start_location}}</td>
                       <td>{{$booking->end_location}}</td> 
                       <td>{{$booking->start_hour}}</td> 
-                      
+                      <td>
+                        <!-- Form for approving the order -->
+                        @if ($booking->status === "pending")
+
+                        <form action="{{ route('lessor.orders.approve', ['id' => $booking->id]) }}" method="POST" style="display: inline;">
+                          @csrf
+                          <button type="submit" class="btn btn-success">Approve</button>
+                      </form>
+
+                      <form action="{{ route('lessor.orders.reject', ['id' => $booking->id]) }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger" onclick="return confirmRejection()">Reject</button>
+                    </form>
+                            
+                        
+                       
+                        @elseif ($booking->status === "approved")
+
+                        {{-- <form action="{{ route('lessor.orders.approve', ['id' => $booking->id]) }}" method="POST" style="display: inline;">
+                          @csrf --}}
+                          <button type="submit" class="btn btn-success" readonly>Approved</button>
+                      {{-- </form> --}}
+
+                    
+                        @endif
+
+                    </td>
                       
                       
                     </tr>
@@ -280,6 +216,15 @@
           document.getElementById('delete-car-form').submit();
       } else {
           alert('Car deletion canceled.');
+      }
+  }
+
+
+  function confirmRejection() {
+      if (confirm('Are you sure you want to reject this booking?')) {
+          document.getElementById('delete-car-form').submit();
+      } else {
+          alert('book Rejection canceled.');
       }
   }
 </script>

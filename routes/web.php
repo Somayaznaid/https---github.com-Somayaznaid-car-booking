@@ -111,15 +111,21 @@ Route::post('admin_table/add-user' , [AdminController::class , 'addUser'])->name
 
 Route::post('admin_table/add-lessor' , [AdminController::class , 'addlessor'])->name('addlessor');
 
-Route::get('admin_table/delete/{id}' , [AdminController::class , 'deleteUser'])->name('deleteUser');
+Route::get('admin_table/delete/user{id}' , [AdminController::class , 'deleteUser'])->name('deleteUser');
 
-Route::get('admin_table/delete/{id}' , [AdminController::class , 'deleteLessor'])->name('deleteLessor');
+Route::get('admin_table/delete/lessor{id}' , [AdminController::class , 'deleteLessor'])->name('deleteLessor');
 
 Route::get('edit/{id}' , [AdminController::class , 'showUser'])->name('showUser');
 
 Route::post('update_user_admin', [AdminController::class, 'editUser'])->name('editUser');
 
+Route::get('edit/lessor/{id}' , [AdminController::class , 'showLessor'])->name('showUser');
 
+Route::post('update_lessor_admin', [AdminController::class, 'editLessor'])->name('editLessor');
+
+Route::get('admin_profile' , [AdminController::class , 'adminInfo'])->name('adminInfo');
+
+Route::post('/admin/edit', [AdminController::class, 'editAdminInfo'])->name('editAdminInfo');
 
 ///////////////////////////////////////////////////////////////
 // lessor 
@@ -155,3 +161,16 @@ Route::get('product/delete/{id}' , [LessorController::class , 'deleteProduct'])-
 Route::get('product/edit/{id}' , [LessorController::class , 'showCarEdit'])->name('showCarEdit');
 
 Route::post('product/edit' , [LessorController::class , 'editCar'])->name('editCar');
+
+Route::get('/lessor_profile', function () {
+    return view('lessor_profile');
+});
+
+
+Route::post('/lessor/orders/{id}/approve', [LessorController::class, 'approve'])->name('lessor.orders.approve');
+Route::post('/lessor/orders/{id}/reject', [LessorController::class, 'reject'])->name('lessor.orders.reject');
+
+Route::get('/lessor_profile' , [LessorController::class , 'showLessorProfile'])->name('showLessorProfile');
+Route::post('/lessor/update', [LessorController::class, 'editLessorInfo'])->name('lessor.update');
+
+

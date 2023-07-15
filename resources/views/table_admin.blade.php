@@ -28,6 +28,56 @@
 <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
+          @if (Session::has('warning_delete_user'))
+          <div class="alert  alert-danger" role="alert">
+            {{ Session::get('warning_delete_user') }}
+          </div>
+          @endif
+
+
+          @if (Session::has('success_delete_user'))
+          <div class="alert  alert-success" role="alert">
+            {{ Session::get('success_delete_user') }}
+          </div>
+          @endif
+
+          @if (Session::has('warning_delete_Lessor'))
+          <div class="alert  alert-danger" role="alert">
+            {{ Session::get('warning_delete_Lessor') }}
+          </div>
+          @endif
+
+
+          @if (Session::has('success_delete_Lessor'))
+          <div class="alert  alert-success" role="alert">
+            {{ Session::get('success_delete_Lessor') }}
+          </div>
+          @endif
+
+          @if (Session::has('add_user'))
+          <div class="alert  alert-success" role="alert">
+            {{ Session::get('add_user') }}
+          </div>
+        @endif
+
+        @if (Session::has('add_lessor'))
+        <div class="alert  alert-success" role="alert">
+          {{ Session::get('add_lessor') }}
+        </div>
+      @endif
+
+      @if (Session::has('user_info_update'))
+      <div class="alert  alert-success" role="alert">
+        {{ Session::get('user_info_update') }}
+      </div>
+    @endif
+
+    @if (Session::has('lessor_info_update'))
+    <div class="alert  alert-success" role="alert">
+      {{ Session::get('lessor_info_update') }}
+    </div>
+    @endif
+
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
@@ -42,12 +92,15 @@
       <i class="fas fa-times"></i> <!-- Assuming you are using Font Awesome for icons -->
     </button>
     </h4>
-    <form action="{{ route('addUser') }}" method="POST">
-      @csrf 
+    <form action="{{ route('addUser') }}" method="POST" id="userForm">
+      @csrf
       <input type="text" name="name" placeholder="Name">
+      <span class="error-message" id="nameError"></span>
       <input type="text" name="email" placeholder="Email">
-      <input type="text" name="password" placeholder="Password">
-      <button onclick="submitUserForm()" class="btn btn-secondary">Submit</button>
+      <span class="error-message" id="emailError"></span>
+      <input type="password" name="password" placeholder="Password">
+      <span class="error-message" id="passwordError"></span>
+      <button type="submit" class="btn btn-secondary">Submit</button>
     </form>
     
   </div>
@@ -98,7 +151,7 @@
                         </a>
                       </td>
                       <td class="align-middle">
-                        <a href="admin_table/delete/ {{$user['id']}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="admin_table/delete/user {{$user['id']}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user" onclick="return confirmDeletion()">
                           Delete
                         </a>
                       </td>
@@ -128,15 +181,19 @@
 <div id="lessor_popup" class="popup">
   <div class="popup-content">
     <h4>Add Lessor:</h4>
-    <form action="{{ route('addlessor') }}" method="POST">
-      @csrf 
-    <input type="text" name="name" placeholder="Name">
-    <small >@error('name'){{$message}} @enderror</small>
-    <input type="text" name="email" placeholder="Email">
-    <input type="text" name="password" placeholder="Password">
-    <input type="text" name="phone" placeholder="Phone">
-    <input type="text" name="address" placeholder="Address">
-    <button onclick="submitLessorForm()" class="btn btn-secondary">Submit</button>
+    <form action="{{ route('addlessor') }}" method="POST" id="lessorForm">
+      @csrf
+      <input type="text" name="name" placeholder="Name">
+      <small id="nameError">{{ $errors->first('name') }}</small>
+      <input type="text" name="email" placeholder="Email">
+      <small id="emailError">{{ $errors->first('email') }}</small>
+      <input type="text" name="password" placeholder="Password">
+      <small id="passwordError">{{ $errors->first('password') }}</small>
+      <input type="text" name="phone" placeholder="Phone">
+      <small id="phoneError">{{ $errors->first('phone') }}</small>
+      <input type="text" name="address" placeholder="Address">
+      <small id="addressError">{{ $errors->first('address') }}</small>
+      <button class="btn btn-secondary">Submit</button>
     </form>
   </div>
 </div>
@@ -192,12 +249,12 @@
                      </td>
                       
                       <td class="align-middle">
-                        <a href="admin_table/edit/ {{$lessor['id']}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="edit/lessor/ {{$lessor['id']}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                           Edit
                         </a>
                       </td>
                       <td class="align-middle">
-                        <a href="admin_table/delete/ {{$lessor['id']}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="admin_table/delete/lessor {{$lessor['id']}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user" onclick="return confirmDeletion()">
                           Delete
                         </a>
                       </td>
@@ -221,217 +278,169 @@
                 <h6 class="text-white text-capitalize ps-3">Projects table</h6>
               </div>
             </div>
+
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center justify-content-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Budget</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Completion</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Car</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+      
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mileage</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Transmission</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Seats</th>
+
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Luggage</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fuel</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Year Of Manufacture</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($cars as $car)
+                      
+                  
                     <tr>
                       <td>
                         <div class="d-flex px-2">
                           <div>
-                            <img src="../assets/img/small-logos/logo-asana.svg" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
+                            <img src="{{ asset('images/' . $car->img_1) }}" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
                           </div>
+                         
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-sm font-weight-bold mb-0">{{ $car->name }}</p>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $car->price }}$</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $car->mileage }}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $car->transmission }}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $car->seats }}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $car->luggage }}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $car->fuel }}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $car->year_of_manufacture }}</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <div class="d-flex align-items-center justify-content-center">
+                          <span class="me-2 text-xs font-weight-bold">{{ $car->description }}</span>
+                          <div>
+                            {{-- <div class="progress">
+                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                            </div> --}}
+                          </div>
+                        </div>
+                      </td>
+                      {{-- <td class="align-middle">
+                        <button class="btn btn-link text-secondary mb-0">
+                          <i class="fa fa-ellipsis-v text-xs"></i>
+                        </button>
+                      </td> --}}
+                    </tr>
+                   
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Order table</h6>
+              </div>
+            </div>
+            
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                   
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">start location</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">end location</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">start date</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">end date</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">start hour</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">booking cost</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($booking as $booking)
+                        
+                    
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2">
+                         
                           <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Asana</h6>
+                            <h6 class="mb-0 text-sm">{{ $car->name}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
+                        <p class="text-sm font-weight-bold mb-0">{{ $booking->start_location}}</p>
                       </td>
                       <td>
-                        <span class="text-xs font-weight-bold">working</span>
+                        <span class="text-xs font-weight-bold">{{ $booking->end_location}}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $booking->start_date}}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $booking->end_date}}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $booking->start_hour}}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $booking->booking_cost}}</span>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold">{{ $booking->status}}</span>
                       </td>
                       <td class="align-middle text-center">
                         <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">60%</span>
+                          {{-- <span class="me-2 text-xs font-weight-bold">60%</span> --}}
                           <div>
-                            <div class="progress">
+                            {{-- <div class="progress">
                               <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
+                            </div> --}}
                           </div>
                         </div>
                       </td>
                       <td class="align-middle">
                         <button class="btn btn-link text-secondary mb-0">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
+                          {{-- <i class="fa fa-ellipsis-v text-xs"></i> --}}
                         </button>
                       </td>
                     </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/github.svg" class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Github</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-atlassian.svg" class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Atlassian</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">30%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/bootstrap.svg" class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Bootstrap</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">80%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Slack</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">0%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/devto.svg" class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Devto</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
+                    @endforeach
+                     
+                   
                   </tbody>
                 </table>
               </div>
@@ -480,5 +489,148 @@ function submitLessorForm() {
   popup.style.display = "none";
 }
 
-      </script>
+
+function confirmDeletion() {
+      if (confirm('Are you sure you want to delete this user?')) {
+          document.getElementById('delete-car-form').submit();
+      } else {
+          alert('Car deletion canceled.');
+      }
+  }
+
+
+  // add user validation 
+
+  function submitUserForm(event) {
+    event.preventDefault(); // Prevent form submission if validation fails
+
+    
+    const nameInput = document.querySelector('input[name="name"]');
+    const emailInput = document.querySelector('input[name="email"]');
+    const passwordInput = document.querySelector('input[name="password"]');
+
+    
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    
+    nameError.textContent = '';
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    
+    let isValid = true;
+
+    if (nameInput.value.trim() === '') {
+      isValid = false;
+      nameError.textContent = 'Please enter your name';
+    }
+
+    if (emailInput.value.trim() === '') {
+      isValid = false;
+      emailError.textContent = 'Please enter your email';
+    }
+
+    if (passwordInput.value.trim() === '') {
+      isValid = false;
+      passwordError.textContent = 'Please enter your password';
+    }
+
+    if (isValid) {
+      // Submit the form if validation passes
+      document.getElementById('userForm').submit();
+    }
+  }
+
+  // Event listener for form submission
+  document.getElementById('userForm').addEventListener('submit', submitUserForm);
+
+
+  
+   // Add Lessor validation
+// document.addEventListener('DOMContentLoaded', function() {
+//   const form = document.getElementById('lessorForm');
+
+//   form.addEventListener('submit', function(event) {
+//     event.preventDefault(); // Prevent form submission if validation fails
+
+//     // Clear previous error messages
+//     clearErrorMessages();
+
+//     // Perform validation
+//     let isValid = true;
+
+//     const nameInput = document.querySelector('input[name="name"]');
+//     const emailInput = document.querySelector('input[name="email"]');
+//     const passwordInput = document.querySelector('input[name="password"]');
+//     const phoneInput = document.querySelector('input[name="phone"]');
+//     const addressInput = document.querySelector('input[name="address"]');
+
+//     if (nameInput.value.trim() === '') {
+//       displayErrorMessage(nameInput, 'Please enter your name');
+//       isValid = false;
+//     }
+
+//     if (emailInput.value.trim() === '') {
+//       displayErrorMessage(emailInput, 'Please enter your email');
+//       isValid = false;
+//     } else if (!validateEmail(emailInput.value.trim())) {
+//       displayErrorMessage(emailInput, 'Please enter a valid email address');
+//       isValid = false;
+//     }
+
+//     if (passwordInput.value.trim() === '') {
+//       displayErrorMessage(passwordInput, 'Please enter a password');
+//       isValid = false;
+//     } else if (!validatePassword(passwordInput.value.trim())) {
+//       displayErrorMessage(passwordInput, 'Password must contain at least 6 characters, one letter, one number, and one special character');
+//       isValid = false;
+//     }
+
+//     if (phoneInput.value.trim() === '') {
+//       displayErrorMessage(phoneInput, 'Please enter your phone number');
+//       isValid = false;
+//     }
+
+//     if (addressInput.value.trim() === '') {
+//       displayErrorMessage(addressInput, 'Please enter your address');
+//       isValid = false;
+//     }
+
+//     if (isValid) {
+//       form.submit(); // Submit the form if validation passes
+//     }
+//   });
+
+//   function displayErrorMessage(inputElement, message) {
+//     const errorElement = document.getElementById(`${inputElement.name}Error`);
+//     errorElement.innerText = message;
+//     errorElement.style.display = 'block';
+//   }
+
+//   function clearErrorMessages() {
+//     const errorElements = document.querySelectorAll('.error-msg');
+//     errorElements.forEach(function(element) {
+//       element.innerText = '';
+//       element.style.display = 'none';
+//     });
+//   }
+//   document.getElementById('lessorForm').addEventListener('submit', submitLessorForm);
+
+//   function validateEmail(email) {
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     return emailRegex.test(email);
+//   }
+
+//   function validatePassword(password) {
+//     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+//     return passwordRegex.test(password);
+//   }
+// });
+
+
+</script>
+
+     
 @endsection

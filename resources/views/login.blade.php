@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Sign Up</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="{{asset('fonts/material-icon/css/material-design-iconic-font.min.css')}}">
@@ -18,7 +18,7 @@
 
         <!-- Sing in  Form -->
         <section class="sign-in">
-            <div class="container">
+            <div class="container_log">
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="images/electric-car.png"  class="login_img" alt="sing up image"></figure>
@@ -63,14 +63,14 @@
                         @endif 
                             </div>
                             
-                        <div class="social-login">
+                        {{-- <div class="social-login">
                             <span class="social-label">Or login with</span>
                             <ul class="socials">
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

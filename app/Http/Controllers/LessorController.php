@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\Booking;
+use App\Models\Lessor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -174,9 +175,57 @@ public function deleteProduct(string $id)
   }
 
 
-//   public function showBooking(){
-        
-//     $booking =  Booking::where('lessor_id' , Auth::id());
-//     return view('/product_lessor' , ['booking' =>$booking]);
-//   }
+  public function showLessorProfile(){
+       $id = Auth::id(); 
+    $lessor =  Lessor::find($id);
+    return view('/lessor_profile' ,compact('lessor') );
+  }
+
+
+
+  public function approve($id)
+  {
+      $order = Booking::findOrFail($id);
+      $order->status = 'approved';
+      $order->save();
+
+      // Add any additional logic or notifications you need here
+
+      return redirect()->back()->with('success_approve', 'Order approved successfully.');
+  }
+
+  public function reject($id)
+  {
+      $order = Booking::findOrFail($id);
+      $order->status = 'rejected';
+      $order->delete();
+
+      // Add any additional logic or notifications you need here
+
+      return redirect()->back()->with('success_reject', 'Order rejected successfully.');
+  }
+
+
+  public function editLessorInfo(Request $request)
+  {
+      // Retrieve the lessor's ID
+      $lessorId = Auth::id();
+  
+      // Find the lessor record
+      $lessor = Lessor::findOrFail($lessorId);
+  
+      // Update the lessor's information
+      $lessor->name = $request->input('name');
+      $lessor->email = $request->input('email');
+      if ($request->filled('password')) {
+          $lessor->password = bcrypt($request->input('password'));
+      }
+      $lessor->phone = $request->input('phone');
+      $lessor->save();
+  
+      Session::flash('success', 'Your profile has been updated successfully.');
+  
+      return redirect()->back();
+  }
+  
 }
