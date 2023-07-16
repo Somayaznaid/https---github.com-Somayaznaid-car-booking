@@ -53,12 +53,11 @@
                     </div>
                 
                     <div class="form-group mb-3">
-                        <label for="category">Category</label>
-                        <select class="custom-select tm-select-accounts" id="category" name="category">
+                        <label for="type_id">Type</label>
+                        <select class="custom-select tm-select-accounts" id="type_id" name="type_id">
                             <option selected>Select category</option>
-                            <option value="1">New Arrival</option>
-                            <option value="2">Most Popular</option>
-                            <option value="3">Trending</option>
+                            <option value="1">Booking</option>
+                            <option value="2">Sale</option>
                         </select>
                         <small class="error-message"></small>
                     </div>

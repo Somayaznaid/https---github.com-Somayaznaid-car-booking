@@ -17,11 +17,17 @@ class BookController extends Controller
      {
 
         $car = Car::find($id);
-        
-        return view('car_single' , compact('car'));
+        $rating = Rating::all();
+        return view('car_single' , compact('car', 'rating'));
      }
 
-
+     public function carSinglePageSale(string $id)
+     {
+         $car = Car::find($id);
+         $ratings = Rating::with('user')->get();
+     
+         return view('car_single_sale', compact('car', 'ratings'));
+     }
 
     public function storeBooking(Request $request)
 {
@@ -65,15 +71,19 @@ class BookController extends Controller
     return redirect()->back();
 }
  
+// public function showBookRentCar()
+// {
+//     $car = Car::where('type_id', 1)->get();
+//     dd($car);
+//     $carSale = Car::where('type_id', 2)->get();
 
+//     return view('index')->with(compact('car', 'carSale'));
+// }
 
 
 
 public function showAvailableCars(Request $request)
 {
-    $car = Car::all();
-    // dd($car);
-    
     // Retrieve user's input
     $pickUpLocation = $request->input('pick_up_location');
     $dropOffLocation = $request->input('drop_off_location');
@@ -84,30 +94,31 @@ public function showAvailableCars(Request $request)
     $maxPrice = $request->input('max_price');
 
     // Perform filtering logic to get the available cars based on the user's input
-    $bookingIds = Booking::whereNot('start_date', '>=', $dropOffDate) //find first index
-                        ->where('end_date','<=', $pickUpDate)
-                        ->pluck('car_id');
-    
+    $bookingIds = Booking::whereNot('start_date', '>=', $dropOffDate)
+        ->where('end_date', '<=', $pickUpDate)
+        ->pluck('car_id');
+
     if ($bookingIds->isEmpty()) {
         // No bookings found for the selected dates
         $availableCars = collect(); // Empty collection
     } else {
-        $availableCars = Car::whereIn('id', $bookingIds) //every index
-                            ->where('price', '>=', $minPrice) // Filter by minimum price
-                            ->where('price', '<=', $maxPrice) // Filter by maximum price
-                            ->get();        
+        $availableCars = Car::whereIn('id', $bookingIds)
+            ->where('price', '>=', $minPrice)
+            ->where('price', '<=', $maxPrice)
+            ->get();
     }
-    
-     
+
     if ($availableCars->isEmpty()) {
         // No cars available for the selected dates and price range
         Session::flash('found', false);
     } else {
-        
         Session::flash('found', true);
     }
+
+    $car = Car::where('type_id', 1)->get();
+    $carSale = Car::where('type_id', 2)->get();
     
-    return view('index')->with('carsAva', $availableCars)->with('car', $car);
+    return view('index')->with(compact('availableCars', 'car', 'carSale'));
 }
 
 
@@ -115,13 +126,25 @@ public function rating(Request $request, $id)
 {
     $rating = new Rating();
     $rating->comments = $request->input("comments");
-    $rating->star_rating = $request->input("star_rating"); // Retrieve the rating value from the request
+    $rating->star_rating = 0; // Retrieve the rating value from the request
     $rating->car_id = $request->input('car_id');
     $rating->user_id = Auth::id();
     $rating->save();
 
     return redirect()->back();
 }
+
+// public function reviewstore(Request $request){
+//     $review = new Rating();
+//     $review->car_id = $request->car_id;
+//     $review->comments= $request->comment;
+//     $review->star_rating = $request->rating;
+//     $review->user_id = Auth::id();
+//     $review->service_id = $request->service_id;
+//     $review->save();
+//     return redirect()->back()->with('flash_msg_success','Your review has been submitted Successfully,');
+// }
+
 
     public function showAllCars( ){
         

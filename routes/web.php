@@ -58,6 +58,10 @@ Route::get('/car_single', function () {
     return view('car_single');
 });
 
+Route::get('/car_single_sale', function () {
+    return view('car_single_sale');
+});
+
 Route::get('/blog_single', function () {
     return view('blog_single');
 });
@@ -77,15 +81,23 @@ Route::post('/login', [SignController::class, 'log'])->name('log');
 
 Route::get('/car_single/{id}', [BookController::class, 'carSinglePage'])->name('car_single');
 
+Route::get('/car_single_sale/{id}', [BookController::class, 'carSinglePageSale'])->name('car_single_sale');
+
+
 Route::post('/logout', [SignController::class , 'logout'])->name('logout');
 
 Route::post('/bookings', [BookController::class, 'storeBooking'])->name('bookings.storeBooking');
 
 Route::post('/car_single/{id}', [BookController::class, 'rating'])->name('rating');
 
-Route::post('index', [BookController::class, 'showAvailableCars'])->name('showAvailableCars.index');
+Route::post('index', [BookController::class, 'showAvailableCars'])->name('showAvailableCars');
+
+Route::get('index', [BookController::class, 'showBookRentCar'])->name('showBookRentCar');
+
 
 Route::get('/car', [BookController::class, 'showAllCars'])->name('showAllCars');
+
+// Route::post('review-store', 'BookController@reviewstore')->name('review.store');
 
 ///////////////////////////////////////////////////////////////
 // admin 

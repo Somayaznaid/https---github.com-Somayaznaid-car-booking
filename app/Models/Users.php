@@ -40,7 +40,7 @@ class Users extends Model implements Authenticatable
 
     public function rating()
     {
-        return $this->belongsTo(Rating::class);
+        return $this->hasOne(Rating::class);
     }
  
 }

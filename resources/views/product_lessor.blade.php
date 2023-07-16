@@ -43,6 +43,7 @@
                     <th scope="col">&nbsp;</th>
                     <th scope="col">PRODUCT NAME</th>
                     <th scope="col">PRICE</th>
+                    <th scope="col">TYPE</th>
                     <th scope="col">MILEAGE</th>
                     <th scope="col">TRANSMISSION</th>
                     <th scope="col">SEATS</th>
@@ -55,7 +56,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if ($cars == false)
+                  @if ($cars)
                   @foreach ($cars as $car)
                     
                   
@@ -64,6 +65,11 @@
                     <td class="tm-product-name"><img src="{{ asset('images/' . $car->img_1) }}" alt="car" width="50px" ></td>
                     <td>{{$car->name}}</td>
                     <td>{{$car->price}}$</td>
+                     @if($car->type_id === 1)
+                    <td>BOOK</td>
+                    @else
+                    <td>SALE</td>
+                    @endif
                     <td>{{$car->mileage}}</td>
                     <td>{{$car->transmission}}</td>
                     <td>{{$car->seats}}</td>
@@ -140,10 +146,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($booking as $booking)
+                    @foreach($bookings as $booking)
                     <tr>
-                     
-                      <td class="tm-product-name">{{ $car->name}}</td>
+
+                    
+                      <td class="tm-product-name">{{ $booking->car->name}}</td>
                       <td>{{$booking->booking_cost}}</td>
                       <td>{{$booking->start_date}}</td>
                       <td>{{$booking->end_date}}</td>

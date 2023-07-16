@@ -338,7 +338,7 @@
               <form id="bookingForm" method="POST" action="{{ route('bookings.storeBooking') }}" class="bg-light p-5 contact-form" onsubmit="validateForm(event)">
                 @csrf
                 <!-- Booking form inputs -->
-                <div class="form-group d-flex">
+             {{--    <div class="form-group d-flex">
                   <input type="text" class="form-control mr-3" name="start_location" id="start_location" placeholder="Picking Up Location">
                   <span class="error-message" id="startLocationError"></span>
                   <input type="text" class="form-control" name="end_location" id="end_location" placeholder="Dropping off Location">
@@ -366,7 +366,7 @@
                   <input type="hidden" class="form-control" name="lessor_id" value="{{$car->lessor_id}}">
                   <input type="hidden" class="form-control" name="car_id" value="{{$car->id}}">
                   <input type="hidden" class="form-control" name="car_price" value="{{$car->price}}">
-                </div>
+                </div> --}}
               
                 @if (Auth::check())
 
@@ -392,7 +392,7 @@
                 </div>             
           
                 <div class="form-group">
-                  <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Book Now</button>
+                  <button id="bookNowBtn" class="btn btn-primary py-3 px-5" onclick="showAlert()">Book Now</button>
                 </div>
                 @else
                 <div class="alert alert-danger" role="alert">
@@ -462,48 +462,51 @@
 						    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
 						      <div class="row">
 							   		<div class="col-md-7">
-							   			<h3 class="head">23 Reviews</h3>
+							   			<h3 class="head">Reviews</h3>
 							   			<div class="review d-flex">
 									   		<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
 									   		<div class="desc">
 									   			<h4>
 									   				<span class="text-left">Jacob Webb</span>
-									   				<span class="text-right">14 March 2018</span>
+									   				{{-- <span class="text-right">14 March 2018</span> --}}
 									   			</h4>
 									   			<p class="star">
-									   				<span>
+									   				{{-- <span>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
-								   					</span>
+								   					</span> --}}
 								   					<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
 									   			</p>
 									   			<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
 									   		</div>
 									   	</div>
+                                           @foreach ($ratings as $rating)
 									   	<div class="review d-flex">
 									   		<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
 									   		<div class="desc">
 									   			<h4>
-									   				<span class="text-left">Jacob Webb</span>
-									   				<span class="text-right">14 March 2018</span>
+									   				<span class="text-left">{{ $rating->user->name }}</span>
+									   				{{-- <span class="text-right"> {{ $rating->created_at->toDateString() }}</span> --}}
 									   			</h4>
 									   			<p class="star">
-									   				<span>
+									   				{{-- <span>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
-								   					</span>
+								   					</span> --}}
 								   					<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
 									   			</p>
-									   			<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+									   			<p>
+                                                    {{ $rating->comments }}
+                                                </p>
 									   		</div>
 									   	</div>
-
+                                           @endforeach
 									   	<div class="review d-flex">
 									   		<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
 									   		<div class="desc">
@@ -579,7 +582,7 @@
                                 <div class="col-md-12 block-9 mb-md-5">
                     
                     <!-- Create the booking form -->
-                    {{-- <form id="ratingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
+                    <form id="ratingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
                       @csrf
                   
                       <input type="hidden" name="star_rating" id="starRatingInput" value="">
@@ -605,13 +608,13 @@
                           <!-- Add a button to trigger the popup -->
                           <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Rate Car</button>
                       </div>
-                  </form> --}}
+                  </form>
                     
                       
-                     <div>
+                     {{-- <div>
                       <!-- Other HTML content -->
                       <livewire:rating-component />
-                    </div>
+                    </div> --}}
                      
 
                     
@@ -637,16 +640,7 @@
 
    
     <script>
-    $(document).ready(function() {
-        $("#ratingForm").rateYo({
-            rating: 0, // Initial rating value
-            starWidth: "20px", // Adjust the star size as needed
-            fullStar: true, // Enable full stars
-            onSet: function(rating, rateYoInstance) {
-                $("#starRatingInput").val(rating); // Set the selected rating value in the hidden input field
-            }
-        });
-    });
+ 
     
 
 function toggleCardInputs() {
@@ -676,11 +670,11 @@ function toggleCardInputs() {
   }
 
   function validateForm(event) {
-  var startLocationInput = document.getElementById("start_location");
-  var endLocationInput = document.getElementById("end_location");
-  var startDateInput = document.getElementById("start_date");
-  var endDateInput = document.getElementById("end_date");
-  var startHourInput = document.getElementById("start_hour");
+//   var startLocationInput = document.getElementById("start_location");
+//   var endLocationInput = document.getElementById("end_location");
+//   var startDateInput = document.getElementById("start_date");
+//   var endDateInput = document.getElementById("end_date");
+//   var startHourInput = document.getElementById("start_hour");
   var cardCheckbox = document.getElementById("cardCheckbox");
   var cardNumberInput = document.getElementsByName("cardNumber")[0];
   var cardHolderInput = document.getElementsByName("cardHolder")[0];
@@ -693,41 +687,8 @@ function toggleCardInputs() {
     errorMessages[i].textContent = "";
   }
 
-  // Validate start location
-  if (startLocationInput.value.trim() === "") {
-    document.getElementById("startLocationError").textContent = "Start location is required.";
-    event.preventDefault();
-    return;
-  }
-
-  // Validate end location
-  if (endLocationInput.value.trim() === "") {
-    document.getElementById("endLocationError").textContent = "End location is required.";
-    event.preventDefault();
-    return;
-  }
-
-  // Validate start date
-  if (startDateInput.value.trim() === "") {
-    document.getElementById("startDateError").textContent = "Start date is required.";
-    event.preventDefault();
-    return;
-  }
-
-  // Validate end date
-  if (endDateInput.value.trim() === "") {
-    document.getElementById("endDateError").textContent = "End date is required.";
-    event.preventDefault();
-    return;
-  }
-
-  // Validate start hour
-  if (startHourInput.value.trim() === "") {
-    document.getElementById("startHourError").textContent = "Start hour is required.";
-    event.preventDefault();
-    return;
-  }
-
+  
+  
   // Validate payment method
   if (cardCheckbox.checked) {
     // Card payment selected
@@ -765,39 +726,41 @@ function toggleCardInputs() {
 }
 
 
-function calculateBookingDetails() {
-  var startDateInput = document.getElementById("start_date");
-  var endDateInput = document.getElementById("end_date");
-  var bookingPeriodElement = document.getElementById("booking_period");
-  var bookingCostElement = document.getElementById("booking_cost");
-  var carPrice = parseFloat(document.getElementsByName("car_price")[0].value);
+// function calculateBookingDetails() {
+//   var startDateInput = document.getElementById("start_date");
+//   var endDateInput = document.getElementById("end_date");
+//   var bookingPeriodElement = document.getElementById("booking_period");
+//   var bookingCostElement = document.getElementById("booking_cost");
+//   var carPrice = parseFloat(document.getElementsByName("car_price")[0].value);
 
-  var startDate = new Date(startDateInput.value);
-  var endDate = new Date(endDateInput.value);
+//   var startDate = new Date(startDateInput.value);
+//   var endDate = new Date(endDateInput.value);
 
-  if (startDate && endDate && startDate <= endDate) {
-    var bookingPeriod = calculateBookingPeriod(startDate, endDate);
-    var bookingCost = calculateBookingCost(bookingPeriod, carPrice);
+//   if (startDate && endDate && startDate <= endDate) {
+//     var bookingPeriod = calculateBookingPeriod(startDate, endDate);
+//     var bookingCost = calculateBookingCost(bookingPeriod, carPrice);
 
-    bookingPeriodElement.textContent = "Booking Period: " + bookingPeriod + " day(s)";
-    bookingCostElement.textContent = "Booking Cost: $" + bookingCost.toFixed(2);
-  } else {
-    bookingPeriodElement.textContent = "";
-    bookingCostElement.textContent = "";
+//     bookingPeriodElement.textContent = "Booking Period: " + bookingPeriod + " day(s)";
+//     bookingCostElement.textContent = "Booking Cost: $" + bookingCost.toFixed(2);
+//   } else {
+//     bookingPeriodElement.textContent = "";
+//     bookingCostElement.textContent = "";
+//   }
+// }
+
+// function calculateBookingPeriod(startDate, endDate) {
+//   var oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
+//   return Math.round(Math.abs(startDate - endDate) / oneDay) + 1; // Add 1 to include both start and end dates
+// }
+
+// function calculateBookingCost(bookingPeriod, carPrice) {
+//   return bookingPeriod * carPrice;
+// }
+
+
+function showAlert() {
+    alert('Thank u for choose us');
   }
-}
-
-function calculateBookingPeriod(startDate, endDate) {
-  var oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
-  return Math.round(Math.abs(startDate - endDate) / oneDay) + 1; // Add 1 to include both start and end dates
-}
-
-function calculateBookingCost(bookingPeriod, carPrice) {
-  return bookingPeriod * carPrice;
-}
-
-
-
 
   
 

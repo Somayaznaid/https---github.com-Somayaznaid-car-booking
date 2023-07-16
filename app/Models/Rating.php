@@ -21,8 +21,8 @@ class Rating extends Model
         return $this->hasOne(Car::class);
     }
 
-    public function users()
+    public function user()
     {
-        return $this->hasOne(Users::class);
+        return $this->belongsTo(User::class);
     }
 }

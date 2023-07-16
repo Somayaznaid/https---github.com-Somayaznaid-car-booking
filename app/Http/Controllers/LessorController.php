@@ -13,7 +13,7 @@ class LessorController extends Controller
 {
     
     public function addCar(Request $request)
-{
+{  
     // Validate the incoming request using the CarRequest or custom validation logic
 
     $validated = $request->validate([
@@ -30,8 +30,9 @@ class LessorController extends Controller
         'img_2' => 'required|image|mimes:jpeg,png,jpg,gif',
         'img_3' => 'required|image|mimes:jpeg,png,jpg,gif',
         'year_of_manufacture' => 'required',
+        'type_id' => 'required',
     ]);
-
+    // dd($validated) ;
     // Create a new car instance and assign the necessary attributes
 
     $car = new Car();
@@ -59,6 +60,7 @@ class LessorController extends Controller
 
 
     $car->year_of_manufacture = $request->input('year_of_manufacture');
+    $car->type_id = $request->input('type_id');
     $car->lessor_id = Auth::id();
     $car->user_id = null;
 
@@ -83,17 +85,19 @@ private function storeImage($file)
     }
 
     public function showCarsLessor(Request $request)
-{
-    $id = Auth::id(); 
-    $cars = Car::where('lessor_id', $id)->get();
-    Session::flash('lessor_found');
-
-
-    $booking = Booking::where('lessor_id' , Auth::id())->get();
-
-
-    return view('product_lessor', compact('cars','booking')  );
-}
+    {
+        $id = Auth::id(); 
+        $cars = Car::where('lessor_id', $id)
+            ->where('type_id', 1)
+            ->get();
+        
+        $bookings = Booking::with('car')
+            ->where('lessor_id', $id)
+            ->get();
+        
+        return view('product_lessor', compact('cars', 'bookings'));
+    }
+    
 
 
 public function deleteProduct(string $id)

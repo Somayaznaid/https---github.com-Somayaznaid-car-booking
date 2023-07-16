@@ -43,8 +43,8 @@ class Booking extends Model
         return $this->belongsTo(Lessor::class);
     }
 
-    public function cars()
+    public function car()
     {
-        return $this->belongsTo(Car::class);
+        return $this->belongsTo(Car::class, 'car_id');
     }
 }

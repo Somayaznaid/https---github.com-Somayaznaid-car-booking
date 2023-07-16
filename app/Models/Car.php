@@ -24,7 +24,8 @@ class Car extends Model
         'img_1' ,
         'img_2' ,
         'img_3' ,
-        'year_of_manufacture'
+        'year_of_manufacture',
+        'type_id',
     ];
 
 

@@ -32,7 +32,7 @@
     				<div class="row no-gutters">
 	  					<div class="col-md-4 d-flex align-items-center">
 	  					
-                <form action="{{ route('showAvailableCars.index') }}" method="POST" class="request-form ftco-animate bg-primary" id="carForm">
+                <form action="{{ route('showAvailableCars') }}" method="POST" class="request-form ftco-animate bg-primary" id="carForm">
                   @csrf
                   <h2>Make your trip</h2>
                   <div class="form-group">
@@ -137,12 +137,12 @@
             <div class="col-md-12 m-3">
              
                    
-                    @if ($carsAva->isEmpty())
+                    @if ($availableCars->isEmpty())
                         <p>No car available for the selected dates.</p>
                     @else
                         <div class="col-md-12">
                             <div class="col-md-4">
-                                @foreach($carsAva as $car)
+                                @foreach($availableCars as $car)
                                     <div class="item">
                                         <div class="car-wrap rounded ftco-animate">
                                             <div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $car['img_1']) }}');">
@@ -169,11 +169,13 @@
     </div>
 </section>
 
-
+  @if (Session::has('found'))
+      
+  @else
+      
+  
     <section class="ftco-section ftco-no-pt bg-light">
-      @if(Session::has('found'))
-
-      @else
+     
     	<div class="container">
     		<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -211,8 +213,7 @@
     					</div>
 
 						@endforeach
-    					
-            @endif
+    			
     					
     				</div>
     			</div>
@@ -223,9 +224,7 @@
     </section>
 
     <section class="ftco-section ftco-no-pt bg-light" id="sale">
-      @if(Session::has('found'))
-
-      @else
+      
     	<div class="container">
     		<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -236,8 +235,9 @@
     		<div class="row">
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
-             
-						@foreach($car as $cars)
+            @if (isset($carSale) && !$carSale->isEmpty())
+						    @foreach($carSale as $cars)
+
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
                 <div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $cars['img_1']) }}');">
@@ -255,14 +255,14 @@
                     </div>
 
                       <p class="d-flex mb-0 d-block">
-                         <a href="{{  route('car_single', ['id' => $cars['id']])  }}" class="btn btn-secondary py-2 ml-1">Book now</a>
+                         <a href="{{  route('car_single_sale', ['id' => $cars['id']])  }}" class="btn btn-secondary py-2 ml-1">Sale Now</a>
                       </p>
 
 		    					</div>
 		    				</div>
     					</div>
 
-						@endforeach
+						    @endforeach
     					
             @endif
     					
@@ -273,7 +273,7 @@
         
     	</div>
     </section>
-
+  @endif
     <section class="ftco-section ftco-about">
 			<div class="container">
 				<div class="row no-gutters">
