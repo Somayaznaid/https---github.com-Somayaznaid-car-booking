@@ -17,6 +17,9 @@
 <script src="{{ asset('js/bootstrap_lessor.min.js') }}"></script>
 <!-- https://getbootstrap.com/ -->
 <script src="{{ asset('js/tooplate-scripts.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
 <script>
     Chart.defaults.global.defaultFontColor = 'white';
     let ctxLine,

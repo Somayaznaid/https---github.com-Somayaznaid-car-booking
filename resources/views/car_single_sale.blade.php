@@ -396,7 +396,7 @@
                 </div>
                 @else
                 <div class="alert alert-danger" role="alert">
-                     <p> Need to Log In to Complete YOUR Car Book! </p>
+                     <p> Need to Log In to Complete YOUR Car Sale! </p>
                 </div>
                 @endif
               
@@ -580,7 +580,7 @@
                         <div class="container">
                             <div class="row d-flex mb-5 contact-info">
                                 <div class="col-md-12 block-9 mb-md-5">
-                    
+                   @if (Auth::check())
                     <!-- Create the booking form -->
                     <form id="ratingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
                       @csrf
@@ -609,12 +609,10 @@
                           <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Rate Car</button>
                       </div>
                   </form>
-                    
-                      
-                     {{-- <div>
-                      <!-- Other HTML content -->
-                      <livewire:rating-component />
-                    </div> --}}
+                   @else
+
+                @endif
+                   
                      
 
                     

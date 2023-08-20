@@ -45,11 +45,11 @@
                     <input type="text" name="pick_up_location" class="form-control" placeholder="City, Airport, Station, etc">
                     <small id="pickUpLocationError" class="text-danger"></small>
                   </div>
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                     <label for="" class="label">Drop-off location</label>
                     <input type="text" name="drop_off_location" class="form-control" placeholder="City, Airport, Station, etc">
                     <small id="dropOffLocationError" class="text-danger"></small>
-                  </div>
+                  </div> --}}
                   <div class="d-flex">
                     <div class="form-group mr-2">
                       <label for="" class="label">Pick-up date</label>
@@ -135,7 +135,11 @@
       </div>
         <div class="row">
             <div class="col-md-12 m-3">
-             
+                   {{-- @foreach ($booking as $bookings)
+                     
+                   
+                   @if ($bookings->car_id === null)
+                        --}}
                    
                     @if ($availableCars->isEmpty())
                         <p>No car available for the selected dates.</p>
@@ -163,6 +167,10 @@
                             </div>
                         </div>
                     @endif
+
+                    {{-- @endif
+                    @endforeach --}}
+
                 @endif
             </div>
         </div>
@@ -188,6 +196,7 @@
     				<div class="carousel-car owl-carousel">
              
 						@foreach($car as $cars)
+            @if ($cars->type_id===1)
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
                 <div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $cars['img_1']) }}');">
@@ -211,7 +220,7 @@
 		    					</div>
 		    				</div>
     					</div>
-
+            @endif
 						@endforeach
     			
     					
@@ -235,9 +244,10 @@
     		<div class="row">
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
-            @if (isset($carSale) && !$carSale->isEmpty())
-						    @foreach($carSale as $cars)
-
+              {{-- isset($carSale) && !$carSale->isEmpty() --}}
+            {{-- @if ($carSale) --}}
+						    @foreach($car as $cars)
+   @if ($cars->type_id===2)
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
                 <div class="img rounded d-flex align-items-end" style="background-image: url('{{ asset('images/' . $cars['img_1']) }}');">
@@ -261,10 +271,11 @@
 		    					</div>
 		    				</div>
     					</div>
+              @endif
 
 						    @endforeach
     					
-            @endif
+            {{-- @endif --}}
     					
     				</div>
     			</div>
@@ -536,8 +547,8 @@
         });
     
         // Retrieve form field values
+        var country = document.getElementsByName('country')[0].value;
         var pickUpLocation = document.getElementsByName('pick_up_location')[0].value;
-        var dropOffLocation = document.getElementsByName('drop_off_location')[0].value;
         var pickUpDate = document.getElementsByName('pick_up_date')[0].value;
         var dropOffDate = document.getElementsByName('drop_off_date')[0].value;
         var minPrice = document.getElementsByName('min_price')[0].value;
@@ -546,16 +557,18 @@
     
         // Validate form fields
         var isValid = true;
+
+
+        if (country === '') {
+          document.getElementById('country').textContent = 'Please enter the Country';
+          isValid = false;
+        }
     
         if (pickUpLocation === '') {
           document.getElementById('pickUpLocationError').textContent = 'Please enter the pick-up location';
           isValid = false;
         }
-    
-        if (dropOffLocation === '') {
-          document.getElementById('dropOffLocationError').textContent = 'Please enter the drop-off location';
-          isValid = false;
-        }
+  
     
         if (pickUpDate === '') {
           document.getElementById('pickUpDateError').textContent = 'Please enter the pick-up date';

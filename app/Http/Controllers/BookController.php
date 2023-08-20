@@ -17,8 +17,8 @@ class BookController extends Controller
      {
 
         $car = Car::find($id);
-        $rating = Rating::all();
-        return view('car_single' , compact('car', 'rating'));
+        $ratings = Rating::with('user')->get();
+        return view('car_single' , compact('car', 'ratings'));
      }
 
      public function carSinglePageSale(string $id)
@@ -80,33 +80,27 @@ class BookController extends Controller
 //     return view('index')->with(compact('car', 'carSale'));
 // }
 
-
-
 public function showAvailableCars(Request $request)
 {
     // Retrieve user's input
     $pickUpLocation = $request->input('pick_up_location');
-    $dropOffLocation = $request->input('drop_off_location');
+    $dropOffLocation = $pickUpLocation;
     $pickUpDate = Carbon::createFromFormat('Y-m-d', $request->input('pick_up_date'))->startOfDay();
     $dropOffDate = Carbon::createFromFormat('Y-m-d', $request->input('drop_off_date'))->endOfDay();
     $time_pick = $request->input('time_pick');
     $minPrice = $request->input('min_price');
     $maxPrice = $request->input('max_price');
 
-    // Perform filtering logic to get the available cars based on the user's input
-    $bookingIds = Booking::whereNot('start_date', '>=', $dropOffDate)
-        ->where('end_date', '<=', $pickUpDate)
+    // Get the booking IDs that don't overlap with the selected dates
+    $bookingIds = Booking::where('end_date', '<', $pickUpDate)
+        ->orWhere('start_date', '>', $dropOffDate)
         ->pluck('car_id');
 
-    if ($bookingIds->isEmpty()) {
-        // No bookings found for the selected dates
-        $availableCars = collect(); // Empty collection
-    } else {
-        $availableCars = Car::whereIn('id', $bookingIds)
-            ->where('price', '>=', $minPrice)
-            ->where('price', '<=', $maxPrice)
-            ->get();
-    }
+    // Filter cars based on booking IDs and price range
+    $availableCars = Car::whereNotIn('id', $bookingIds)
+        ->where('price', '>=', $minPrice)
+        ->where('price', '<=', $maxPrice)
+        ->get();
 
     if ($availableCars->isEmpty()) {
         // No cars available for the selected dates and price range
@@ -115,10 +109,10 @@ public function showAvailableCars(Request $request)
         Session::flash('found', true);
     }
 
-    $car = Car::where('type_id', 1)->get();
-    $carSale = Car::where('type_id', 2)->get();
-    
-    return view('index')->with(compact('availableCars', 'car', 'carSale'));
+    $bookings = Booking::all();
+    $cars = Car::all();
+    //   dd($availableCars);
+    return view('index')->with(compact('availableCars', 'cars', 'bookings'));
 }
 
 
@@ -148,9 +142,10 @@ public function rating(Request $request, $id)
 
     public function showAllCars( ){
         
+        // $cars= Car::limit(5)->get();
         $cars= Car::all();
         return view('car' , compact('cars'));
-    }
+    } // limit sql 
 
     public function showBookDay(string $id){
         
@@ -158,3 +153,14 @@ public function rating(Request $request, $id)
         return view('car_single' , compact('book'));
     }
 }
+
+
+// public function showBookDay(string $id)
+// {
+//     $booking = Booking::findOrFail($id); // Retrieve the booking with the specified ID
+    
+//     $start_date = $booking->start_date; // Access the start_date column
+//     $end_date = $booking->end_date; // Access the end_date column
+
+//     return view('car_single', compact('booking', 'start_date', 'end_date'));
+// }

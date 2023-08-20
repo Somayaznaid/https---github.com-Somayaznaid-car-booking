@@ -77,18 +77,18 @@ private function storeImage($file)
     return $filename;
 }
 
-    public function showCars(){
+public function showCars(){
         
-        $car = Car::all();
-        
-        return view('index' , ['car' =>$car]);
-    }
+    $car = Car::all();
+    
+    return view('index' , ['car' =>$car]);
+}
 
     public function showCarsLessor(Request $request)
     {
         $id = Auth::id(); 
         $cars = Car::where('lessor_id', $id)
-            ->where('type_id', 1)
+            // ->where('type_id', 1)
             ->get();
         
         $bookings = Booking::with('car')
@@ -96,6 +96,20 @@ private function storeImage($file)
             ->get();
         
         return view('product_lessor', compact('cars', 'bookings'));
+    }
+
+    public function showBookingLessor(Request $request)
+    {
+        $id = Auth::id(); 
+        $cars = Car::where('lessor_id', $id)
+            // ->where('type_id', 1)
+            ->get();
+        
+        $bookings = Booking::with('car')
+            ->where('lessor_id', $id)
+            ->get();
+        
+        return view('order_lessor', compact('cars', 'bookings'));
     }
     
 

@@ -26,6 +26,23 @@ class AdminController extends Controller
        
     }
 
+    public function showCar()
+    {
+        $data = Car::all();
+
+       
+        return view('admin_table_car' , ['cars' =>$data]);
+       
+    }
+
+    public function showBooking()
+    {
+       
+        $data = Booking::all();
+        return view('admin_table_order' , ['booking' =>$data]);
+       
+    }
+
    public function adminInfo(){
      $info= Users::where('role_id' , 3)->first();
      $cars = Car::all();
@@ -181,6 +198,8 @@ class AdminController extends Controller
                 $user->delete();
                 return redirect('admin_table')->with('success_delete_user', 'User deleted successfully.');
             }
+
+            
         } else {
             // User not found
             return redirect('admin_table')->with('error_delete_user', 'User not found.');

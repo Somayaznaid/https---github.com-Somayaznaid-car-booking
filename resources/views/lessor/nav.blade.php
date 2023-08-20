@@ -12,7 +12,10 @@
     <!-- https://fontawesome.com/ -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap_lessor.min.css') }}">
     <!-- https://getbootstrap.com/ -->
-    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    
     <!--
     Product Admin CSS Template
     https://templatemo.com/tm-524-product-admin
@@ -40,21 +43,16 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        {{-- <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
 
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="{{ url('order_lessor') }}" role="button" >
                                 <i class="far fa-file-alt"></i>
                                 <span>
-                                    Reports <i class="fas fa-angle-down"></i>
+                                    Orders <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Daily Report</a>
-                                <a class="dropdown-item" href="#">Weekly Report</a>
-                                <a class="dropdown-item" href="#">Yearly Report</a>
-                            </div>
-                        </li> --}}
+                            
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('product') }}">
                                 <i class="fas fa-shopping-cart"></i>

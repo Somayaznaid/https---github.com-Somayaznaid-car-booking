@@ -112,6 +112,13 @@ Route::get('/admin_table', function () {
     return view('table_admin');
 });
 
+Route::get('/admin_table_car', function () {
+    return view('admin_table_car');
+});
+
+Route::get('/admin_table_order', function () {
+    return view('admin_table_order');
+});
 
 Route::get('/admin_profile', function () {
     return view('admin_profile');
@@ -119,11 +126,15 @@ Route::get('/admin_profile', function () {
 
 Route::get('admin_table' , [AdminController::class , 'index']);
 
+Route::get('admin_table_car' , [AdminController::class , 'showCar']);
+Route::get('admin_table_order' , [AdminController::class , 'showBooking']);
+
 Route::post('admin_table/add-user' , [AdminController::class , 'addUser'])->name('addUser');
 
 Route::post('admin_table/add-lessor' , [AdminController::class , 'addlessor'])->name('addlessor');
 
 Route::get('admin_table/delete/user{id}' , [AdminController::class , 'deleteUser'])->name('deleteUser');
+Route::post('/admin_table/delete/user/{id}', 'AdminController@deleteUserConfirm')->name('deleteUserConfirm');
 
 Route::get('admin_table/delete/lessor{id}' , [AdminController::class , 'deleteLessor'])->name('deleteLessor');
 
@@ -177,6 +188,13 @@ Route::post('product/edit' , [LessorController::class , 'editCar'])->name('editC
 Route::get('/lessor_profile', function () {
     return view('lessor_profile');
 });
+
+Route::get('/order_lessor', function () {
+    return view('order_lessor');
+});
+
+
+Route::get('/order_lessor' , [LessorController::class , 'showBookingLessor'])->name('showBookingLessor');
 
 
 Route::post('/lessor/orders/{id}/approve', [LessorController::class, 'approve'])->name('lessor.orders.approve');

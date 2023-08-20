@@ -483,26 +483,35 @@
 									   			<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
 									   		</div>
 									   	</div>
+                        
+                   
+                       @foreach ($ratings as $rating)
 									   	<div class="review d-flex">
 									   		<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
 									   		<div class="desc">
 									   			<h4>
-									   				<span class="text-left">Jacob Webb</span>
-									   				<span class="text-right">14 March 2018</span>
+									   				<span class="text-left">{{ $rating->user->name }}</span>
+									   				{{-- <span class="text-right"> {{ $rating->created_at->toDateString() }}</span> --}}
 									   			</h4>
 									   			<p class="star">
-									   				<span>
+									   				{{-- <span>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
 									   					<i class="ion-ios-star"></i>
-								   					</span>
+								   					</span> --}}
 								   					<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
 									   			</p>
-									   			<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+									   			<p>
+                                                    {{ $rating->comments }}
+                                                </p>
 									   		</div>
 									   	</div>
+
+                     @endforeach
+                                           
+                     
 
 									   	<div class="review d-flex">
 									   		<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
@@ -511,75 +520,16 @@
 									   		</div>
 									   	</div>
 							   		</div>
-							   		{{-- <div class="col-md-5">
-							   			<div class="rating-wrap">
-								   			<h3 class="head">Give a Review</h3>
-								   			<div class="wrap">
-									   			<p class="star">
-									   				<span>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					(98%)
-								   					</span>
-								   					<span>20 Reviews</span>
-									   			</p>
-									   			<p class="star">
-									   				<span>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					(85%)
-								   					</span>
-								   					<span>10 Reviews</span>
-									   			</p>
-									   			<p class="star">
-									   				<span>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					(70%)
-								   					</span>
-								   					<span>5 Reviews</span>
-									   			</p>
-									   			<p class="star">
-									   				<span>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					(10%)
-								   					</span>
-								   					<span>0 Reviews</span>
-									   			</p>
-									   			<p class="star">
-									   				<span>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					(0%)
-								   					</span>
-								   					<span>0 Reviews</span>
-									   			</p>
-									   		</div>
-								   		</div> --}}
+							   	
 
                        <div class="row">
                         <div class="container">
                             <div class="row d-flex mb-5 contact-info">
                                 <div class="col-md-12 block-9 mb-md-5">
                     
-                    <!-- Create the booking form -->
-                    {{-- <form id="ratingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
+                     @if (Auth::check())
+                                  <!-- Create the booking form -->
+                    <form id="ratingForm" method="POST" action="{{ route('rating', ['id' => request()->route('id')]) }}" class="bg-light p-5 contact-form">
                       @csrf
                   
                       <input type="hidden" name="star_rating" id="starRatingInput" value="">
@@ -605,8 +555,14 @@
                           <!-- Add a button to trigger the popup -->
                           <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Rate Car</button>
                       </div>
-                  </form> --}}
-                    
+                  </form>
+
+               
+                      
+                  @else
+                      
+                 
+                    @endif
                       
                      <div>
                       <!-- Other HTML content -->
