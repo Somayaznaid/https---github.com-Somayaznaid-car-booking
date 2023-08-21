@@ -124,24 +124,8 @@ public function rating(Request $request, $id)
     return redirect()->back();
 }
 
-// public function reviewstore(Request $request){
-//     $review = new Rating();
-//     $review->car_id = $request->car_id;
-//     $review->comments= $request->comment;
-//     $review->star_rating = $request->rating;
-//     $review->user_id = Auth::id();
-//     $review->service_id = $request->service_id;
-//     $review->save();
-//     return redirect()->back()->with('flash_msg_success','Your review has been submitted Successfully,');
-// }
 
 
-    public function showAllCars( ){
-        
-        // $cars= Car::limit(5)->get();
-        $cars= Car::all();
-        return view('car' , compact('cars'));
-    } // limit sql 
 
     public function showBookDay(string $id){
         

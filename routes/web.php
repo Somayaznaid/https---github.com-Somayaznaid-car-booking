@@ -97,9 +97,9 @@ Route::post('index', [BookController::class, 'showAvailableCars'])->name('showAv
 Route::get('index', [BookController::class, 'showBookRentCar'])->name('showBookRentCar');
 
 
-Route::get('/car', [BookController::class, 'showAllCars'])->name('showAllCars');
+Route::get('/car', [CarController::class, 'filterCars'])->name('filterCars');
 
-Route::get('/car', [CarController::class, 'index'])->name('cars.index');
+Route::get('/car', [CarController::class, 'filterCars'])->name('cars.filterCars');
 
 
 

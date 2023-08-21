@@ -1,32 +1,6 @@
 @extends('layout.master')
 
 @section('content')
-    <!-- Add filter form here -->
-    <form id="filter-form" method="GET" action="{{ route('cars.index') }}">
-        <label>Transmission:</label>
-        <input type="radio" name="transmission" value="automatic" id="transmission-automatic"> Automatic
-        <input type="radio" name="transmission" value="manual" id="transmission-manual"> Manual
-
-        <div id="transmission-options" style="display: none;">
-            <!-- Filter options for transmission -->
-        </div>
-
-        <!-- Repeat the same pattern for other filters -->
-    </form>
-
-    <ul>
-        @foreach ($filterCars as $filterCar)
-            <li>{{ $filterCar->name }} - {{ $filterCar->year }} - {{ $filterCar->transmission }}</li>
-        @endforeach
-    </ul>
-
-
-
-    <!-- Add filter to here -->
-
-
-
-
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');"
         data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
@@ -42,11 +16,100 @@
         </div>
     </section>
 
-
     <section class="ftco-section bg-light">
         <div class="container">
+            <!-- Add filter form here -->
+
+			<form action="{{ route('cars.filterCars') }}" method="GET">
+				<label>
+					<input type="checkbox" name="2" value="1"> For Sale
+				</label>
+				<label>
+					<input type="checkbox" name="1" value="1"> For Booking
+				</label>
+				<br>
+				<label>
+					<input type="checkbox" name="manual" value="1"> Manual Transmission
+				</label>
+				<label>
+					<input type="checkbox" name="automatic" value="1"> Automatic Transmission
+				</label>
+				<br>
+                <label>
+				<input type="text" name="name" placeholder="Car Name">
+			    </label>
+				<br>
+				<label>
+					<input type="text" name="year_of_manufacture" placeholder="Year Of Manufacture">				</label>
+				<br>
+				<label>
+					<input type="text" name="mileage" placeholder="Mileage">			
+				</label>
+				<br>
+				<label>
+					<input type="text" name="luggage" placeholder="Luggage Capacity">
+				</label>
+				<br>
+				<label>
+					<input type="text" name="seats" placeholder="Number of Seats">
+				</label>
+
+
+				<!-- Repeat for other checkboxes... -->
+				<button type="submit">Filter</button>
+			</form>
+			
+			<div class="row">
+			@foreach($filterCars as $filterCar)
+				<!-- Display car information -->
+
+				<div class="col-md-4">
+
+					<div class="car-wrap rounded ftco-animate">
+						<div class="img rounded d-flex align-items-end"
+							style="background-image: url('{{ asset('images/' . $filterCar['img_1']) }}');">
+						</div>
+						<div class="text">
+							<h2 class="mb-0"><a href="car-single.html">{{ $filterCar['name'] }}</a></h2>
+							<div class="d-flex mb-3">
+								<span class="cat">{{ $filterCar['transmission'] }}</span>
+								<p class="price ml-auto">${{ $filterCar['price'] }} <span>/day</span></p>
+							</div>
+							<p class="d-flex mb-0 d-block">
+								@if ($filterCar['type_id'] == 1)
+									<a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
+										class="btn btn-secondary py-2 ml-1">Book now</a>
+								@else
+									<a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
+										class="btn btn-secondary py-2 ml-1">Buy now</a>
+								@endif
+
+							</p>
+						</div>
+					</div>
+
+				</div>
+
+
+			@endforeach
+			
+            </div>
+
+
+            <!-- Add filter to here -->
+
+
+        </div>
+    </section>
+
+	  
+    <section class="ftco-section bg-light">
+		<h2>
+			Cars:
+		</h2>
+        <div class="container">
             <div class="row">
-                {{-- @foreach ($cars as $car)
+                @foreach ($cars as $car)
                     <div class="col-md-4">
 
                         <div class="car-wrap rounded ftco-animate">
@@ -60,14 +123,20 @@
                                     <p class="price ml-auto">${{ $car['price'] }} <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block">
-                                    <a href="{{ route('car_single', ['id' => $car['id']]) }}"
-                                        class="btn btn-secondary py-2 ml-1">Book now</a>
+                                    @if ($car['type_id'] == 1)
+                                        <a href="{{ route('car_single', ['id' => $car['id']]) }}"
+                                            class="btn btn-secondary py-2 ml-1">Book now</a>
+                                    @else
+                                        <a href="{{ route('car_single', ['id' => $car['id']]) }}"
+                                            class="btn btn-secondary py-2 ml-1">Buy now</a>
+                                    @endif
+
                                 </p>
                             </div>
                         </div>
 
                     </div>
-                @endforeach --}}
+                @endforeach
             </div>
 
 
