@@ -10,7 +10,7 @@
                     <div class="tm-order-table-container">
                         <h2 class="tm-site-title m-2">Your Orders</h2>
                         @if (Session::has('success_reject'))
-                            <div class="alert  alert-danger" role="alert">
+                            <div class="alert  alert-success" role="alert">
                                 {{ Session::get('success_reject') }}
                             </div>
                         @endif
@@ -57,12 +57,58 @@
                                                     <button type="submit" class="btn btn-success">Approve</button>
                                                 </form>
 
-                                                <form action="{{ route('lessor.orders.reject', ['id' => $booking->id]) }}"
+                                               
+
+                                                {{-- <form action="{{ route('lessor.orders.reject', ['id' => $booking->id]) }}"
                                                     method="POST" style="display: inline;">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirmRejection()">Reject</button>
-                                                </form>
+                                                    @csrf --}}
+                                                    <button type="submit"  
+                                                    class="btn btn-danger"  
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal"
+
+                                                        >Reject</button>
+                                                {{-- </form> --}}
+
+                                                <div class="modal fade tm-block tm-block-products" id="exampleModal" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            
+
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete
+                                                                    Car:
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to reject this booking for {{ $booking->car->name }} car ?
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                {{-- <a href="{{ route('lessor.orders.reject', ['id' => $booking->id]) }}"> --}}
+                                                                     <form action="{{ route('lessor.orders.reject', ['id' => $booking->id]) }}"
+                                                                            method="POST" style="display: inline;">
+                                                                            @csrf
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                        data-bs-dismiss="modal">Reject</button>
+                                                                          </form>
+                                                                {{-- </a> --}}
+
+                                                                {{-- <form action="{{ url("product_lessor") }}" method="POST">
+                                                            <button type="button" class="btn btn-primary">Save
+                                                                changes</button>
+                                                            </form> --}}
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             @elseif ($booking->status === 'approved')
                                                <form action="{{ route('lessor.orders.approve', ['id' => $booking->id]) }}" method="POST" style="display: inline;">
                           @csrf
@@ -95,6 +141,10 @@
                     window.location.href = "edit-product.html";
                 });
             });
+
+            $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
         </script>
 
 

@@ -17,10 +17,9 @@
             <div class="ftco-footer-widget mb-4 ml-md-5">
               <h2 class="ftco-heading-2">Information</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Services</a></li>
+                <li><a href="{{url('about')}}" class="py-2 d-block">About</a></li>
+                <li><a href="{{url('services')}}" class="py-2 d-block">Services</a></li>
                 <li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
-                <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
                 <li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
               </ul>
             </div>
@@ -30,10 +29,7 @@
               <h2 class="ftco-heading-2">Customer Support</h2>
               <ul class="list-unstyled">
                 <li><a href="#" class="py-2 d-block">FAQ</a></li>
-                <li><a href="#" class="py-2 d-block">Payment Option</a></li>
-                <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-                <li><a href="#" class="py-2 d-block">How it works</a></li>
-                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                <li><a href="{{url('contact')}}" class="py-2 d-block">Contact Us</a></li>
               </ul>
             </div>
           </div>
@@ -54,7 +50,7 @@
           <div class="col-md-12 text-center">
 
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
         </div>
@@ -81,7 +77,9 @@
 <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
 <script src="{{ asset('js/scrollax.min.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&sensor=false"></script> <!-- Replace YOUR_API_KEY with your actual API key -->
+{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdGamvZ_VUBBokyJ8wfTH07qKG_jWh_3U=false"></script> <!-- Replace YOUR_API_KEY with your actual API key --> --}}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdGamvZ_VUBBokyJ8wfTH07qKG_jWh_3U&libraries=places"></script>
+
 <script src="{{ asset('js/google-map.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
     

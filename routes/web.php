@@ -5,6 +5,8 @@ use App\Http\Controllers\SignController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LessorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CarController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +99,9 @@ Route::get('index', [BookController::class, 'showBookRentCar'])->name('showBookR
 
 Route::get('/car', [BookController::class, 'showAllCars'])->name('showAllCars');
 
-// Route::post('review-store', 'BookController@reviewstore')->name('review.store');
+Route::get('/car', [CarController::class, 'index'])->name('cars.index');
+
+
 
 ///////////////////////////////////////////////////////////////
 // admin 

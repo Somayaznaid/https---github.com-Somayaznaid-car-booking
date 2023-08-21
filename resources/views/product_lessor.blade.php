@@ -78,11 +78,9 @@
                                             <td>{{ $car->description }}</td>
 
                                             <td>
-                                                <a href=""
-                                                    class="tm-product-delete-link"  
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal"
-                                                    >
+                                                <a href="" class="tm-product-delete-link" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal{{ $car->id }}">
+
                                                     <i class="far fa-trash-alt tm-product-delete-icon"></i>
                                                 </a>
 
@@ -94,12 +92,14 @@
                                                 </button> --}}
 
                                                 <!-- Modal -->
-                                                <div class="modal fade tm-block tm-block-products" id="exampleModal" tabindex="-1"
+                                                <div class="modal fade tm-block tm-block-products" id="exampleModal{{ $car->id }}" tabindex="-1"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Car:
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete
+                                                                    Car:
                                                                 </h5>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close">
@@ -107,26 +107,20 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                Are you sure you want to delete {{$car->name}} ?
+                                                                Are you sure you want to delete {{ $car->name }} ?
                                                             </div>
                                                             <div class="modal-footer">
 
-                                                                {{-- <form action="product/delete/ {{ $car->id }}" method="POST">
-
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Delete</button>
-                                                                </form> --}}
-
-                                                                    <a href="product/delete/ {{ $car->id }}" >
-                                                                        <button type="button" class="btn btn-secondary"
+                                                                <a href="product/delete/ {{ $car->id }}">
+                                                                    <button type="button" class="btn btn-danger"
                                                                         data-bs-dismiss="modal">Delete</button>
-                                                                    </a>
+                                                                </a>
 
-                                                                    <form action="{{ url("product_lessor") }}" method="POST">
+                                                                {{-- <form action="{{ url("product_lessor") }}" method="POST">
                                                                 <button type="button" class="btn btn-primary">Save
                                                                     changes</button>
-                                                                </form>
-                                                              
+                                                                </form> --}}
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -156,7 +150,7 @@
 
 
 
-          
+
 
         </div>
 
@@ -165,11 +159,9 @@
         <script src="{{ asset('js/bootstrap_lessor.min.js') }}"></script>
         <!-- https://getbootstrap.com/ -->
         <script>
-            $(function() {
-                $(".tm-product-name").on("click", function() {
-                    window.location.href = "edit-product.html";
-                });
-            });
+            $('#myModal').on('shown.bs.modal', function() {
+                $('#myInput').trigger('focus')
+            })
         </script>
 
 
@@ -183,19 +175,19 @@
             // }
 
 
-            function confirmRejection() {
-                if (confirm('Are you sure you want to reject this booking?')) {
-                    document.getElementById('delete-car-form').submit();
-                } else {
-                    alert('book Rejection canceled.');
-                }
-            }
+            // function confirmRejection() {
+            //     if (confirm('Are you sure you want to reject this booking?')) {
+            //         document.getElementById('delete-car-form').submit();
+            //     } else {
+            //         alert('book Rejection canceled.');
+            //     }
+            // }
 
-            var myModal = document.getElementById('myModal')
-            var myInput = document.getElementById('myInput')
+            // var myModal = document.getElementById('myModal')
+            // var myInput = document.getElementById('myInput')
 
-            myModal.addEventListener('shown.bs.modal', function() {
-                myInput.focus()
-            })
+            // myModal.addEventListener('shown.bs.modal', function() {
+            //     myInput.focus()
+            // })
         </script>
     @endsection

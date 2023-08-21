@@ -430,19 +430,19 @@ input[type="checkbox"]:focus {
   box-shadow: none!important;
 }
 .tm-block-products {
-  min-height: 725px!important;
+  min-height: 563px!important;
 }
 .tm-block-product-categories {
   min-height: 650px!important;
 }
 .tm-product-table-container {
-  max-height: 580px!important;
+  max-height: 371px!important;
   margin-bottom: 15px!important;
   overflow-y: scroll!important;
 }
 
 .tm-order-table-container {
-  max-height: 634px!important;
+  max-height: 435px!important;
   margin-bottom: 15px!important;
   overflow-y: scroll!important;
 }

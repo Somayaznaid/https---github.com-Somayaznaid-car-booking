@@ -48,7 +48,7 @@
                             <a class="nav-link" href="{{ url('order_lessor') }}" role="button" >
                                 <i class="far fa-file-alt"></i>
                                 <span>
-                                    Orders <i class="fas fa-angle-down"></i>
+                                    Orders 
                                 </span>
                             </a>
                             

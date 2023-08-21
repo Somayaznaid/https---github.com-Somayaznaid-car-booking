@@ -34,7 +34,7 @@
 			</div>
 		</section>
 
-		<section class="ftco-section ftco-intro" style="background-image: url(images/bg_3.jpg);">
+		{{-- <section class="ftco-section ftco-intro" style="background-image: url(images/bg_3.jpg);">
 			<div class="overlay"></div>
 			<div class="container">
 				<div class="row justify-content-end">
@@ -44,10 +44,10 @@
           </div>
 				</div>
 			</div>
-		</section>
+		</section> --}}
 
 
-    <section class="ftco-section testimony-section bg-light">
+    {{-- <section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center heading-section ftco-animate">
@@ -117,9 +117,9 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> --}}
 
-    <section class="ftco-counter ftco-section img" id="section-counter">
+    {{-- <section class="ftco-counter ftco-section img" id="section-counter">
 			<div class="overlay"></div>
     	<div class="container">
     		<div class="row">
@@ -157,6 +157,6 @@
           </div>
         </div>
     	</div>
-    </section>	
+    </section>	 --}}
 
 @endsection

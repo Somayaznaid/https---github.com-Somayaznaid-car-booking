@@ -173,7 +173,7 @@
           <div class="car-details">
             <div class="img rounded" style="background-image: url({{ asset('images/'.$car->img_1) }});"></div>
             <div class="text text-center">
-              <span class="subheading">Cheverolet</span>
+              <span class="subheading">{{$car->year_of_manufacture}}</span>
 			  
               <h2>{{$car->name}}</h2>
             </div>
@@ -187,7 +187,7 @@
           <div class="car-details">
             <div class="img rounded" style="background-image: url({{ asset('images/'.$car->img_2) }});"></div>
             <div class="text text-center">
-              <span class="subheading">Cheverolet</span>
+              <span class="subheading">{{$car->year_of_manufacture}}</span>
               <h2>{{$car->name}}</h2>
             </div>
           </div>
@@ -200,7 +200,7 @@
           <div class="car-details">
             <div class="img rounded" style="background-image: url({{ asset('images/'.$car->img_3) }});"></div>
             <div class="text text-center">
-              <span class="subheading">Cheverolet</span>
+              <span class="subheading">{{$car->year_of_manufacture}}</span>
               <h2>{{$car->name}}</h2>
             </div>
           </div>
@@ -330,14 +330,18 @@
 
 	  <div class="row">
     <div class="container">
+      
         <div class="row d-flex mb-5 contact-info">
             <div class="col-md-12 block-9 mb-md-5">
 	
+             
 
-
-              <form id="bookingForm" method="POST" action="{{ route('bookings.storeBooking') }}" class="bg-light p-5 contact-form" onsubmit="validateForm(event)">
+              <form id="" method="POST" action="{{ route('bookings.storeBooking') }}" class="bg-light p-5 contact-form" onsubmit="validateForm(event)">
                 @csrf
                 <!-- Booking form inputs -->
+                <h3 class="mb-1">
+                  BOOK KNOW: 
+                </h3> <br>
                 <div class="form-group d-flex">
                   <input type="text" class="form-control mr-3" name="start_location" id="start_location" placeholder="Picking Up Location">
                   <span class="error-message" id="startLocationError"></span>
@@ -374,20 +378,26 @@
                     
                 <!-- Payment form inputs -->
                 <div class="form-group">
-                  <input type="checkbox" name="paymentMethod" id="cardCheckbox" onclick="toggleCardInputs()">
-                  <label for="cardCheckbox">Using Card</label>
-                  <input type="checkbox" name="paymentMethod" id="cashCheckbox" onclick="toggleUserNumberInput()">
-                  <label for="cashCheckbox">Cash</label>
-          
+                  <div>
+                  <input type="radio" name="paymentMethod" id="cardradio" onclick="toggleCardInputs()">
+                  <label for="cardradio">Using Card  </label>
+                  </div>
+
+                  <div>
+                  <input type="radio" name="paymentMethod" id="cashradio" onclick="toggleUserNumberInput()">
+                  <label for="cashradio">Cash</label>
+                  </div>
                   <div id="cardInputs" style="display: none;">
-                    <input type="text" class="form-control col-4" name="cardNumber" placeholder="Card Number">
-                    <input type="text" class="form-control col-4" name="cardHolder" placeholder="Card Holder">
-                    <input type="text" class="form-control col-4" name="cvc" placeholder="CVC">
-                    <input type="date" class="form-control col-4" name="exp_day" placeholder="Expiration Day">
+                    <input type="text" class="form-control col-4 m-1" name="userName" placeholder="User Name">
+                    <input type="text" class="form-control col-4 m-1" name="cardNumber" placeholder="Card Number">
+                    <input type="text" class="form-control col-4 m-1" name="cardHolder" placeholder="Card Holder">
+                    <input type="text" class="form-control col-4 m-1" name="cvc" placeholder="CVC">
+                    <input type="date" class="form-control col-4 m-1" name="exp_day" placeholder="Expiration Day">
                   </div>
           
                   <div id="userNumberInput" style="display: none;">
-                    <input type="text" class="form-control col-4" name="user_number" placeholder="User Number">
+                    <input type="text" class="form-control col-4 m-1" name="userName" placeholder="User Name">
+                    <input type="text" class="form-control col-4 m-1" name="user_number" placeholder="User Number">
                   </div>
                 </div>             
           
@@ -462,27 +472,8 @@
 						    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
 						      <div class="row">
 							   		<div class="col-md-7">
-							   			<h3 class="head">23 Reviews</h3>
-							   			<div class="review d-flex">
-									   		<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-									   		<div class="desc">
-									   			<h4>
-									   				<span class="text-left">Jacob Webb</span>
-									   				<span class="text-right">14 March 2018</span>
-									   			</h4>
-									   			<p class="star">
-									   				<span>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-									   					<i class="ion-ios-star"></i>
-								   					</span>
-								   					<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-									   			</p>
-									   			<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-									   		</div>
-									   	</div>
+							   			<h3 class="head">Reviews</h3>
+							   			
                         
                    
                        @foreach ($ratings as $rating)
@@ -553,7 +544,7 @@
                   
                       <div class="form-group">
                           <!-- Add a button to trigger the popup -->
-                          <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Rate Car</button>
+                          <button id="bookNowBtn" class="btn btn-primary py-3 px-5">Comment</button>
                       </div>
                   </form>
 
@@ -564,10 +555,7 @@
                  
                     @endif
                       
-                     <div>
-                      <!-- Other HTML content -->
-                      <livewire:rating-component />
-                    </div>
+                    
                      
 
                     
@@ -608,9 +596,9 @@
 function toggleCardInputs() {
     var cardInputs = document.getElementById("cardInputs");
     var userNumberInput = document.getElementById("userNumberInput");
-    var cardCheckbox = document.getElementById("cardCheckbox");
+    var cardradio = document.getElementById("cardradio");
 
-    if (cardCheckbox.checked) {
+    if (cardradio.checked) {
       cardInputs.style.display = "block";
       userNumberInput.style.display = "none";
     } else {
@@ -621,9 +609,9 @@ function toggleCardInputs() {
   function toggleUserNumberInput() {
     var cardInputs = document.getElementById("cardInputs");
     var userNumberInput = document.getElementById("userNumberInput");
-    var cashCheckbox = document.getElementById("cashCheckbox");
+    var cashradio = document.getElementById("cashradio");
 
-    if (cashCheckbox.checked) {
+    if (cashradio.checked) {
       cardInputs.style.display = "none";
       userNumberInput.style.display = "block";
     } else {
@@ -637,7 +625,7 @@ function toggleCardInputs() {
   var startDateInput = document.getElementById("start_date");
   var endDateInput = document.getElementById("end_date");
   var startHourInput = document.getElementById("start_hour");
-  var cardCheckbox = document.getElementById("cardCheckbox");
+  var cardradio = document.getElementById("cardradio");
   var cardNumberInput = document.getElementsByName("cardNumber")[0];
   var cardHolderInput = document.getElementsByName("cardHolder")[0];
   var cvcInput = document.getElementsByName("cvc")[0];
@@ -685,7 +673,7 @@ function toggleCardInputs() {
   }
 
   // Validate payment method
-  if (cardCheckbox.checked) {
+  if (cardradio.checked) {
     // Card payment selected
     if (cardNumberInput.value.trim() === "") {
       document.getElementById("cardInputs").style.display = "block";

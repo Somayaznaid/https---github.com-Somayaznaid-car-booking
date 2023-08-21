@@ -17,15 +17,17 @@ class BookController extends Controller
      {
 
         $car = Car::find($id);
-        $ratings = Rating::with('user')->get();
+        $ratings = Rating::where('car_id' , $id)->get();
         return view('car_single' , compact('car', 'ratings'));
      }
 
      public function carSinglePageSale(string $id)
      {
          $car = Car::find($id);
-         $ratings = Rating::with('user')->get();
-     
+        //  $ratings = Rating::with('user')->get();
+          $ratings = Rating::where('car_id' , $id)
+           ->get();
+        
          return view('car_single_sale', compact('car', 'ratings'));
      }
 
@@ -70,15 +72,7 @@ class BookController extends Controller
 
     return redirect()->back();
 }
- 
-// public function showBookRentCar()
-// {
-//     $car = Car::where('type_id', 1)->get();
-//     dd($car);
-//     $carSale = Car::where('type_id', 2)->get();
 
-//     return view('index')->with(compact('car', 'carSale'));
-// }
 
 public function showAvailableCars(Request $request)
 {
@@ -124,7 +118,9 @@ public function rating(Request $request, $id)
     $rating->car_id = $request->input('car_id');
     $rating->user_id = Auth::id();
     $rating->save();
-
+    
+    $ratings = Rating::where('car_id' , 13)->get();
+    // dd($ratings);
     return redirect()->back();
 }
 

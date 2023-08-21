@@ -120,7 +120,7 @@ public function deleteProduct(string $id)
 
    
     if (Booking::where('car_id' , $id)->exists()) {
-        
+        // dd(Booking::where('car_id' , $id)->get());
         return redirect('/product')->with('warning', 'Deleting this car is not allowed as it has associated bookings, and removing it would compromise the accuracy of the booking records.');
 
     } else {

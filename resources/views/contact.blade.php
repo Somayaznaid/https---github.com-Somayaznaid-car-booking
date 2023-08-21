@@ -24,7 +24,7 @@
 			          	<div class="icon mr-3">
 			          		<span class="icon-map-o"></span>
 			          	</div>
-			            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+			            <p><span>Address:</span> Amman Jordan</p>
 			          </div>
 		          </div>
 		          <div class="col-md-12">
@@ -40,7 +40,7 @@
 			          	<div class="icon mr-3">
 			          		<span class="icon-envelope-o"></span>
 			          	</div>
-			            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+			            <p><span>Email:</span> <a href="mailto:info@car.rent.com">car.rent@yoursite.com</a></p>
 			          </div>
 		          </div>
 		        </div>
