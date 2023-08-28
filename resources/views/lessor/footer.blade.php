@@ -12,7 +12,7 @@
 <!-- https://jquery.com/download/ -->
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <!-- https://momentjs.com/ -->
-<script src="{{ asset('js/Chart.min.js') }}"></script>
+{{-- <script src="{{ asset('js/Chart.min.js') }}"></script> --}}
 <!-- http://www.chartjs.org/docs/latest/ -->
 <script src="{{ asset('js/bootstrap_lessor.min.js') }}"></script>
 <!-- https://getbootstrap.com/ -->
@@ -20,31 +20,31 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
-<script>
-    Chart.defaults.global.defaultFontColor = 'white';
-    let ctxLine,
-        ctxBar,
-        ctxPie,
-        optionsLine,
-        optionsBar,
-        optionsPie,
-        configLine,
-        configBar,
-        configPie,
-        lineChart;
-    barChart, pieChart;
+{{-- <script> --}}
+    {{-- // Chart.defaults.global.defaultFontColor = 'white';
+    // let ctxLine,
+    //     ctxBar,
+    //     ctxPie,
+    //     optionsLine,
+    //     optionsBar,
+    //     optionsPie,
+    //     configLine,
+    //     configBar,
+    //     configPie;
+        // lineChart;
+    // barChart, pieChart;
     // DOM is ready
-    $(function () {
-        drawLineChart(); // Line Chart
-        drawBarChart(); // Bar Chart
-        drawPieChart(); // Pie Chart
+    // $(function () {
+    //     // drawLineChart(); // Line Chart
+    //     // drawBarChart(); // Bar Chart
+    //     drawPieChart(); // Pie Chart
 
-        $(window).resize(function () {
-            updateLineChart();
-            updateBarChart();
-        });
-    })
-</script>
+    //     $(window).resize(function () {
+    //         updateLineChart();
+    //         // updateBarChart();
+    //     });
+    // }) --}}
+{{-- </script> --}}
 </body>
 
 </html>

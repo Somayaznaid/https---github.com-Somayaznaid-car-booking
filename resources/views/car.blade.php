@@ -19,80 +19,103 @@
     <section class="ftco-section bg-light">
         <div class="container">
             <!-- Add filter form here -->
+            <div class="row d-flex mb-5 contact-info">
+                <div class="col-md-12 block-9 mb-md-5">
+                    <form action="{{ route('cars.filterCars') }}" method="GET" class="bg-light p-5 contact-form">
+                        <div class="m-2">
+                            <label>
+                                <input type="checkbox" name="type_id" value="2"> For Sale
+                            </label>
+                            <label>
+                                <input type="checkbox" name="type_id" value="1"> For Booking
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" name="manual" value="manual"> Manual Transmission
+                            </label>
+                            <label>
+                                <input type="checkbox" name="automatic" value="automatic"> Automatic Transmission
+                            </label>
+                            <br>
 
-			<form action="{{ route('cars.filterCars') }}" method="GET">
-				<label>
-					<input type="checkbox" name="2" value="1"> For Sale
-				</label>
-				<label>
-					<input type="checkbox" name="1" value="1"> For Booking
-				</label>
-				<br>
-				<label>
-					<input type="checkbox" name="manual" value="1"> Manual Transmission
-				</label>
-				<label>
-					<input type="checkbox" name="automatic" value="1"> Automatic Transmission
-				</label>
-				<br>
-                <label>
-				<input type="text" name="name" placeholder="Car Name">
-			    </label>
-				<br>
-				<label>
-					<input type="text" name="year_of_manufacture" placeholder="Year Of Manufacture">				</label>
-				<br>
-				<label>
-					<input type="text" name="mileage" placeholder="Mileage">			
-				</label>
-				<br>
-				<label>
-					<input type="text" name="luggage" placeholder="Luggage Capacity">
-				</label>
-				<br>
-				<label>
-					<input type="text" name="seats" placeholder="Number of Seats">
-				</label>
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <label class="mr-1 col-3">
+                                <input type="text" name="name" class="form-control" placeholder="Car Name">
+                            </label>
+
+                            <label class="col-3">
+                                <input type="text" class="form-control" name="year_of_manufacture"
+                                    placeholder="Year Of Manufacture">
+                            </label>
+
+                        </div>
+
+                        <div class="form-group d-flex">
 
 
-				<!-- Repeat for other checkboxes... -->
-				<button type="submit">Filter</button>
-			</form>
-			
-			<div class="row">
-			@foreach($filterCars as $filterCar)
-				<!-- Display car information -->
+                            <label class="mr-1 col-3">
+                                <input type="text" class="form-control" name="mileage" placeholder="Mileage">
+                            </label>
 
-				<div class="col-md-4">
+                            <label class="col-3">
+                                <input type="text" class="form-control" name="luggage" placeholder="Luggage Capacity">
+                            </label>
 
-					<div class="car-wrap rounded ftco-animate">
-						<div class="img rounded d-flex align-items-end"
-							style="background-image: url('{{ asset('images/' . $filterCar['img_1']) }}');">
-						</div>
-						<div class="text">
-							<h2 class="mb-0"><a href="car-single.html">{{ $filterCar['name'] }}</a></h2>
-							<div class="d-flex mb-3">
-								<span class="cat">{{ $filterCar['transmission'] }}</span>
-								<p class="price ml-auto">${{ $filterCar['price'] }} <span>/day</span></p>
-							</div>
-							<p class="d-flex mb-0 d-block">
-								@if ($filterCar['type_id'] == 1)
-									<a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
-										class="btn btn-secondary py-2 ml-1">Book now</a>
-								@else
-									<a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
-										class="btn btn-secondary py-2 ml-1">Buy now</a>
-								@endif
 
-							</p>
-						</div>
+                        </div>
+                        <div class="form-group d-flex">
+                            <label class="col-6">
+                                <input type="text" class="form-control mr-3" name="seats"
+                                    placeholder="Number of Seats">
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                        <button type="submit" class="btn btn-primary ml-3">Filter</button>
 					</div>
+                    </form>
+                </div>
+            </div>
 
-				</div>
+			{{-- <div id="filtered-cars"> --}}
+            <div class="row">
 
+				
+                @foreach ($filterCars as $filterCar)
+                   
 
-			@endforeach
-			
+                    <div class="col-md-4">
+
+                        <div class="car-wrap rounded ftco-animate">
+                            <div class="img rounded d-flex align-items-end"
+                                style="background-image: url('{{ asset('images/' . $filterCar['img_1']) }}');">
+                            </div>
+                            <div class="text">
+                                <h2 class="mb-0"><a href="car-single.html">{{ $filterCar['name'] }}</a></h2>
+                                <div class="d-flex mb-3">
+                                    <span class="cat">{{ $filterCar['transmission'] }}</span>
+                                    <p class="price ml-auto">${{ $filterCar['price'] }} <span>/day</span></p>
+                                </div>
+                                <p class="d-flex mb-0 d-block">
+                                    @if ($filterCar['type_id'] == 1)
+                                        <a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
+                                            class="btn btn-secondary py-2 ml-1">Book now</a>
+                                    @else
+                                        <a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
+                                            class="btn btn-secondary py-2 ml-1">Buy now</a>
+                                    @endif
+
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                @endforeach
+
+			{{-- </div> --}}
+
             </div>
 
 
@@ -102,12 +125,18 @@
         </div>
     </section>
 
-	  
+
     <section class="ftco-section bg-light">
-		<h2>
-			Cars:
-		</h2>
+
         <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+                    <span class="subheading">What all offer</span>
+                    <h2 class="mb-2">Cars: </h2>
+                </div>
+            </div>
+
             <div class="row">
                 @foreach ($cars as $car)
                     <div class="col-md-4">
@@ -188,19 +217,29 @@
         </div>
     </section>
 
-    <script>
-        const transmissionAutomatic = document.getElementById('transmission-automatic');
-        const transmissionManual = document.getElementById('transmission-manual');
-        const transmissionOptions = document.getElementById('transmission-options');
+	<script>
+		// document.addEventListener('DOMContentLoaded', function () {
+		// 	const filterForm = document.getElementById('filter-form');
+		// 	const filteredCarsContainer = document.getElementById('filtered-cars');
+		
+		// 	filterForm.addEventListener('submit', function (event) {
+		// 		event.preventDefault();
+		// 		const formData = new FormData(filterForm);
+		
+		// 		fetch('{{ route('cars.filterCars') }}', {
+		// 			method: 'POST', // Use POST to avoid caching issues
+		// 			body: formData
+		// 		})
+		// 		.then(response => response.text())
+		// 		.then(data => {
+		// 			filteredCarsContainer.innerHTML = data;
+		// 		})
+		// 		.catch(error => {
+		// 			console.error('Error:', error);
+		// 		});
+		// 	});
+		// });
+		</script>
 
-        transmissionAutomatic.addEventListener('click', function() {
-            transmissionOptions.style.display = 'block';
-        });
 
-        transmissionManual.addEventListener('click', function() {
-            transmissionOptions.style.display = 'none';
-        });
-
-        // Repeat the same pattern for other filters
-    </script>
 @endsection

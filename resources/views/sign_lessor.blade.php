@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <div class="main">
+    <div class="main_lessor">
 
         <!-- Sign up form -->
         <section class="signup">
@@ -84,8 +84,8 @@
     </div>
 
     <!-- JS -->
-    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
+    {{-- <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('js/main.js')}}"></script> --}}
    <script> 
    
    document.addEventListener('DOMContentLoaded', function() {

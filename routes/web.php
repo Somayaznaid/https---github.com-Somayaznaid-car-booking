@@ -101,6 +101,8 @@ Route::get('/car', [CarController::class, 'filterCars'])->name('filterCars');
 
 Route::get('/car', [CarController::class, 'filterCars'])->name('cars.filterCars');
 
+// Route::get('/car_single', [CarController::class, 'carSinglePage'])->name('car_single');
+
 
 
 ///////////////////////////////////////////////////////////////

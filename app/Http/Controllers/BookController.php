@@ -9,6 +9,7 @@ use App\Models\Car;
 use App\Models\Booking;
 use App\Models\Rating;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class BookController extends Controller
 {
@@ -18,8 +19,38 @@ class BookController extends Controller
 
         $car = Car::find($id);
         $ratings = Rating::where('car_id' , $id)->get();
-        return view('car_single' , compact('car', 'ratings'));
+        // $booking = Booking::where('car_id', $id)->get('start_date');
+        // $booking2 = Booking::where('car_id', $id)->get('end_date');
+
+        if(!($car)){
+          return '<h1 style="text-align:center ;color=red;">Sorry car id not found</h1>';
+        }
+        $booking = Booking::where('car_id', $id)->pluck('start_date')->toArray();
+        $booking2 = Booking::where('car_id', $id)->pluck('end_date')->toArray();
+          
+        // Assuming $booking and $booking2 are arrays of start and end dates
+
+        if ($booking) {
+        $dateRange = CarbonPeriod::create(
+            Carbon::createFromFormat('Y-m-d', $booking[0]),
+            Carbon::createFromFormat('Y-m-d', $booking2[0])
+        );
+       
+        $dates = array_map(fn ($date) => $date->format('Y-m-d'), iterator_to_array($dateRange));
+        // dd($dates);
+        return view('car_single' , compact('car', 'ratings','dates'));
+
+    }
+
+    $dates = null;
+    
+        return view('car_single' , compact('car', 'ratings', 'dates'));
      }
+
+
+
+
+
 
      public function carSinglePageSale(string $id)
      {
@@ -127,20 +158,24 @@ public function rating(Request $request, $id)
 
 
 
-    public function showBookDay(string $id){
+    // public function showBookDay(string $id){
         
-        $book= Booking::find()->where('');
-        return view('car_single' , compact('book'));
-    }
+    //     $book= Booking::find()->where('');
+    //     return view('car_single' , compact('book'));
+    // }
+
+    // public function showBookDayJson()
+    //   {
+    //     //  $booking = Booking::findOrFail($id); // Retrieve the booking with the specified ID
+    
+    //     //  $start_date = $booking->start_date; // Access the start_date column
+    //     //  $end_date = $booking->end_date; // Access the end_date column
+
+    //      $booking = Booking::all(['start_date']);
+
+    //      return view('car_single', compact('booking'));
+    //   }
+
 }
 
 
-// public function showBookDay(string $id)
-// {
-//     $booking = Booking::findOrFail($id); // Retrieve the booking with the specified ID
-    
-//     $start_date = $booking->start_date; // Access the start_date column
-//     $end_date = $booking->end_date; // Access the end_date column
-
-//     return view('car_single', compact('booking', 'start_date', 'end_date'));
-// }

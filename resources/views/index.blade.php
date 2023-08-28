@@ -35,11 +35,7 @@
                 <form action="{{ route('showAvailableCars') }}" method="POST" class="request-form ftco-animate bg-primary" id="carForm">
                   @csrf
                   <h2>Make your trip</h2>
-                  <div class="form-group">
-                    <label for="" class="label">Country</label>
-                    <input type="text" name="country" class="form-control" placeholder="Country">
-                    <small id="Error" class="text-danger"></small>
-                  </div>
+               
                   <div class="form-group">
                     <label for="" class="label">Pick-up location</label>
                     <input type="text" name="pick_up_location" class="form-control" placeholder="City, Airport, Station, etc">
@@ -134,7 +130,7 @@
         </div>
       </div>
         <div class="row">
-            <div class="col-md-12 m-3">
+          
                    {{-- @foreach ($booking as $bookings)
                      
                    
@@ -144,8 +140,9 @@
                     @if ($availableCars->isEmpty())
                         <p>No car available for the selected dates.</p>
                     @else
-                        <div class="col-md-12">
-                            <div class="col-md-4">
+                        {{-- <div class="col-md-12"> --}}
+                            <div class="col-md-12">
+                              <div class="carousel-car owl-carousel">
                                 @foreach($availableCars as $car)
                                     <div class="item">
                                         <div class="car-wrap rounded ftco-animate">
@@ -164,15 +161,16 @@
                                         </div>
                                     </div>
                                 @endforeach
+                              </div>
                             </div>
-                        </div>
+                        {{-- </div> --}}
                     @endif
 
                     {{-- @endif
                     @endforeach --}}
 
                 @endif
-            </div>
+          
         </div>
     </div>
 </section>
@@ -547,7 +545,6 @@
         });
     
         // Retrieve form field values
-        var country = document.getElementsByName('country')[0].value;
         var pickUpLocation = document.getElementsByName('pick_up_location')[0].value;
         var pickUpDate = document.getElementsByName('pick_up_date')[0].value;
         var dropOffDate = document.getElementsByName('drop_off_date')[0].value;
@@ -559,10 +556,6 @@
         var isValid = true;
 
 
-        if (country === '') {
-          document.getElementById('country').textContent = 'Please enter the Country';
-          isValid = false;
-        }
     
         if (pickUpLocation === '') {
           document.getElementById('pickUpLocationError').textContent = 'Please enter the pick-up location';
