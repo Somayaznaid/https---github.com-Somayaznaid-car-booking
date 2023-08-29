@@ -21,7 +21,7 @@
             <div class="container_log">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="images/electric-car.png"  class="login_img" alt="sing up image"></figure>
+                        <figure><img src="images/sport-car.png"  class="login_img" alt="sing up image"></figure>
                         <a href="sign_up" class="signup-image-link">Create an account</a>
                     </div>
 

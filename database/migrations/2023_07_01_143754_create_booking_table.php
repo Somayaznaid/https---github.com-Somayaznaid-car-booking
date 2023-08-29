@@ -21,10 +21,12 @@ return new class extends Migration
             $table->time('end_hour');
             $table->unsignedBigInteger('lessor_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+            
             
             $table->foreign('lessor_id')->references('id')->on('lessor');
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->timestamps();
         });
     }
 

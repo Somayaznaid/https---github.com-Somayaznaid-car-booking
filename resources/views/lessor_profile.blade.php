@@ -19,9 +19,7 @@
               <i class="far fa-trash-alt tm-product-delete-icon"></i>
             </a> --}}
           </div>
-          <button class="btn btn-primary btn-block text-uppercase">
-            Upload New Photo
-          </button>
+         
         </div>
       </div>
       <div class="tm-block-col tm-col-account-settings">

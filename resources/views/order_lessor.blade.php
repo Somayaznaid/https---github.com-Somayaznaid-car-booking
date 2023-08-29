@@ -130,11 +130,11 @@
     <script src="{{ asset('js/bootstrap_lessor.min.js') }}"></script>
     <!-- https://getbootstrap.com/ -->
     <script>
-        $(function() {
-            $(".tm-product-name").on("click", function() {
-                window.location.href = "edit-product.html";
-            });
-        });
+        // $(function() {
+        //     $(".tm-product-name").on("click", function() {
+        //         window.location.href = "edit-product.html";
+        //     });
+        // });
 
         $('#myModal').on('shown.bs.modal', function() {
             $('#myInput').trigger('focus')

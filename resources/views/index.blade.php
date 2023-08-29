@@ -38,7 +38,22 @@
                
                   <div class="form-group">
                     <label for="" class="label">Pick-up location</label>
-                    <input type="text" name="pick_up_location" class="form-control" placeholder="City, Airport, Station, etc">
+                    {{-- <input type="text" name="pick_up_location" class="form-control" placeholder="City"> --}}
+                    <select name="pick_up_location"  class="form-control">
+                      <option value="" class="text-danger">Select a city</option>
+                      <option value="Amman">Amman</option>
+                      <option value="Irbid">Irbid</option>
+                      <option value="Zarqa">Zarqa</option>
+                      <option value="Aqaba">Aqaba</option>
+                      <option value="Madaba">Madaba</option>
+                      <option value="Ma'an">Ma'an</option>
+                      <option value="Jerash">Jerash</option>
+                      <option value="Ajloun">Ajloun</option>
+                      <option value="Karak">Karak</option>
+                      <option value="Tafilah">Tafilah</option>
+                      <option value="Mafraq">Mafraq</option>
+                      <option value="Balqa">Balqa</option>
+                  </select>
                     <small id="pickUpLocationError" class="text-danger"></small>
                   </div>
                   {{-- <div class="form-group">
@@ -76,7 +91,7 @@
                     <small id="pickUpTimeError" class="text-danger"></small>
                   </div>
                   <div class="form-group">
-                    <input type="submit" value="Rent A Car Now" class="btn btn-secondary py-3 px-4">
+                    <input type="submit" value="Show Available Car" class="btn btn-secondary py-3 px-4">
                   </div>
                 </form>
 
@@ -110,7 +125,7 @@
 					            </div>      
 					          </div>
 					        </div>
-					        <p><a href="#sale" class="btn btn-primary py-3 px-4">OR Sale Your Car</a></p>
+					        <p><a href="#sale" class="btn btn-primary py-3 px-4">OR Go To Sale Section</a></p>
 	  						</div>
 	  					</div>
 	  				</div>

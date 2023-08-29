@@ -179,7 +179,7 @@
                                                 </button>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                {{-- <div class="modal fade" id="exampleModal" tabindex="-1"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -204,6 +204,42 @@
                                                               <form action="{{ url('admin_table') }}" method="POST"></form>
                                                                 <button type="button" class="btn btn-primary font-weight-bold text-xs">Save
                                                                     changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
+
+
+                                                <div class="modal fade tm-block tm-block-products" id="exampleModal{{ $user['id'] }}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete
+                                                                    User:
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to delete {{ $user->name }} ?
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <a href="admin_table/delete/user {{ $user['id'] }}"
+                                                              class="text-light font-weight-bold text-xs btn btn-danger" data-toggle="tooltip"
+                                                              data-original-title="Edit user">
+                                                              Delete
+                                                              </a>
+
+                                                                {{-- <form action="{{ url("product_lessor") }}" method="POST">
+                                                                <button type="button" class="btn btn-primary">Save
+                                                                    changes</button>
+                                                                </form> --}}
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -336,7 +372,7 @@
                                                 </button>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                {{-- <div class="modal fade" id="exampleModal" tabindex="-1"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -364,7 +400,35 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div> --}}
+
+
+                                                <div class="modal fade" id="exampleModal-{{ $lessor->id }}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Lessor: {{ $lessor->name }}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure you want to delete the lessor: {{ $lessor->name }}?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="{{ route('deleteLessor', ['id' => $lessor->id]) }}"
+                                                                    class="text-danger font-weight-bold text-xs" data-toggle="tooltip"
+                                                                    data-original-title="Delete lessor">
+                                                                    Delete
+                                                                </a>
+                                                                <!-- You can replace 'route' with the appropriate URL to handle the deletion action -->
+                                            
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+
+                                                
 
 
                                             </td>

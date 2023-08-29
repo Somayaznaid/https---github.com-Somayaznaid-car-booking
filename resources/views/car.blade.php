@@ -88,7 +88,9 @@
 			{{-- <div id="filtered-cars"> --}}
             <div class="row">
 
-				
+				@if ($filterCars)
+                    
+               
                 @foreach ($filterCars as $filterCar)
                    
 
@@ -119,6 +121,19 @@
 
                     </div>
                 @endforeach
+
+
+                @else
+                    
+
+                <div class="col-md-4">
+
+                    <div class="car-wrap rounded ftco-animate">
+                      No car Availbale
+                    </div>
+
+                </div>    
+                @endif
 
 			{{-- </div> --}}
 
