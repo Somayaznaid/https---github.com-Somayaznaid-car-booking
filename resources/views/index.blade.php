@@ -40,19 +40,19 @@
                     <label for="" class="label">Pick-up location</label>
                     {{-- <input type="text" name="pick_up_location" class="form-control" placeholder="City"> --}}
                     <select name="pick_up_location"  class="form-control">
-                      <option value="" class="text-danger">Select a city</option>
-                      <option value="Amman">Amman</option>
-                      <option value="Irbid">Irbid</option>
-                      <option value="Zarqa">Zarqa</option>
-                      <option value="Aqaba">Aqaba</option>
-                      <option value="Madaba">Madaba</option>
-                      <option value="Ma'an">Ma'an</option>
-                      <option value="Jerash">Jerash</option>
-                      <option value="Ajloun">Ajloun</option>
-                      <option value="Karak">Karak</option>
-                      <option value="Tafilah">Tafilah</option>
-                      <option value="Mafraq">Mafraq</option>
-                      <option value="Balqa">Balqa</option>
+                      <option value="" class="text-dark">Select a city</option>
+                      <option value="Amman" class="text-dark">Amman</option>
+                      <option value="Irbid" class="text-dark">Irbid</option>
+                      <option value="Zarqa" class="text-dark">Zarqa</option>
+                      <option value="Aqaba" class="text-dark">Aqaba</option>
+                      <option value="Madaba" class="text-dark">Madaba</option>
+                      <option value="Ma'an" class="text-dark">Ma'an</option>
+                      <option value="Jerash" class="text-dark">Jerash</option>
+                      <option value="Ajloun" class="text-dark">Ajloun</option>
+                      <option value="Karak" class="text-dark">Karak</option>
+                      <option value="Tafilah" class="text-dark">Tafilah</option>
+                      <option value="Mafraq" class="text-dark">Mafraq</option>
+                      <option value="Balqa" class="text-dark">Balqa</option>
                   </select>
                     <small id="pickUpLocationError" class="text-danger"></small>
                   </div>
