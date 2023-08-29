@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,12 @@
     <title>Sign Up</title>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="{{asset('fonts/material-icon/css/material-design-iconic-font.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('fonts/material-icon/css/material-design-iconic-font.min.css') }}">
 
     <!-- Main css -->
-    <link rel="stylesheet" href="{{asset('css/style_sign.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/style_sign.css') }}">
 </head>
+
 <body>
 
     <div class="main">
@@ -25,49 +27,44 @@
                         <form method="POST" action="{{ route('create') }}" class="register-form" id="register-form">
                             @csrf
                             <div class="form-group">
-                              <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                              <input type="text" name="name" id="name" placeholder="Your Name" required/>
-                              <small id="name-error" class="form-error"></small>
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="name" id="name" placeholder="Your Name" required />
+                                <small id="name-error" class="form-error"></small>
                             </div>
-                          
+
                             <div class="form-group">
-                              <label for="email"><i class="zmdi zmdi-email"></i></label>
-                              <input type="email" name="email" id="email" placeholder="Your Email" required/>
-                              <small id="email-error" class="form-error"></small>
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Your Email" required />
+                                <small id="email-error" class="form-error"></small>
                             </div>
-                          
+
                             <div class="form-group">
-                              <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                              <input type="password" name="password" id="pass" placeholder="Password" required/>
-                              <small id="password-error" class="form-error"></small>
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="pass" placeholder="Password" required />
+                                <small id="password-error" class="form-error"></small>
                             </div>
-                          
+
                             <div class="form-group password-input">
-                              <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                              <input type="password" name="re_password" id="re-pass" placeholder="Password" required/>
-                              <small id="re-password-error" class="form-error"></small>
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="re_password" id="re-pass" placeholder="Password"
+                                    required />
+                                <small id="re-password-error" class="form-error"></small>
                             </div>
-                          
-                            <div class="form-group">
-                              <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required/>
-                              <label for="agree-term" class="label-agree-term">
-                                <span><span></span></span>
-                                I agree all statements in <a href="#" class="term-service">Terms of service</a>
-                              </label>
-                              <small id="agree-term-error" class="form-error"></small>
-                            </div>
-                          
+
+                           
+
                             <div class="form-group form-button">
-                              <input type="submit" name="signup" id="signup" class="form-submit btn" value="Register"/>
+                                <input type="submit" name="signup" id="signup" class="form-submit btn"
+                                    value="Register" />
                             </div>
-                          </form>
+                        </form>
 
                     </div>
 
                     <div class="signup-image">
-                        <figure><img src="images/smart-car.png" alt="sing up image" class="sign_img"></figure>
+                        <figure><img src="images/sport-car.png" alt="sing up image" class="sign_img"></figure>
                         <a href="login" class="signup-image-link">I am already member</a>
-                        <br> 
+                        <br>
                         <a href="sign_lessor" class="signup-image-link">Sign as Lessor</a>
 
                     </div>
@@ -84,84 +81,63 @@
     </div>
 
     <!-- JS -->
-    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+
+
     <script>
-        // Function to handle form submission
-        function handleFormSubmit(event) {
-          event.preventDefault(); // Prevent default form submission
-      
-          // Reset error messages
-          resetErrors();
-      
-          // Perform form validation
-          var nameInput = document.getElementById('name');
-          var emailInput = document.getElementById('email');
-          var passwordInput = document.getElementById('pass');
-          var rePasswordInput = document.getElementById('re-pass');
-          var agreeTermCheckbox = document.getElementById('agree-term');
-      
-          if (nameInput.value.trim() === '') {
-            showError('name', 'Please enter your name');
-            nameInput.focus();
-            return;
-          }
-      
-          if (emailInput.value.trim() === '') {
-            showError('email', 'Please enter your email');
-            emailInput.focus();
-            return;
-          }
-          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(emailInput.value.trim())) {
-           showError('email', 'Please enter a valid email address');
-           emailInput.focus();
-           return;
-          }
-          if (passwordInput.value.trim() === '') {
-            showError('password', 'Please enter a password');
-            passwordInput.focus();
-            return;
-          }
-      
-          if (rePasswordInput.value.trim() === '') {
-            showError('re-pass', 'Please confirm your password');
-            rePasswordInput.focus();
-            return;
-          }
-      
-          if (passwordInput.value !== rePasswordInput.value) {
-            showError('re-pass', 'Passwords do not match');
-            rePasswordInput.focus();
-            return;
-          }
-      
-          if (!agreeTermCheckbox.checked) {
-            showError('agree-term', 'Please agree to the terms');
-            return;
-          }
-      
-          // If all validations pass, submit the form
-          document.getElementById('register-form').submit();
+        const form = document.getElementById("register-form");
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("pass");
+        const rePasswordInput = document.getElementById("re-pass");
+        const nameError = document.getElementById("name-error");
+        const emailError = document.getElementById("email-error");
+        const passwordError = document.getElementById("password-error");
+        const rePasswordError = document.getElementById("re-password-error");
+        const submitButton = document.getElementById("signup");
+
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        submitButton.addEventListener("click", function(event) {
+            let isValid = true;
+
+            clearErrors();
+
+            if (nameInput.value.trim() === "") {
+                isValid = false;
+                nameError.textContent = "Name is required";
+            }
+
+            if (!emailRegex.test(emailInput.value)) {
+                isValid = false;
+                emailError.textContent = "Please enter a valid email address.";
+            }
+
+            if (passwordInput.value.length < 6) {
+                isValid = false;
+                passwordError.textContent = "Password must be at least 6 characters long";
+            }
+
+            if (passwordInput.value !== rePasswordInput.value) {
+                isValid = false;
+                rePasswordError.textContent = "Passwords do not match";
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+
+        function clearErrors() {
+            nameError.textContent = "";
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            rePasswordError.textContent = "";
         }
-      
-        // Function to display an error message
-        function showError(field, message) {
-          var errorElement = document.getElementById(field + '-error');
-          errorElement.innerText = message;
-        }
-      
-        // Function to reset error messages
-        function resetErrors() {
-          var errorElements = document.getElementsByClassName('form-error');
-          for (var i = 0; i < errorElements.length; i++) {
-            errorElements[i].innerText = '';
-          }
-        }
-      
-        // Attach event listener to the form submit button
-        var submitButton = document.getElementById('signup');
-        submitButton.addEventListener('click', handleFormSubmit);
-      </script>
+    </script>
+
+
 </body>
+
 </html>

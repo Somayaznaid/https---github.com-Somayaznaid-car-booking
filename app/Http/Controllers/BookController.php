@@ -90,6 +90,8 @@ class BookController extends Controller
     $booking->car_id = $request->input('car_id');
     $car_price = $request->input('car_price');
 
+    // $booking->timestamps();
+
     $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', $booking->start_date);
     // dd($startDate);
     $endDate = \Carbon\Carbon::createFromFormat('Y-m-d', $booking->end_date);

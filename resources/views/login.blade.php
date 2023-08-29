@@ -32,13 +32,13 @@
                             <!-- Form fields -->
                             <div class="form-group">
                               <label for="your_email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                              <input type="text" name="email" id="your_email" placeholder="Your Email" />
+                              <input type="email" name="email" id="your_email" placeholder="Your Email" />
                               <small id="email-error" class="form-error"></small>
                             </div>
                           
                             <div class="form-group">
                               <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                              <input type="password" name="password" id="your_pass" placeholder="Password" required/>
+                              <input type="password" name="password" id="your_pass" placeholder="Password" required />
                               <small id="password-error" class="form-error"></small>
                             </div>
                           
@@ -51,7 +51,7 @@
                             </div>
                           
                             <div class="form-group form-button">
-                              <input type="submit" name="signin" id="signin" class="form-submit btn" value="Log in"/>
+                              <input type="submit" name="signin" id="submitBtn" class="form-submit btn" value="Log in"/>
                             </div>
                           </form>
 
@@ -63,14 +63,9 @@
                         @endif 
                             </div>
                             
-                        {{-- <div class="social-login">
-                            <span class="social-label">Or login with</span>
-                            <ul class="socials">
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                            </ul>
-                        </div> --}}
+
+
+              
                     </div>
                 </div>
             </div>
@@ -82,56 +77,37 @@
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
     <script>
-        // Function to handle form submission
-        function handleFormSubmit(event) {
-          event.preventDefault(); // Prevent default form submission
-      
-          // Reset error messages
-          resetErrors();
-      
-          // Perform form validation
-          var emailInput = document.getElementById('your_email');
-          var passwordInput = document.getElementById('your_pass');
-      
-          if (emailInput.value.trim() === '') {
-            showError('email', 'Please enter your email');
-            emailInput.focus();
-            return;
-          }
-      
-          if (passwordInput.value.trim() === '') {
-            showError('password', 'Please enter your password');
-            passwordInput.focus();
-            return;
-          }
-      
-          // Perform validations for other fields
-      
-          // If all validations pass, submit the form
-          document.getElementById('login-form').submit();
-        }
-      
-        // Function to display an error message
-        function showError(field, message) {
-          var errorElement = document.getElementById(field + '-error');
-          errorElement.innerText = message;
-        }
-      
-        // Function to reset error messages
-        function resetErrors() {
-          var errorElements = document.getElementsByClassName('form-error');
-          for (var i = 0; i < errorElements.length; i++) {
-            errorElements[i].innerText = '';
-          }
-        }
-      
-        // Attach event listener to the form submit button
-        var submitButton = document.getElementById('signin');
-        submitButton.addEventListener('click', handleFormSubmit);
-      
-        // Optional: Attach event listener to the form on submit event
-        var loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', handleFormSubmit);
+    const emailInput = document.getElementById("your_email");
+    const passwordInput = document.getElementById("your_pass");
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
+    const submitButton = document.getElementById("submitBtn");
+
+    
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    submitButton.addEventListener("click", function (event) {
+      let isValid = true;
+
+      if (!emailRegex.test(emailInput.value)) {
+        isValid = false;
+        emailError.textContent = "Please enter a valid email address.";
+      } else {
+        emailError.textContent = "";
+      }
+
+      if (passwordInput.value.trim() === "") {
+        isValid = false;
+        passwordError.textContent = "Password is required.";
+      } else {
+        passwordError.textContent = "";
+      }
+
+      if (!isValid) {
+        event.preventDefault(); 
+      }
+    });
+        
       </script>
 </body>
 </html>

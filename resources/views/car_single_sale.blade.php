@@ -262,36 +262,7 @@
                   BUYING KNOW :
                 </h3>
                 <br>
-                <!-- Booking form inputs -->
-             {{--    <div class="form-group d-flex">
-                  <input type="text" class="form-control mr-3" name="start_location" id="start_location" placeholder="Picking Up Location">
-                  <span class="error-message" id="startLocationError"></span>
-                  <input type="text" class="form-control" name="end_location" id="end_location" placeholder="Dropping off Location">
-                  <span class="error-message" id="endLocationError"></span>
-                </div>
-              
-                <div class="form-group d-flex">
-                  <input type="date" class="form-control mr-3" name="start_date" id="start_date" onchange="calculateBookingDetails()">
-                  <span class="error-message" id="startDateError"></span>
-                  <input type="date" class="form-control" name="end_date" id="end_date" onchange="calculateBookingDetails()">
-                  <span class="error-message" id="endDateError"></span>
-                </div>
-              
-                <div class="form-group d-flex">
-                  <input type="time" class="form-control mr-3" name="start_hour" id="start_hour">
-                  <span class="error-message" id="startHourError"></span>
-                </div>
-              
-                <div>
-                  <p class="form-group d-flex" id="booking_period"></p>
-                  <p class="form-group d-flex" id="booking_cost"></p>
-                </div>
-              
-                <div class="form-group">
-                  <input type="hidden" class="form-control" name="lessor_id" value="{{$car->lessor_id}}">
-                  <input type="hidden" class="form-control" name="car_id" value="{{$car->id}}">
-                  <input type="hidden" class="form-control" name="car_price" value="{{$car->price}}">
-                </div> --}}
+               
               
                 @if (Auth::check())
 
@@ -309,16 +280,15 @@
                     <label for="cashradio">Cash</label>
                     </div>
                   <div id="cardInputs" style="display: none;">
-                    <input type="text" class="form-control col-4 m-1" name="userName" placeholder="User Name">
+                    <input type="text" class="form-control col-4 m-1" name="userName" placeholder="User Holder">
                     <input type="text" class="form-control col-4 m-1" name="cardNumber" placeholder="Card Number">
-                    <input type="text" class="form-control col-4 m-1" name="cardHolder" placeholder="Card Holder">
                     <input type="text" class="form-control col-4 m-1" name="cvc" placeholder="CVC">
                     <input type="date" class="form-control col-4 m-1" name="exp_day" placeholder="Expiration Day">
                   </div>
           
                   <div id="userNumberInput" style="display: none;">
                     <input type="text" class="form-control col-4 m-1" name="userName" placeholder="User Name">
-                    <input type="text" class="form-control col-4 m-1" name="user_number" placeholder="User Number">
+                    <input type="text" class="form-control col-4 m-1" name="user_number" placeholder="User Phone">
                   </div>
                 </div>             
           

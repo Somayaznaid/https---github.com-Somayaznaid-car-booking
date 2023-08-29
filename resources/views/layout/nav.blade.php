@@ -3,6 +3,10 @@
 
 <head>
     <title>Carbook</title>
+    {{-- <link rel="icon" type="{{ asset('images/1689189813_64aefdb5e94bc') }}" href="path-to-your-favicon"/> --}}
+    <link rel="icon" type="image/png" href="{{ asset('images/1689189813_64aefdb5e94bc.png') }}"/>
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -40,7 +44,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Car<span>Book</span></a>
+            <a class="navbar-brand" href="{{ url('index') }}">Car<span>Book</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu

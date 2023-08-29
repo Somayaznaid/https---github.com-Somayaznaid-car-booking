@@ -88,8 +88,10 @@ public function showCars(){
     {
         $id = Auth::id(); 
         $cars = Car::where('lessor_id', $id)
-            // ->where('type_id', 1)
+        ->orderBy('price', 'asc')
             ->get();
+
+
         
         $bookings = Booking::with('car')
             ->where('lessor_id', $id)

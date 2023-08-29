@@ -49,12 +49,12 @@
                   <div class="d-flex">
                     <div class="form-group mr-2">
                       <label for="" class="label">Pick-up date</label>
-                      <input type="date" name="pick_up_date" class="form-control col-md-12" placeholder="Date">
+                      <input type="date" id="start_date" name="pick_up_date" class="form-control col-md-12" placeholder="Date">
                       <small id="pickUpDateError" class="text-danger"></small>
                     </div>
                     <div class="form-group ml-2">
                       <label for="" class="label">Drop-off date</label>
-                      <input type="date" name="drop_off_date" class="form-control col-md-12" placeholder="Date">
+                      <input type="date" id="end_date" name="drop_off_date" class="form-control col-md-12" placeholder="Date">
                       <small id="dropOffDateError" class="text-danger"></small>
                     </div>
                   </div>
@@ -535,6 +535,23 @@
     </section>	 --}}
 
     <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+
+            document.getElementById('start_date').setAttribute('min', today);
+            document.getElementById('end_date').setAttribute('min', today);
+
+            // Replace this line with your own way of getting bookedDates
+          
+          
+        });
+
       document.getElementById('carForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent form submission
     

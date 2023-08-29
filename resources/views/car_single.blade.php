@@ -232,35 +232,6 @@
             </div>
 
 
-            <!-- <div class="row">
-                                                                                          <div class="container">
-                                                                                            <div class="row d-flex mb-5 contact-info">
-
-                                                                                              <div class="col-md-12 block-9 mb-md-5">
-                                                                                                <form action="#" class="bg-light p-5 contact-form">
-                                                                                                  <div class="form-group">
-                                                                                                    <input type="text" class="form-control" placeholder="Your Name">
-                                                                                                  </div>
-                                                                                                  <div class="form-group">
-                                                                                                    <input type="text" class="form-control" placeholder="Your Email">
-                                                                                                  </div>
-                                                                                                  <div class="form-group">
-                                                                                                    <input type="text" class="form-control" placeholder="Subject">
-                                                                                                  </div>
-                                                                                                  <div class="form-group">
-                                                                                                    <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
-                                                                                                  </div>
-                                                                                                  <div class="form-group">
-                                                                                                    <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-                                                                                                  </div>
-                                                                                                </form>
-                                                                                              
-                                                                                              </div>
-                                                                                            </div>
-                                                                                            
-                                                                                          </div>
-                                                                                     </div> -->
-
 
             <div class="row">
                 <div class="container">
@@ -286,21 +257,23 @@
                                     <span class="error-message" id="endLocationError"></span>
                                 </div>
 
-                                <div class="form-group d-flex">
-                                    <input type="date" placeholder="Select a date" class="form-control mr-3"
+                                <div class="form-group d-flex flex-wrap">
+                                    <input type="date" placeholder="Select a date" class="form-control "
                                         name="start_date" id="start_date" onchange="calculateBookingDetails()">
 
-                                    {{-- <input type="text" placeholder="Select a date" class="form-control mr-3" name="start_date" id="start_date" min="{{ $dates[0] }}" max="{{ end($dates) }}" onchange="calculateBookingDetails()"> --}}
-
-
                                     <span class="error-message" id="startDateError"></span>
+                                   
+                                </div>
+
+                                <div class="form-group d-flex flex-wrap">
+                                    
                                     <input type="date" class="form-control" name="end_date" id="end_date"
                                         onchange="calculateBookingDetails()">
                                     <span class="error-message" id="endDateError"></span>
                                 </div>
 
                                 <div class="form-group d-flex">
-                                    <input type="time" class="form-control mr-3" name="start_hour" id="start_hour">
+                                    <input type="time" class="form-control" name="start_hour" id="start_hour">
                                     <span class="error-message" id="startHourError"></span>
                                 </div>
 
@@ -335,12 +308,12 @@
                                             <label for="cashradio">Cash</label>
                                         </div>
                                         <div id="cardInputs" style="display: none;">
+                                            {{-- <input type="hidden" value="" > --}}
                                             <input type="text" class="form-control col-4 m-1" name="userName"
-                                                placeholder="User Name">
+                                                placeholder="Card Holder">
                                             <input type="text" class="form-control col-4 m-1" name="cardNumber"
                                                 placeholder="Card Number">
-                                            <input type="text" class="form-control col-4 m-1" name="cardHolder"
-                                                placeholder="Card Holder">
+                                            
                                             <input type="text" class="form-control col-4 m-1" name="cvc"
                                                 placeholder="CVC">
                                             <input type="date" class="form-control col-4 m-1" name="exp_day"
@@ -351,7 +324,7 @@
                                             <input type="text" class="form-control col-4 m-1" name="userName"
                                                 placeholder="User Name">
                                             <input type="text" class="form-control col-4 m-1" name="user_number"
-                                                placeholder="User Number">
+                                                placeholder="User Phone">
                                         </div>
                                     </div>
 
@@ -755,7 +728,7 @@
 
         function calculateBookingPeriod(startDate, endDate) {
             var oneDay = 24 * 60 * 60 * 1000; // Milliseconds in a day
-            return Math.round(Math.abs(startDate - endDate) / oneDay) + 1; // Add 1 to include both start and end dates
+            return Math.round(Math.abs(startDate - endDate) / oneDay) + 3; // Add 1 to include both start and end dates
         }
 
         function calculateBookingCost(bookingPeriod, carPrice) {

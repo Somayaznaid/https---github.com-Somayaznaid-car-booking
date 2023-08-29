@@ -31,21 +31,29 @@
                             </label>
                             <br>
                             <label>
-                                <input type="checkbox" name="manual" value="manual"> Manual Transmission
+                                <input type="radio" name="manual" value="manual"> Manual Transmission
                             </label>
                             <label>
-                                <input type="checkbox" name="automatic" value="automatic"> Automatic Transmission
+                                <input type="radio" name="automatic" value="automatic"> Automatic Transmission
                             </label>
                             <br>
 
                         </div>
 
                         <div class="form-group d-flex">
-                            <label class="mr-1 col-3">
+                            <label class="mr-1 col-6">
                                 <input type="text" name="name" class="form-control" placeholder="Car Name">
                             </label>
 
-                            <label class="col-3">
+                           
+
+                        </div>
+
+
+                        <div class="form-group d-flex">
+                           
+
+                            <label class="col-6">
                                 <input type="text" class="form-control" name="year_of_manufacture"
                                     placeholder="Year Of Manufacture">
                             </label>
@@ -55,11 +63,9 @@
                         <div class="form-group d-flex">
 
 
-                            <label class="mr-1 col-3">
-                                <input type="text" class="form-control" name="mileage" placeholder="Mileage">
-                            </label>
+                        
 
-                            <label class="col-3">
+                            <label class="col-6">
                                 <input type="text" class="form-control" name="luggage" placeholder="Luggage Capacity">
                             </label>
 

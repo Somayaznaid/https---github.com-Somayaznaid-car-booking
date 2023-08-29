@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SignController extends Controller
 {
+  
     
     public function create(Request $request)
+
     {
+          
+  
         $validated = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -27,14 +31,18 @@ class SignController extends Controller
                 
             ],
             're_password' => 'required|same:password',
-            'agree-term' => 'required'
+           
         ]);
+
+    
    
        $user = new Users;
-       $user->name = $request -> input('name');
-       $user->email = $request -> input('email');
+       $user->name = $request ->input('name');
+       $user->email = $request ->input('email');
        $user->password = Hash::make($request->input('password'));
        $user->role_id = 1;
+
+    // dd($user);
        $user->save();
 
        Auth::login($user); 
