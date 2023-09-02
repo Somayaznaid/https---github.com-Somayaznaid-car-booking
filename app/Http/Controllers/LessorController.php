@@ -39,7 +39,6 @@ class LessorController extends Controller
     $car->name = $request->input('name');
     $car->description = $request->input('description');
     $car->mileage = $request->input('mileage');
-    $car->mileage = $request->input('city'); 
     $car->price = $request->input('price');
     $car->transmission = $request->input('transmission');
     $car->seats = $request->input('seats');
@@ -58,7 +57,7 @@ class LessorController extends Controller
     $imagePath = $this->storeImage($img_3);
     $car->img_3 = $imagePath;
 
-
+    $car->city = $request->input('city');
     $car->year_of_manufacture = $request->input('year_of_manufacture');
     $car->type_id = $request->input('type_id');
     $car->lessor_id = Auth::id();

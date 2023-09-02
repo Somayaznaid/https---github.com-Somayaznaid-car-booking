@@ -63,13 +63,13 @@
                                             <td class="tm-product-name"><img src="{{ asset('images/' . $car->img_1) }}"
                                                     alt="car" width="50px"></td>
                                             <td>{{ $car->name }}</td>
-                                            <td>{{ $car->price }}$</td>
+                                            <td>{{ $car->price }}JOD</td>
                                             @if ($car->type_id === 1)
                                                 <td>BOOK</td>
                                             @else
                                                 <td>SALE</td>
                                             @endif
-                                            <td>{{ $car->mileage }}</td>
+                                            <td>{{ $car->mileage }} km\l</td>
                                             <td>{{ $car->transmission }}</td>
                                             <td>{{ $car->seats }}</td>
                                             <td>{{ $car->luggage }}</td>

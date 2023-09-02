@@ -26,18 +26,23 @@ return new class extends Migration
             $table->string("city");
             $table->integer("price");
             $table->year("year_of_manufacture");
-            $table->unsignedBigInteger('user_id')->nullable(); // Foreign key column
-            $table->foreign('user_id') // Define foreign key constraint
+            $table->unsignedBigInteger('user_id')->nullable(); 
+            $table->foreign('user_id') 
             ->references('id')
             ->on('users')
             ->onDelete('cascade');
 
-            $table->unsignedBigInteger('lessor_id'); // Foreign key column
-            $table->foreign('lessor_id') // Define foreign key constraint
+            $table->unsignedBigInteger('lessor_id'); 
+            $table->foreign('lessor_id') 
             ->references('id')
             ->on('lessor')
             ->onDelete('cascade');
-            $table->timestamps();
+            
+
+          
+
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')); 
         });
     }
 

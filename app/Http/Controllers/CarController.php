@@ -9,27 +9,92 @@ use App\Models\Car;
 class CarController extends Controller
 {
     
-    public function filterCars(Request $request)
-    {
-        $query = Car::query();
+    // public function filterCars(Request $request)
+    // {
+    //     $query = Car::query();
 
-        if ($request->has('2')) {
-            $query->Where('type_id', '2'); //sale
-            // $query->WhereIn('type_id', 1); //booking  
-        }
+    //     if ($request->has('type_id')) {
+    //         $query->Where('type_id', 2); //sale
+             
+    //     }
     
-        if ($request->has(2)) {
-            $query->Where('type_id', 1); //booking
-        }
+    //     if ($request->has('type_id')) {
+    //         $query->Where('type_id', 1); //booking
+    //     }
     
-        if ($request->has('manual')) {
-            $query->Where('transmission', 'manual');
-        }
+    //     if ($request->has('transmission')) {
+    //         $query->Where('transmission', 'manual');
+    //     }
     
-        if ($request->has('automatic')) {
-            $query->Where('transmission', 'automatic');
-        }
+    //     if ($request->has('transmission')) {
+    //         $query->Where('transmission', 'automatic');
+    //     }
     
+    //     if ($request->has('name')) {
+    //         $query->where('name', 'like', '%' . $request->name . '%');
+    //     }
+
+    //     if ($request->has('fuel')) {
+    //         $query->where('fuel', $request->fuel);
+    //     }
+
+    //     if ($request->has('luggage')) {
+    //         $query->where('luggage', $request->luggage);
+    //     }
+    
+    //     if ($request->has('seats')) {
+    //         $query->where('seats', $request->seats);
+    //     }
+
+    //     if ($request->has('mileage')) {
+    //         $query->where('mileage', $request->mileage);
+    //     }
+    
+    
+    //     if ($request->has('year_of_manufacture')) {
+    //         $query->where('year_of_manufacture', $request->year_of_manufacture);
+    //     }
+        
+    
+    //     $filterCars = $query->get();
+
+    
+    //     $cars= Car::all();
+
+    //     return view('/car', compact('filterCars','cars'));
+    // }
+
+    public function filterCars(Request $request)
+{
+    $query = Car::query();
+
+    // Check if any filter parameters are provided
+    $hasFilters = $request->filled('type_id') ||
+                  $request->filled('transmission') ||
+                  $request->filled('name') ||
+                  $request->filled('fuel') ||
+                  $request->filled('luggage') ||
+                  $request->filled('seats') ||
+                  $request->filled('mileage') ||
+                  $request->filled('year_of_manufacture');
+
+    if ($hasFilters) {
+        if ($request->has('type_id') && $request->type_id == 2) {
+            $query->where('type_id', 2); // Sale
+        }
+
+        if ($request->has('type_id') && $request->type_id == 1) {
+            $query->where('type_id', 1); // Booking
+        }
+
+        if ($request->has('transmission') && $request->transmission == 'manual') {
+            $query->where('transmission', 'manual');
+        }
+
+        if ($request->has('transmission') && $request->transmission == 'automatic') {
+            $query->where('transmission', 'automatic');
+        }
+
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
@@ -41,7 +106,7 @@ class CarController extends Controller
         if ($request->has('luggage')) {
             $query->where('luggage', $request->luggage);
         }
-    
+
         if ($request->has('seats')) {
             $query->where('seats', $request->seats);
         }
@@ -49,81 +114,21 @@ class CarController extends Controller
         if ($request->has('mileage')) {
             $query->where('mileage', $request->mileage);
         }
-    
-    
+
         if ($request->has('year_of_manufacture')) {
             $query->where('year_of_manufacture', $request->year_of_manufacture);
         }
-        
-    
-        $filterCars = $query->get();
 
-        // if ($filterCars->isEmpty()) {
-        //     $filterCars = Car::all(); // Show all cars if no filters match
-        // }
-
-    
-        $cars= Car::all();
-
-        return view('/car', compact('filterCars') , compact('cars'));
-
-        // $query = Car::query();
-
-        // // Apply filter conditions as before...
-    
-        //  if ($request->has(2)) {
-        //     $query->orWhere('type_id',2); //sale
-        // }
-    
-        // elseif ($request->has(1)) {
-        //     $query->orWhere('type_id', 1); //booking
-        // }
-    
-        // elseif ($request->has('manual')) {
-        //     $query->orWhere('transmission', 'manual');
-        // }
-    
-        // elseif ($request->has('automatic')) {
-        //     $query->orWhere('transmission', 'automatic');
-        // }
-    
-        // elseif ($request->has('name')) {
-        //     $query->where('name', 'like', '%' . $request->name . '%');
-        // }
-
-        // elseif ($request->has('fuel')) {
-        //     $query->where('fuel', $request->fuel);
-        // }
-
-        // elseif ($request->has('luggage')) {
-        //     $query->where('luggage', $request->luggage);
-        // }
-    
-        // elseif ($request->has('seats')) {
-        //     $query->where('seats', $request->seats);
-        // }
-
-        // elseif ($request->has('mileage')) {
-        //     $query->where('mileage', $request->mileage);
-        // }
-    
-    
-        // elseif ($request->has('year_of_manufacture')) {
-        //     $query->where('year_of_manufacture', $request->year_of_manufacture);
-        // }
-
-        // $filteredCars = $query->get();
-        // $cars= Car::all();
-
-        // if ($request->ajax()) {
-        //     return view('/car', compact('filteredCars')); // cars.filtered is a Blade partial view
-        // }
-    
-       
-
-        // return view('/car', compact('filteredCars'), compact('cars'));
     
     }
+
+    $filterCars = $query->get();
+
+    $cars = Car::all();
+
+    return view('/car', compact('filterCars', 'cars'));
+}
+
 }
 
 

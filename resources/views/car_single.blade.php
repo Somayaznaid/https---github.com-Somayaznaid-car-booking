@@ -158,7 +158,7 @@
                                 <div class="text">
                                     <h3 class="heading mb-0 pl-3">
                                         Mileage
-                                        <span>{{ $car->mileage }}</span>
+                                        <span>{{ $car->mileage }} km/l</span>
                                     </h3>
                                 </div>
                             </div>
@@ -249,11 +249,11 @@
                                     BOOK KNOW:
                                 </h3> <br>
                                 <div class="form-group d-flex">
-                                    <input type="text" class="form-control mr-3" name="start_location"
-                                        id="start_location" placeholder="Picking Up Location">
+                                    <input type="text" class="form-control " name="start_location"
+                                        id="start_location" placeholder="Picking Up City">
                                     <span class="error-message" id="startLocationError"></span>
-                                    <input type="text" class="form-control" name="end_location" id="end_location"
-                                        placeholder="Dropping off Location">
+                                    <input type="hidden" class="form-control" name="end_location" id="end_location"
+                                        placeholder="Dropping off City">
                                     <span class="error-message" id="endLocationError"></span>
                                 </div>
 
@@ -640,11 +640,11 @@
             }
 
             // Validate end location
-            if (endLocationInput.value.trim() === "") {
-                document.getElementById("endLocationError").textContent = "End location is required.";
-                event.preventDefault();
-                return;
-            }
+            // if (endLocationInput.value.trim() === "") {
+            //     document.getElementById("endLocationError").textContent = "End location is required.";
+            //     event.preventDefault();
+            //     return;
+            // }
 
             // Validate start date
             if (startDateInput.value.trim() === "") {

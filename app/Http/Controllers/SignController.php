@@ -52,33 +52,58 @@ class SignController extends Controller
 
     public function createLessor(Request $request)
     {
+        
         $validated = $request->validate([
-            'name' => 'required',
+            // 'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => [
-                'required',
-                'min:6',
-                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/', 
-            ],
             'phone' => 'required',
+            'password' => 'required',
             'address' => 'required',
             're_password' => 'required|same:password',
-            'agree-term' => 'required'
         ]);
+
+
        $lessor = new Lessor;
-       $lessor->name = $request -> input('name');
-       $lessor->email = $request -> input('email');
-       $lessor->phone = $request -> input('phone');
-       $lessor->address = $request -> input('address');
+       $lessor->name = $request->input('name');
+       $lessor->email = $request->input('email');
+       $lessor->phone = $request->input('phone');
+       $lessor->address = $request->input('address');
        $lessor->password = Hash::make($request->input('password'));
        $lessor->role_id = 2;
+   
        $lessor->save();
-
+  //    dd($lessor);
        Auth::login($lessor);
 
        return redirect('product');
     }
 
+    // public function createLessor(Request $request)
+    // {
+    //     // Validation rules
+    //     $validated = $request->validate([
+    //         'name' => 'required',
+    //         'email' => 'required|email|unique:users',
+    //         'phone' => 'required|digits:10', 
+    //         'password' => 'required|min:6',
+    //         'address' => 'required',
+    //         're_password' => 'required|same:password',
+    //     ]);
+    
+    //     $lessor = new Lessor;
+    //     $lessor->name = $validated['name'];
+    //     $lessor->email = $validated['email'];
+    //     $lessor->phone = $validated['phone'];
+    //     $lessor->address = $validated['address'];
+    //     $lessor->password = Hash::make($validated['password']);
+    //     $lessor->role_id = 2;
+    //     $lessor->save();
+    
+    //     // Log in the newly created user
+    //     Auth::login($lessor);
+    
+    //     return redirect('product');
+    // }
 
     public function log(Request $request)
 {

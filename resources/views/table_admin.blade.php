@@ -92,9 +92,9 @@
                                     class="btn badge badge-sm bg-gradient-secondary">add</button>
                             </h6>
                             <div id="user_popup" class="popup">
-                                <div class="popup-content">
+                                <div class="popup-content rounded">
                                     <h4 class="d-flex justify-content-between align-items-center">Add User:
-                                        <button onclick="closeLUserPopup()" class="close-button btn">
+                                        <button onclick="closeUserPopup()" class="close-button btn">
                                             <i class="fas fa-times"></i>
                                             <!-- Assuming you are using Font Awesome for icons -->
                                         </button>
@@ -120,7 +120,8 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        <th
+                                            class="align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Users</th>
                                         <th
                                             class="align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -152,12 +153,12 @@
                                                 <p class="text-xs text-secondary mb-0"></p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                              @if ($user->status === 'online')
-                                                  <span class="badge badge-sm bg-gradient-success">Online</span>
-                                              @else
-                                                  <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                              @endif
-                                          </td>
+                                                @if ($user->status === 'online')
+                                                    <span class="badge badge-sm bg-gradient-success">Online</span>
+                                                @else
+                                                    <span class="badge badge-sm bg-gradient-secondary">Offline</span>
+                                                @endif
+                                            </td>
 
                                             <td class="align-middle text-center">
                                                 <a href="/edit/{{ $user['id'] }}"
@@ -167,79 +168,41 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle text-center">
-                                               
 
-                                                  
-                                                
+
+
+
 
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="text-danger border-0 bg-white font-weight-bold text-xs" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">
+                                                <button type="button"
+                                                    class="text-danger border-0 bg-white font-weight-bold text-xs"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
                                                     Delete
                                                 </button>
 
-                                                <!-- Modal -->
-                                                {{-- <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                
+
+
+                                                <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Delete User: 
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                              <p>Are you sure you want to delete the user: {{ $user->name }}?</p>
-                                                              
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                               
-                                                              <a href="admin_table/delete/user {{ $user['id'] }}"
-                                                              class="text-light font-weight-bold text-xs btn btn-danger" data-toggle="tooltip"
-                                                              data-original-title="Edit user">
-                                                              Delete
-                                                              </a>
-
-                                                              <form action="{{ url('admin_table') }}" method="POST"></form>
-                                                                <button type="button" class="btn btn-primary font-weight-bold text-xs">Save
-                                                                    changes</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
-
-
-                                                <div class="modal fade tm-block tm-block-products" id="exampleModal{{ $user['id'] }}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Delete
-                                                                    User:
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                <h5 class="modal-title">Delete {{ $user->name }}</h5>
+                                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                Are you sure you want to delete {{ $user->name }} ?
+                                                                Are you sure you want to delete {{ $user->name }}?
                                                             </div>
                                                             <div class="modal-footer">
-
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
                                                                 <a href="admin_table/delete/user {{ $user['id'] }}"
-                                                              class="text-light font-weight-bold text-xs btn btn-danger" data-toggle="tooltip"
-                                                              data-original-title="Edit user">
-                                                              Delete
-                                                              </a>
-
-                                                                {{-- <form action="{{ url("product_lessor") }}" method="POST">
-                                                                <button type="button" class="btn btn-primary">Save
-                                                                    changes</button>
-                                                                </form> --}}
-
+                                                                class="text-light font-weight-bold text-xs btn btn-danger" data-toggle="tooltip"
+                                                                data-original-title="Edit user">
+                                                                Delete
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -272,26 +235,27 @@
                             </h6>
 
                             <div id="lessor_popup" class="popup">
-                                <div class="popup-content">
+                                <div class="popup-content rounded">
                                     <h4 class="d-flex justify-content-between align-items-center">Add Lessor:
                                         <button onclick="closeLessorPopup()" class="close-button btn">
                                             <i class="fas fa-times"></i>
                                             <!-- Assuming you are using Font Awesome for icons -->
                                         </button>
                                     </h4>
-                                    <form action="{{ route('addlessor') }}" method="POST" id="lessorForm">
+                                    <form action="{{ route('addlessor') }}" method="POST" id="lessorForm"
+                                        >
                                         @csrf
-                                        <input type="text" name="name" placeholder="Name">
-                                        <small id="nameError">{{ $errors->first('name') }}</small>
-                                        <input type="text" name="email" placeholder="Email">
-                                        <small id="emailError">{{ $errors->first('email') }}</small>
-                                        <input type="text" name="password" placeholder="Password">
-                                        <small id="passwordError">{{ $errors->first('password') }}</small>
-                                        <input type="text" name="phone" placeholder="Phone">
-                                        <small id="phoneError">{{ $errors->first('phone') }}</small>
-                                        <input type="text" name="address" placeholder="Address">
-                                        <small id="addressError">{{ $errors->first('address') }}</small>
-                                        <button class="btn btn-secondary">Submit</button>
+                                        <input type="text" name="name" placeholder="Name" id="nameLessor">
+                                        <small id="nameLessorError"></small>
+                                        <input type="text" name="email" placeholder="Email" id="emailLessor">
+                                        <small id="emailLessorError"></small>
+                                        <input type="text" name="password" placeholder="Password" id="passwordLessor">
+                                        <small id="passwordLessorError"></small>
+                                        <input type="text" name="phone" placeholder="Phone" id="phoneLessor">
+                                        <small id="phoneLessorError"></small>
+                                        <input type="text" name="address" placeholder="Address" id="addressLessor">
+                                        <small id="addressLessorError"></small>
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
                                     </form>
                                 </div>
                             </div>
@@ -364,71 +328,69 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                           
+
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="text-danger border-0 bg-white font-weight-bold text-xs" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">
+                                                <button type="button"
+                                                    class="text-danger border-0 bg-white font-weight-bold text-xs"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteModal{{ $lessor->id }}">
                                                     Delete
                                                 </button>
 
                                                 <!-- Modal -->
-                                                {{-- <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                                
+
+                                                <div class="modal fade" id="deleteModal{{ $lessor->id }}" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Lessor: 
-                                                                </h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
+                                                                <h5 class="modal-title">Delete {{ $lessor->name }}</h5>
+                                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                              <p>Are you sure you want to delete the lessor: {{ $lessor->name }}?</p>
-                                                             
+                                                                Are you sure you want to delete {{ $lessor->name }}?
                                                             </div>
                                                             <div class="modal-footer">
-                                                               
-                                                              <a href="admin_table/delete/lessor {{ $lessor['id'] }}"
-                                                              class="text-danger font-weight-bold text-xs" data-toggle="tooltip"
-                                                              data-original-title="Edit user">
-                                                              Delete
-                                                          </a>
-
-                                                              <form action="{{ url('admin_table') }}" method="POST"></form>
-                                                                <button type="button" class="btn btn-primary font-weight-bold text-xs">Save
-                                                                    changes</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
-
-
-                                                <div class="modal fade" id="exampleModal-{{ $lessor->id }}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Lessor: {{ $lessor->name }}</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Are you sure you want to delete the lessor: {{ $lessor->name }}?</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <a href="{{ route('deleteLessor', ['id' => $lessor->id]) }}"
-                                                                    class="text-danger font-weight-bold text-xs" data-toggle="tooltip"
-                                                                    data-original-title="Delete lessor">
-                                                                    Delete
-                                                                </a>
-                                                                <!-- You can replace 'route' with the appropriate URL to handle the deletion action -->
-                                            
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
+                                                                <a href="admin_table/delete/lessor {{ $lessor['id'] }}"
+                                                                class="text-light font-weight-bold text-xs btn btn-danger" data-toggle="tooltip"
+                                                                data-original-title="Edit lessor">
+                                                                Delete
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                
+
+                                                {{-- <div class="modal fade" id="deleteModal{{ $lessor->id }}" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Delete {{ $lessor->name }}</h5>
+                                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to delete {{ $lessor->name }}?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
+                                                                {{-- <a href="admin_table/delete/lessor {{ $lessor->id }}"
+                                                                class="text-danger font-weight-bold text-xs" data-toggle="tooltip"
+                                                                data-original-title="Edit user">
+                                                                Delete
+                                                            </a>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+                                                {{-- </div> --}} 
+
+
 
 
                                             </td>
@@ -494,18 +456,12 @@
             }
 
 
-            // function confirmDeletion() {
-            //       if (confirm('Are you sure you want to delete this user?')) {
-            //           document.getElementById('delete-car-form').submit();
-            //       } else {
-            //           alert('Car deletion canceled.');
-            //       }
-            //   }
+
 
 
             // add user validation 
 
-            function submitUserForm(event) {
+            function validationUserForm(event) {
                 event.preventDefault(); // Prevent form submission if validation fails
 
 
@@ -548,97 +504,66 @@
             }
 
             // Event listener for form submission
-            document.getElementById('userForm').addEventListener('submit', submitUserForm);
+            document.getElementById('userForm').addEventListener('submit', validationUserForm);
 
+            // Add Lessor validation 
+            function validateLessorForm(event) {
+                event.preventDefault();
+                // Get form input values
+                var name = document.getElementById('nameLessor').value;
+                var email = document.getElementById('emailLessor').value;
+                var password = document.getElementById('passwordLessor').value;
+                var phone = document.getElementById('phoneLessor').value;
+                var address = document.getElementById('addressLessor').value;
 
+                // Regular expressions for validation
+                var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+                var passwordRegex = /^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/;
+                var phoneRegex = /^(\+?962|0)(7[789]|79|77|78|79|07)[0-9]{7}$/i;
 
-            // Add Lessor validation
-            // document.addEventListener('DOMContentLoaded', function() {
-            //   const form = document.getElementById('lessorForm');
+                // Reset error messages
+                document.getElementById('nameLessorError').textContent = '';
+                document.getElementById('emailLessorError').textContent = '';
+                document.getElementById('passwordLessorError').textContent = '';
+                document.getElementById('phoneLessorError').textContent = '';
+                document.getElementById('addressLessorError').textContent = '';
 
-            //   form.addEventListener('submit', function(event) {
-            //     event.preventDefault(); // Prevent form submission if validation fails
+                // Validate name
+                if (name.trim() === '') {
+                    document.getElementById('nameLessorError').textContent = 'Name is required';
+                    return false;
+                }
 
-            //     // Clear previous error messages
-            //     clearErrorMessages();
+                // Validate email
+                if (!email.match(emailRegex)) {
+                    document.getElementById('emailLessorError').textContent = 'Invalid email format';
+                    return false;
+                }
 
-            //     // Perform validation
-            //     let isValid = true;
+                // Validate password
+                if (!password.match(passwordRegex)) {
+                    document.getElementById('passwordLessorError').textContent =
+                        'Password must have at least 8 characters and contain at least one letter and one number';
+                    return false;
+                }
 
-            //     const nameInput = document.querySelector('input[name="name"]');
-            //     const emailInput = document.querySelector('input[name="email"]');
-            //     const passwordInput = document.querySelector('input[name="password"]');
-            //     const phoneInput = document.querySelector('input[name="phone"]');
-            //     const addressInput = document.querySelector('input[name="address"]');
+                // Validate phone
+                if (!phone.match(phoneRegex)) {
+                    document.getElementById('phoneLessorError').textContent = 'Invalid Jordanian phone number';
+                    return false;
+                }
 
-            //     if (nameInput.value.trim() === '') {
-            //       displayErrorMessage(nameInput, 'Please enter your name');
-            //       isValid = false;
-            //     }
+                // Validate address
+                if (address.trim() === '') {
+                    document.getElementById('addressLessorError').textContent = 'Address is required';
+                    return false;
+                }
 
-            //     if (emailInput.value.trim() === '') {
-            //       displayErrorMessage(emailInput, 'Please enter your email');
-            //       isValid = false;
-            //     } else if (!validateEmail(emailInput.value.trim())) {
-            //       displayErrorMessage(emailInput, 'Please enter a valid email address');
-            //       isValid = false;
-            //     }
+                // If all validations pass, the form will be submitted
+                return true;
+            }
 
-            //     if (passwordInput.value.trim() === '') {
-            //       displayErrorMessage(passwordInput, 'Please enter a password');
-            //       isValid = false;
-            //     } else if (!validatePassword(passwordInput.value.trim())) {
-            //       displayErrorMessage(passwordInput, 'Password must contain at least 6 characters, one letter, one number, and one special character');
-            //       isValid = false;
-            //     }
-
-            //     if (phoneInput.value.trim() === '') {
-            //       displayErrorMessage(phoneInput, 'Please enter your phone number');
-            //       isValid = false;
-            //     }
-
-            //     if (addressInput.value.trim() === '') {
-            //       displayErrorMessage(addressInput, 'Please enter your address');
-            //       isValid = false;
-            //     }
-
-            //     if (isValid) {
-            //       form.submit(); // Submit the form if validation passes
-            //     }
-            //   });
-
-            //   function displayErrorMessage(inputElement, message) {
-            //     const errorElement = document.getElementById(`${inputElement.name}Error`);
-            //     errorElement.innerText = message;
-            //     errorElement.style.display = 'block';
-            //   }
-
-            //   function clearErrorMessages() {
-            //     const errorElements = document.querySelectorAll('.error-msg');
-            //     errorElements.forEach(function(element) {
-            //       element.innerText = '';
-            //       element.style.display = 'none';
-            //     });
-            //   }
-            //   document.getElementById('lessorForm').addEventListener('submit', submitLessorForm);
-
-            //   function validateEmail(email) {
-            //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            //     return emailRegex.test(email);
-            //   }
-
-            //   function validatePassword(password) {
-            //     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
-            //     return passwordRegex.test(password);
-            //   }
-            // });
-
-
-            // function confirmDeletion() {
-            //     return confirm('Are you sure you want to delete this user?');
-            // }
-
-
+            document.getElementById('lessorForm').addEventListener('submit', validateLessorForm);
 
             var myModal = document.getElementById('myModal')
             var myInput = document.getElementById('myInput')

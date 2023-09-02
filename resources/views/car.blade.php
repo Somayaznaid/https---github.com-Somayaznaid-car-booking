@@ -30,14 +30,15 @@
                                 <input type="checkbox" name="type_id" value="1"> For Booking
                             </label>
                             <br>
-                            <label>
-                                <input type="radio" name="manual" value="manual"> Manual Transmission
+                            <label for="cardradio">
+                                <input type="radio" name="transmission" value="manual" id="cardradio"> Manual Transmission
                             </label>
-                            <label>
-                                <input type="radio" name="automatic" value="automatic"> Automatic Transmission
+                            <label for="cardradio">
+                                <input type="radio" name="transmission" value="automatic" id="cardradio"> Automatic Transmission
                             </label>
                             <br>
 
+                          
                         </div>
 
                         <div class="form-group d-flex">
@@ -78,7 +79,11 @@
                             </label>
                         </div>
 
-                        <div class="form-group">
+
+
+                    
+
+                    <div class="form-group">
                         <button type="submit" class="btn btn-primary ml-3">Filter</button>
 					</div>
                     </form>
@@ -111,7 +116,7 @@
                                         <a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
                                             class="btn btn-secondary py-2 ml-1">Book now</a>
                                     @else
-                                        <a href="{{ route('car_single', ['id' => $filterCar['id']]) }}"
+                                        <a href="{{ route('car_single_sale', ['id' => $filterCar['id']]) }}"
                                             class="btn btn-secondary py-2 ml-1">Buy now</a>
                                     @endif
 
@@ -152,14 +157,14 @@
         <div class="container">
 
             <div class="row justify-content-center">
-                <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+                {{-- <div class="col-md-12 heading-section text-center ftco-animate mb-5">
                     <span class="subheading">What all offer</span>
                     <h2 class="mb-2">Cars: </h2>
-                </div>
+                </div> --}}
             </div>
 
             <div class="row">
-                @foreach ($cars as $car)
+                {{-- @foreach ($cars as $car)
                     <div class="col-md-4">
 
                         <div class="car-wrap rounded ftco-animate">
@@ -186,7 +191,7 @@
                         </div>
 
                     </div>
-                @endforeach
+                @endforeach --}}
             </div>
 
 

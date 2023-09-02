@@ -88,7 +88,9 @@ Route::get('/car_single_sale/{id}', [BookController::class, 'carSinglePageSale']
 
 Route::post('/logout', [SignController::class , 'logout'])->name('logout');
 
-Route::post('/bookings', [BookController::class, 'storeBooking'])->name('bookings.storeBooking');
+// Route::post('/bookings', [BookController::class, 'storeBooking'])->name('bookings.storeBooking');
+Route::match(['GET', 'POST'], 'carSinglePage', [BookController::class, 'storeBooking'])->name('bookings.storeBooking');
+
 
 Route::post('/car_single/{id}', [BookController::class, 'rating'])->name('rating');
 

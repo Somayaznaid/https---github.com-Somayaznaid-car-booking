@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Users;
 use App\Models\Lessor;
+use App\Models\Type;
 
 class Car extends Model
 {
@@ -38,9 +39,15 @@ class Car extends Model
         return $this->belongsTo(Users::class);
     }
 
+    
     public function lessors()
     {
         return $this->belongsTo(Lessor::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 
     

@@ -144,7 +144,7 @@
 	              	<div class="text">
 		                <h3 class="heading mb-0 pl-3">
 		                	Mileage
-		                	<span>{{$car->mileage}}</span>
+		                	<span>{{$car->mileage}} km/l</span>
 		                </h3>
 	                </div>
                 </div>
@@ -280,7 +280,7 @@
                     <label for="cashradio">Cash</label>
                     </div>
                   <div id="cardInputs" style="display: none;">
-                    <input type="text" class="form-control col-4 m-1" name="userName" placeholder="User Holder">
+                    <input type="text" class="form-control col-4 m-1" name="userName" placeholder="Card Holder">
                     <input type="text" class="form-control col-4 m-1" name="cardNumber" placeholder="Card Number">
                     <input type="text" class="form-control col-4 m-1" name="cvc" placeholder="CVC">
                     <input type="date" class="form-control col-4 m-1" name="exp_day" placeholder="Expiration Day">

@@ -60,7 +60,7 @@
                         <span class="text-xs font-weight-bold">{{ $booking->start_hour}}</span>
                       </td>
                       <td>
-                        <span class="text-xs font-weight-bold">{{ $booking->booking_cost}}</span>
+                        <span class="text-xs font-weight-bold">{{ $booking->cost}}JOD</span>
                       </td>
                       <td>
 

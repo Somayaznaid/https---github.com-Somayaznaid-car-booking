@@ -4,7 +4,7 @@
 <head>
     <title>Carbook</title>
     {{-- <link rel="icon" type="{{ asset('images/1689189813_64aefdb5e94bc') }}" href="path-to-your-favicon"/> --}}
-    <link rel="icon" type="image/png" href="{{ asset('images/1689189813_64aefdb5e94bc.png') }}"/>
+    <link rel="icon" type="image/png" href="{{ asset('images/sport-car.png') }}"/>
 
 
     <meta charset="utf-8">

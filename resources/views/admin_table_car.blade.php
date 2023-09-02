@@ -51,7 +51,7 @@
                         <p class="text-sm font-weight-bold mb-0">{{ $car->name }}</p>
                       </td>
                       <td>
-                        <span class="text-xs font-weight-bold align-middle text-center">{{ $car->price }}$</span>
+                        <span class="text-xs font-weight-bold align-middle text-center">{{ $car->price }}JOD</span>
                       </td>
                       <td>
                         <span class="text-xs font-weight-bold">{{ $car->mileage }}</span>
@@ -72,7 +72,7 @@
                         <span class="text-xs font-weight-bold">{{ $car->year_of_manufacture }}</span>
                       </td>
                       <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
+                        <div class="d-flex align-items-center justify-content-right">
                           <span class="me-2 text-xs font-weight-bold">{{ $car->description }}</span>
                           <div>
                             {{-- <div class="progress">

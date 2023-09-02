@@ -17,7 +17,8 @@ return new class extends Migration
             $table->longText('comments')->nullable();
             $table->integer('star_rating');
             $table->enum('status', ['active', 'deactive']);
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')); 
            
         });
     }

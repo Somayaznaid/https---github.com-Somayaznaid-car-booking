@@ -25,22 +25,22 @@ class BookController extends Controller
         if(!($car)){
           return '<h1 style="text-align:center ;color=red;">Sorry car id not found</h1>';
         }
-        $booking = Booking::where('car_id', $id)->pluck('start_date')->toArray();
-        $booking2 = Booking::where('car_id', $id)->pluck('end_date')->toArray();
+        // $booking = Booking::where('car_id', $id)->pluck('start_date')->toArray();
+        // $booking2 = Booking::where('car_id', $id)->pluck('end_date')->toArray();
           
-        // Assuming $booking and $booking2 are arrays of start and end dates
+        // // Assuming $booking and $booking2 are arrays of start and end dates
 
-        if ($booking) {
-        $dateRange = CarbonPeriod::create(
-            Carbon::createFromFormat('Y-m-d', $booking[0]),
-            Carbon::createFromFormat('Y-m-d', $booking2[0])
-        );
+        // if ($booking) {
+        // $dateRange = CarbonPeriod::create(
+        //     Carbon::createFromFormat('Y-m-d', $booking[0]),
+        //     Carbon::createFromFormat('Y-m-d', $booking2[0])
+        // );
        
-        $dates = array_map(fn ($date) => $date->format('Y-m-d'), iterator_to_array($dateRange));
-        // dd($dates);
-        return view('car_single' , compact('car', 'ratings','dates'));
+        // $dates = array_map(fn ($date) => $date->format('Y-m-d'), iterator_to_array($dateRange));
+        // // dd($dates);
+        // return view('car_single' , compact('car', 'ratings','dates'));
 
-    }
+    // }
 
     $dates = null;
     
@@ -67,7 +67,7 @@ class BookController extends Controller
     
     $validatedData = $request->validate([
         'start_location' => 'required|string',
-        'end_location' => 'required|string',
+        // 'end_location' => 'required|string',
         'start_date' => 'required|date',
         'end_date' => 'required|date',
         'start_hour' => 'required|date_format:H:i',
@@ -79,12 +79,12 @@ class BookController extends Controller
     $booking = new Booking();
     $car = new Car();
     $booking->start_location = $request->input('start_location');
-    $booking->end_location = $request->input('end_location');
+    $booking->end_location = $booking->start_location;
     $booking->start_date = $request->input('start_date');
     $booking->end_date = $request->input('end_date');
     $booking->start_hour = $request->input('start_hour');
     $booking->end_hour =$booking->start_hour;
-    $booking->booking_cost = $request->input('booking_cost'); 
+    $booking->cost = $request->input('booking_cost'); 
     $booking->user_id = Auth::id();
     $booking->lessor_id = $request->input('lessor_id');
     $booking->car_id = $request->input('car_id');
@@ -95,7 +95,7 @@ class BookController extends Controller
     $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', $booking->start_date);
     // dd($startDate);
     $endDate = \Carbon\Carbon::createFromFormat('Y-m-d', $booking->end_date);
-    $booking->booking_cost = $car_price * $startDate->diffInDays($endDate);
+    $booking->cost = $car_price * $startDate->diffInDays($endDate);
 
     // dd($booking);
 
@@ -160,23 +160,7 @@ public function rating(Request $request, $id)
 
 
 
-    // public function showBookDay(string $id){
-        
-    //     $book= Booking::find()->where('');
-    //     return view('car_single' , compact('book'));
-    // }
-
-    // public function showBookDayJson()
-    //   {
-    //     //  $booking = Booking::findOrFail($id); // Retrieve the booking with the specified ID
     
-    //     //  $start_date = $booking->start_date; // Access the start_date column
-    //     //  $end_date = $booking->end_date; // Access the end_date column
-
-    //      $booking = Booking::all(['start_date']);
-
-    //      return view('car_single', compact('booking'));
-    //   }
 
 }
 
