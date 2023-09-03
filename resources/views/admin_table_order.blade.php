@@ -22,7 +22,7 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">start location</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">end location</th>
+                      {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">end location</th> --}}
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">start date</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">end date</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">start hour</th>
@@ -47,9 +47,9 @@
                       <td>
                         <p class="text-sm font-weight-bold mb-0">{{ $booking->start_location}}</p>
                       </td>
-                      <td>
+                      {{-- <td>
                         <span class="text-xs font-weight-bold">{{ $booking->end_location}}</span>
-                      </td>
+                      </td> --}}
                       <td>
                         <span class="text-xs font-weight-bold">{{ $booking->start_date}}</span>
                       </td>

@@ -93,7 +93,7 @@
 			{{-- <div id="filtered-cars"> --}}
             <div class="row">
 
-				@if ($filterCars)
+				
                     
                
                 @foreach ($filterCars as $filterCar)
@@ -128,24 +128,29 @@
                 @endforeach
 
 
-                @else
+              
                     
 
                 <div class="col-md-4">
 
                     <div class="car-wrap rounded ftco-animate">
-                      No car Availbale
+                        @if(session('no_cars_message'))
+                        <div class="alert alert-info">
+                            {{ session('no_cars_message') }}
+                        </div>
+                    @endif
+
                     </div>
 
                 </div>    
-                @endif
+               
 
 			{{-- </div> --}}
 
             </div>
 
 
-            <!-- Add filter to here -->
+          
 
 
         </div>
@@ -157,14 +162,14 @@
         <div class="container">
 
             <div class="row justify-content-center">
-                {{-- <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+                <div class="col-md-12 heading-section text-center ftco-animate mb-5">
                     <span class="subheading">What all offer</span>
                     <h2 class="mb-2">Cars: </h2>
-                </div> --}}
+                </div>
             </div>
 
             <div class="row">
-                {{-- @foreach ($cars as $car)
+                @foreach ($cars as $car)
                     <div class="col-md-4">
 
                         <div class="car-wrap rounded ftco-animate">
@@ -191,7 +196,7 @@
                         </div>
 
                     </div>
-                @endforeach --}}
+                @endforeach
             </div>
 
 

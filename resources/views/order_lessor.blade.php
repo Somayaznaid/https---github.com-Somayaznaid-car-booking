@@ -38,7 +38,7 @@
 
 
                                 <td class="tm-product-name">{{ $booking->car->name }}</td>
-                                <td>{{ $booking->booking_cost }}</td>
+                                <td>{{ $booking->cost }}</td>
                                 <td>{{ $booking->start_date }}</td>
                                 <td>{{ $booking->end_date }}</td>
                                 <td>{{ $booking->start_location }}</td>

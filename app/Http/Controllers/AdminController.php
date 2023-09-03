@@ -18,11 +18,13 @@ class AdminController extends Controller
     public function index()
     {
         
-        $data = Users::all()->where("role_id" , 1);
-        $data2 = Lessor::all()->where("role_id" , 2);
-        $data3 = Car::all();
-        $data4 = Booking::all();
-        return view('table_admin' , ['users'=> $data , 'lessors' =>$data2 , 'cars' =>$data3 , 'booking' =>$data4]);
+        $users = Users::all()->where("role_id" , 1);
+        $lessors = Lessor::all()->where("role_id" , 2);
+        // $data3 = Car::all();
+        // $data4 = Booking::all();
+        // return view('table_admin' , ['lessors' =>$lessors ,'users'=> $data , 'cars' =>$data3 , 'booking' =>$data4]);
+        return view('table_admin', compact('lessors', 'users'));
+
        
     }
 
@@ -221,7 +223,7 @@ class AdminController extends Controller
                 return redirect('admin_table')->with('warning_delete_Lessor', 'Lessor deletion failed. Lessor has related bookings.');
             } else {
                 // User has no related bookings, proceed with deletion
-                $user->delete();
+                $lessor->delete();
                 return redirect('admin_table')->with('success_delete_Lessor', 'Lessor deleted successfully.');
             }
         } else {

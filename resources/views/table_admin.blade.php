@@ -176,19 +176,22 @@
                                                 <!-- Button trigger modal -->
                                                 <button type="button"
                                                     class="text-danger border-0 bg-white font-weight-bold text-xs"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal{{ $user->id }}">
                                                     Delete
                                                 </button>
 
-                                
 
 
-                                                <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" role="dialog">
+
+                                                <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1"
+                                                    role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title">Delete {{ $user->name }}</h5>
-                                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <button type="button" class="close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -196,12 +199,13 @@
                                                                 Are you sure you want to delete {{ $user->name }}?
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancel</button>
                                                                 {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
                                                                 <a href="admin_table/delete/user {{ $user['id'] }}"
-                                                                class="text-light font-weight-bold text-xs btn btn-danger" data-toggle="tooltip"
-                                                                data-original-title="Edit user">
-                                                                Delete
+                                                                    class="text-light font-weight-bold text-xs btn btn-danger"
+                                                                    data-toggle="tooltip" data-original-title="Edit user">
+                                                                    Delete
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -242,14 +246,14 @@
                                             <!-- Assuming you are using Font Awesome for icons -->
                                         </button>
                                     </h4>
-                                    <form action="{{ route('addlessor') }}" method="POST" id="lessorForm"
-                                        >
+                                    <form action="{{ route('addlessor') }}" method="POST" id="lessorForm">
                                         @csrf
                                         <input type="text" name="name" placeholder="Name" id="nameLessor">
                                         <small id="nameLessorError"></small>
                                         <input type="text" name="email" placeholder="Email" id="emailLessor">
                                         <small id="emailLessorError"></small>
-                                        <input type="text" name="password" placeholder="Password" id="passwordLessor">
+                                        <input type="text" name="password" placeholder="Password"
+                                            id="passwordLessor">
                                         <small id="passwordLessorError"></small>
                                         <input type="text" name="phone" placeholder="Phone" id="phoneLessor">
                                         <small id="phoneLessorError"></small>
@@ -332,19 +336,22 @@
                                                 <!-- Button trigger modal -->
                                                 <button type="button"
                                                     class="text-danger border-0 bg-white font-weight-bold text-xs"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteModal{{ $lessor->id }}">
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal{{ $lessor->id }}">
                                                     Delete
                                                 </button>
 
                                                 <!-- Modal -->
-                                                
 
-                                                <div class="modal fade" id="deleteModal{{ $lessor->id }}" tabindex="-1" role="dialog">
+
+                                                <div class="modal fade" id="deleteModal{{ $lessor->id }}"
+                                                    tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title">Delete {{ $lessor->name }}</h5>
-                                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <button type="button" class="close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -352,12 +359,14 @@
                                                                 Are you sure you want to delete {{ $lessor->name }}?
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancel</button>
                                                                 {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
                                                                 <a href="admin_table/delete/lessor {{ $lessor['id'] }}"
-                                                                class="text-light font-weight-bold text-xs btn btn-danger" data-toggle="tooltip"
-                                                                data-original-title="Edit lessor">
-                                                                Delete
+                                                                    class="text-light font-weight-bold text-xs btn btn-danger"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Edit lessor">
+                                                                    Delete
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -380,7 +389,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                                 {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
-                                                                {{-- <a href="admin_table/delete/lessor {{ $lessor->id }}"
+                                                {{-- <a href="admin_table/delete/lessor {{ $lessor->id }}"
                                                                 class="text-danger font-weight-bold text-xs" data-toggle="tooltip"
                                                                 data-original-title="Edit user">
                                                                 Delete
@@ -388,7 +397,7 @@
                                                             </div>
                                                         </div>
                                                     </div> --}}
-                                                {{-- </div> --}} 
+                                                {{-- </div> --}}
 
 
 
@@ -486,10 +495,15 @@
                     isValid = false;
                     nameError.textContent = 'Please enter your name';
                 }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
                 if (emailInput.value.trim() === '') {
                     isValid = false;
                     emailError.textContent = 'Please enter your email';
+                } else 
+                if (!emailRegex.test(emailInput.value.trim())) {
+                    isValid = false;
+                    emailError.textContent = 'Please enter a valid email address';
                 }
 
                 if (passwordInput.value.trim() === '') {
@@ -507,63 +521,68 @@
             document.getElementById('userForm').addEventListener('submit', validationUserForm);
 
             // Add Lessor validation 
-            function validateLessorForm(event) {
-                event.preventDefault();
-                // Get form input values
-                var name = document.getElementById('nameLessor').value;
-                var email = document.getElementById('emailLessor').value;
-                var password = document.getElementById('passwordLessor').value;
-                var phone = document.getElementById('phoneLessor').value;
-                var address = document.getElementById('addressLessor').value;
+            function validationlessorForm(event) {
+                event.preventDefault(); // Prevent form submission if validation fails
 
-                // Regular expressions for validation
-                var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-                var passwordRegex = /^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/;
-                var phoneRegex = /^(\+?962|0)(7[789]|79|77|78|79|07)[0-9]{7}$/i;
+                const nameInput = document.getElementById('nameLessor');
+                const emailInput = document.getElementById('emailLessor');
+                const passwordInput = document.getElementById('passwordLessor');
+                const phoneInput = document.getElementById('phoneLessor');
+                const addressInput = document.getElementById('addressLessor');
 
-                // Reset error messages
-                document.getElementById('nameLessorError').textContent = '';
-                document.getElementById('emailLessorError').textContent = '';
-                document.getElementById('passwordLessorError').textContent = '';
-                document.getElementById('phoneLessorError').textContent = '';
-                document.getElementById('addressLessorError').textContent = '';
+                const nameError = document.getElementById('nameLessorError');
+                const emailError = document.getElementById('emailLessorError');
+                const passwordError = document.getElementById('passwordLessorError');
+                const phoneError = document.getElementById('phoneLessorError');
+                const addressError = document.getElementById('addressLessorError');
 
-                // Validate name
-                if (name.trim() === '') {
-                    document.getElementById('nameLessorError').textContent = 'Name is required';
-                    return false;
+                nameError.textContent = '';
+                emailError.textContent = '';
+                passwordError.textContent = '';
+                phoneError.textContent = '';
+                addressError.textContent = '';
+
+                let isValid = true;
+
+                if (nameInput.value.trim() === '') {
+                    isValid = false;
+                    nameError.textContent = 'Please enter your name';
                 }
 
-                // Validate email
-                if (!email.match(emailRegex)) {
-                    document.getElementById('emailLessorError').textContent = 'Invalid email format';
-                    return false;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (emailInput.value.trim() === '') {
+                    isValid = false;
+                    emailError.textContent = 'Please enter your email';
+                } else 
+                if (!emailRegex.test(emailInput.value.trim())) {
+                    isValid = false;
+                    emailError.textContent = 'Please enter a valid email address';
                 }
 
-                // Validate password
-                if (!password.match(passwordRegex)) {
-                    document.getElementById('passwordLessorError').textContent =
-                        'Password must have at least 8 characters and contain at least one letter and one number';
-                    return false;
+                if (passwordInput.value.trim() === '') {
+                    isValid = false;
+                    passwordError.textContent = 'Please enter your password';
                 }
 
-                // Validate phone
-                if (!phone.match(phoneRegex)) {
-                    document.getElementById('phoneLessorError').textContent = 'Invalid Jordanian phone number';
-                    return false;
+                if (phoneInput.value.trim() === '') {
+                    isValid = false;
+                    phoneError.textContent = 'Please enter your phone number';
                 }
 
-                // Validate address
-                if (address.trim() === '') {
-                    document.getElementById('addressLessorError').textContent = 'Address is required';
-                    return false;
+                if (addressInput.value.trim() === '') {
+                    isValid = false;
+                    addressError.textContent = 'Please enter your address';
                 }
 
-                // If all validations pass, the form will be submitted
-                return true;
+                if (isValid) {
+                    // Submit the form if validation passes
+                    document.getElementById('lessorForm').submit();
+                }
             }
 
-            document.getElementById('lessorForm').addEventListener('submit', validateLessorForm);
+            // Event listener for form submission
+            document.getElementById('lessorForm').addEventListener('submit', validationlessorForm);
 
             var myModal = document.getElementById('myModal')
             var myInput = document.getElementById('myInput')
